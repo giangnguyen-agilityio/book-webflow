@@ -1,93 +1,158 @@
-# next-training
+# Book Webflow website
 
+### 📝 Overview
 
+- This document is intended to describe the requirements for my NextJS practice.
+- Design: [Figma](https://www.figma.com/design/vrDLGDlGWrBahadzcS1giu/Book-Webflow-Website?node-id=0-1&t=ovHcM9338fZQvLAU-1)
+- Plan: [Note](https://docs.google.com/document/d/18ck2zC5BfYcEsuesnNMAp6PRkZykmzDL1P743xlzK5w/edit?usp=sharing)
 
-## Getting started
+### ⌛ Timeline
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- 7 working days
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### 💻 Tech stacks
 
-## Add your files
+- [React 18](https://react.dev/)
+- [NextJS](https://nextjs.org/)
+- [NextUI](https://nextui.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [MockAPI](https://mockapi.io/)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### 🛠️ Development tools
 
+- [Husky](https://typicode.github.io/husky/)
+- [Prettier](https://prettier.io/)
+- [Eslint](https://eslint.org/)
+- [Commitlint](https://commitlint.js.org/)
+- [Storybook](https://github.com/storybookjs/storybook/tree/next/code/lib/cli)
+- [Vercel](https://vercel.com)
+
+### 🎯 Targets
+
+- Understand and apply the core concepts of NextJS
+- Utilize NextUI to create and customize UI components that match the design.
+- Use Storybook to document React components.
+- Improve PageSpeed scores to achieve the highest score around 90-95.
+- Ensure responsive design that supports three device types: Mobile, Tablet, and Desktop.
+
+### 🗂️ Features
+
+Build a simple website with the following features:
+
+- **Common:**
+
+  - The header and footer should be shown on all pages
+  - Navigation of the Header and Explore section at Footer will have the following items:
+    - **My Store** page
+    - **Articles** page
+    - **Cart** icon: (Click on this icon will open the Cart modal)
+  - Show active status for the menu item when accessing the page (Text will be changed to **_Yellow_** color)
+  - Users can be directed to the 404-page error if they access a page that does not exist
+
+- **My Store page**
+
+  - Users can see the book list
+  - Users can see pagination if the total books > 6
+  - Users can be directed to the Book Detail page when clicking on any book item (without the **Order Today** button)
+  - Users can click on the **Order Today** button to add a book to their cart if the total of that book ≥ 1
+  - Users can see a snack bar notification for adding a book to cart status
+
+- **Book Detail page**
+
+  - Users can see the book's detailed information
+  - Users can update quantity input. The default should be 1 and the number cannot < 1
+  - Users can click on **Add to Cart** when the total of books that are chosen ≥ 1
+  - Users can see a snack bar notification after adding a book into cart
+
+- **Cart**
+  - Users can click on the Cart icon on the header to open the Cart modal
+  - Users can see all added books in the Cart
+  - Users can update the quantity of each item but the quantity can’t > the total of books
+  - Users can remove items from the cart
+  - Users can see subtotal
+  - Users can be directed to the Checkout page when they click on the **Continue to Checkout** button. (**Note:** you don’t need to handle payment, the checkout page can be shown as an incoming page. After checkout the cart will reset)
+- **Articles**
+  - Users can see the **Articles & Resources** section at the bottom of each page, except the **Articles** and **Article Detail** page. This section shows only the three latest articles and does not have pagination.
+  - Users can see pagination if the total **Articles** > 9
+  - Users can see the **Article Detail** page when they click on the **Read More** link
+
+## How to run
+
+### 📦 Prerequisites
+
+Make sure you install packages with correct version below:
+
+- [node v18.19.0](https://nodejs.org/en/download/package-manager)
+- [pnpm 9.12.3](https://pnpm.io/installation)
+
+- **Note:**:
+  - Please add `.env` into root of project source code, refer `.env.sample`.
+
+Check and update config image hosting on `next.config.mjs` file follow [Next.js document](https://nextjs.org/docs/messages/next-image-unconfigured-host)
+
+### 📥 Get source code
+
+| Command                                                                | Action                      |
+| :--------------------------------------------------------------------- | :-------------------------- |
+| `git clone git@gitlab.asoft-python.com:giang.nguyen/next-training.git` | Clone Repository with SSH   |
+| `git checkout feature/practice-one`                                    | Checkout to the main Branch |
+
+### ⚙️ Build and Run app
+
+| Command              | Action                                     | Port                  |
+| :------------------- | :----------------------------------------- | :-------------------- |
+| `$ pnpm install`     | Install packages dependencies              | N/A                   |
+| `$ pnpm build`       | Build app with optimized production mode   | N/A                   |
+| `$ pnpm start`       | Starts the application in production mode. | http://localhost:3000 |
+| `$ pnpm dev`         | Run the app in development mode            | http://localhost:3000 |
+| `$ pnpm storybook`   | Run Storybook.                             | http://localhost:6006 |
+| `$ pnpm test`        | Run Unit Test                              | N/A                   |
+| `$ pnpm coverage`    | Generate code coverage                     | N/A                   |
+| `$ pnpm test:update` | Update the Snapshot                        | N/A                   |
+| `$ pnpm lint`        | Run the Eslint                             | N/A                   |
+
+### 📁 Project structure
+
+```shell
+.
+├── README.md                       # README file
+├── .husky                          # Husky configuration
+├── .storybook                      # Storybook folder
+├── public                          # Public assets folder
+├── src
+│   ├── actions                     # Next.js actions
+│   ├── app                         # Next.js App (App Router)
+│   ├── components                  # React components
+│   ├── constants                   # App constants
+│   ├── context                     # App context
+│   ├── icons                       # Icons folder
+│   ├── layouts                     # React components for app layout
+│   ├── mocks                       # App mock data
+│   ├── models                      # Model type definitions
+│   ├── services                    # Handle data with API: GET, POST, PUT, DELETE
+│   ├── themes                      # Custom tailwindCSS styles
+│   ├── types                       # Type definitions
+│   ├── ui                          # Feature components
+│   ├── utils                       # Utilities folder
+├── .editorconfig                   # Editor configuration
+├── .env.sample                     # Env sample
+├── .eslintrc.json                  # ESLint configuration
+├── .gitignore                      # Git ignore file
+├── .lintstagedrc                   # Lint-stage
+├── .prettierrc                     # Prettier configuration
+├── .commitlint.config.js           # Commitlint configuration
+├── jest.config.ts                  # Jest configuration
+├── jest.setup.ts                   # Jest setup configuration
+├── next.config.mjs                 # Next.js configuration
+├── postcss.config.mjs              # Post CSS configuration
+├── tailwind.config.ts              # Tailwind CSS configuration
+├── tsconfig.json                   # TypeScript configuration
+├── pnpm-lock.yaml
+└── package.json
 ```
-cd existing_repo
-git remote add origin https://gitlab.asoft-python.com/giang.nguyen/next-training.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+### 👨‍💻 Author
 
-- [ ] [Set up project integrations](https://gitlab.asoft-python.com/giang.nguyen/next-training/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- Giang Nguyen.
+- Email: giang.nguyen@asnet.com.vn.
