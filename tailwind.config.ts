@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 import { nextui } from '@nextui-org/react';
 
-import { colorPalette, colors } from '@/themes';
+import { colorPalette, colors, fontSize } from '@/themes';
 
 const config: Config = {
   content: [
@@ -10,6 +10,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+        cardo: ['var(--font-cardo)'],
+      },
+      fontSize,
       colors: {
         ...colorPalette,
         ...colors,
