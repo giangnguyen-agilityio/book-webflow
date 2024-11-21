@@ -11,7 +11,7 @@ import {
   spacing,
   width,
   container,
-} from '@/themes';
+} from './src/themes';
 
 const config: Config = {
   content: [

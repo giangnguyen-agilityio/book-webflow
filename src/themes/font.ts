@@ -1,17 +1,3 @@
-import { Inter, Cardo } from 'next/font/google';
-
-export const inter = Inter({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-export const cardo = Cardo({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  variable: '--font-cardo',
-});
-
 export const fontSize = {
   base: '1rem', // 16px
   sm: '1.0625rem', // 17px
