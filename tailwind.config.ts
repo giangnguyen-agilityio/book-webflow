@@ -1,7 +1,17 @@
 import type { Config } from 'tailwindcss';
 import { nextui } from '@nextui-org/react';
 
-import { colorPalette, colors, fontSize } from '@/themes';
+import {
+  borderWidth,
+  colorPalette,
+  colors,
+  fontSize,
+  height,
+  screens,
+  spacing,
+  width,
+  container,
+} from '@/themes';
 
 const config: Config = {
   content: [
@@ -10,14 +20,33 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      container,
       fontFamily: {
         inter: ['var(--font-inter)'],
         cardo: ['var(--font-cardo)'],
       },
       fontSize,
+      borderWidth: {
+        ...borderWidth,
+      },
       colors: {
         ...colorPalette,
         ...colors,
+      },
+      screens: {
+        ...screens,
+      },
+      spacing: {
+        ...spacing,
+      },
+      width: {
+        ...width,
+      },
+      height: {
+        ...height,
+      },
+      backgroundImage: {
+        'not-found-bg': 'url(/images/background-image.webp)',
       },
     },
   },
