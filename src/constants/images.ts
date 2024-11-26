@@ -1,7 +1,9 @@
 import UnavailableImage from '@/images/unavailable-image.webp';
+import ErrorImage from '@/images/error-image.webp';
 
 const ImageStore = {
   UnavailableImage,
+  ErrorImage,
 };
 
 const IMAGE_BLUR_SRC = {
