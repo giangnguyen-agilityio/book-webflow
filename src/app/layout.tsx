@@ -4,7 +4,7 @@ import { Inter, Cardo } from 'next/font/google';
 import Providers from '@/app/providers';
 
 // Components
-import { Header } from '@/components';
+import { Footer, Header } from '@/components';
 
 import './globals.css';
 
@@ -33,6 +33,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main>{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>
