@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { cn } from '@nextui-org/theme';
 
 // Constants
-import { ROUTER } from '@/constants';
+import { ROUTES } from '@/constants';
 
 // Icons
 import { NotFoundIcon } from '@/icons';
@@ -54,7 +54,7 @@ const NotFoundFallback = ({
       aria-label="Back to home button"
       as={Link}
       color="primary"
-      href={ROUTER.STORE}
+      href={ROUTES.STORE}
       onPress={reset}
     >
       Back to home

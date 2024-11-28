@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 // Constants
-import { ImageStore, ROUTER } from '@/constants';
+import { ImageStore, ROUTES } from '@/constants';
 
 // Components
 import { ImageFallback } from '@/components';
@@ -43,7 +43,7 @@ export const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
       or&nbsp;
       <Link
         className="text-text-primary font-semibold hover:underline"
-        href={ROUTER.STORE}
+        href={ROUTES.STORE}
       >
         back to home
       </Link>
