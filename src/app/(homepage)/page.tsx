@@ -1,11 +1,17 @@
-import { HorizontalDotsIcon } from '@/icons';
+import type { Metadata } from 'next';
 
-const Homepage = async () => {
-  return (
-    <div className="bg-slate-500">
-      <HorizontalDotsIcon customClass="text-green-500" />
-    </div>
-  );
+// Components
+import { ComingSoon } from '@/components';
+
+export const metadata: Metadata = {
+  title: 'Store',
+  description: 'Browse and shop our wide range of products.',
+  openGraph: {
+    title: 'Store | Book WebFlow',
+    description: 'Browse and shop our wide range of products.',
+  },
 };
 
-export default Homepage;
+export default function StorePage() {
+  return <ComingSoon />;
+}
