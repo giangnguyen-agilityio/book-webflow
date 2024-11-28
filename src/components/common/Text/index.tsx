@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { memo, ReactNode } from 'react';
 import { cn } from '@nextui-org/theme';
 
 // Constants
 import { TEXT_SIZE_MAP } from '@/constants';
 
 interface TextProps {
-  children: string;
+  children: ReactNode;
   size?:
     | 'base'
     | 'sm'

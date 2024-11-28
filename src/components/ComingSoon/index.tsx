@@ -29,12 +29,12 @@ const ComingSoon = () => (
       </Heading>
 
       <Text
-        className="text-base md:text-md"
+        className="text-center text-base md:text-md"
         textColor="text-text-default"
         type="wrap"
       >
-        We&apos;re working hard to bring you something amazing. Stay tuned for
-        updates!
+        We&apos;re working hard to bring you something amazing.
+        <br /> Stay tuned for updates!
       </Text>
 
       <div className="flex flex-col justify-center items-center space-y-6">

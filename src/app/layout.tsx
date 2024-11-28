@@ -3,6 +3,9 @@ import { Inter, Cardo } from 'next/font/google';
 // Providers
 import Providers from '@/app/providers';
 
+// Components
+import { Header } from '@/components';
+
 import './globals.css';
 
 const inter = Inter({
@@ -27,7 +30,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${inter.variable} ${cardo.variable}`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );

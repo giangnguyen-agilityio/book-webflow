@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { NavbarContent, NavbarItem, cn } from '@nextui-org/react';
 
@@ -15,7 +16,7 @@ interface NavbarProps extends CustomClassType {
 
 const Navbar = ({ pathname, customClass = '' }: NavbarProps) => (
   <NavbarContent className={cn('gap-6 lg:gap-12', customClass)} justify="end">
-    {NAVIGATION_ITEMS.map(({ url, label, title }) => {
+    {NAVIGATION_ITEMS.MAIN.map(({ url, label, title }) => {
       const isActive =
         pathname === url || pathname.includes(label.toLowerCase());
 
@@ -37,4 +38,4 @@ const Navbar = ({ pathname, customClass = '' }: NavbarProps) => (
   </NavbarContent>
 );
 
-export default Navbar;
+export default memo(Navbar);
