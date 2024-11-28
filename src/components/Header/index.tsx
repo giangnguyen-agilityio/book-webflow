@@ -7,6 +7,7 @@ import {
   NavbarContent,
   NavbarBrand,
   NavbarMenuToggle,
+  NavbarItem,
 } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
 
@@ -27,9 +28,11 @@ const Header = () => {
 
   return (
     <NavbarNextUI
-      as="header"
       className="bg-background-primary"
       isMenuOpen={isMenuOpen}
+      classNames={{
+        wrapper: 'max-w-none !p-0 !container mx-auto',
+      }}
       onMenuOpenChange={setIsMenuOpen}
     >
       {/* Hamburger Button */}
@@ -42,28 +45,29 @@ const Header = () => {
 
       <NavbarContent justify="center">
         {/* Logo Website */}
-        <NavbarBrand>
+        <NavbarBrand as="li">
           <Link href="/">
             <LogoIcon customClass="w-30 h-9 text-text-default" />
           </Link>
         </NavbarBrand>
 
         {/* Social Network Links */}
-        <ul className="hidden md:flex gap-2.5">
+        <NavbarItem className="hidden md:flex gap-2.5">
           {formattedSocialLinks.map(({ url, icon: Icon, title }) => (
-            <li key={title} className="text-text-primary">
+            <span key={title} className="text-text-primary">
               <SocialLinks key={title} Icon={Icon} title={title} url={url} />
-            </li>
+            </span>
           ))}
-        </ul>
+        </NavbarItem>
       </NavbarContent>
 
       {/* Navbar */}
       <Navbar customClass="hidden mr-0 md:flex lg:mr-4" pathname={pathname} />
 
       {/* Cart Icon */}
-      <CartAction />
-
+      <NavbarContent className="!flex-grow-0">
+        <CartAction />
+      </NavbarContent>
       {/* Sidebar Menu */}
       <Sidebar />
     </NavbarNextUI>
