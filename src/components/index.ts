@@ -7,3 +7,4 @@ export { default as ComingSoon } from './ComingSoon';
 export { default as Sidebar } from './Sidebar';
 export { default as SocialLinks } from './SocialLinks';
 export { default as Footer } from './Footer';
+export { default as LoadingIndicator } from './LoadingIndicator';
