@@ -7,3 +7,4 @@ export { default as Text } from './Text';
 export { default as Heading } from './Heading';
 export { default as BaseModal } from './BaseModal';
 export { default as Toast } from './Toast';
+export { default as BaseSkeleton } from './BaseSkeleton';

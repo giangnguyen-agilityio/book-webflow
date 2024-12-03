@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 
-// Components
-import { ComingSoon } from '@/components';
+// Mocks
+import { MOCK_BOOK_LIST } from '@/mock';
+
+// UI Components
+import { BookList } from '@/ui';
 
 export const metadata: Metadata = {
   title: 'Store',
@@ -13,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function StorePage() {
-  return <ComingSoon />;
+  return <BookList bookList={MOCK_BOOK_LIST} />;
 }
