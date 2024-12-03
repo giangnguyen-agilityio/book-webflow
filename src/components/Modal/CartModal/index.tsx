@@ -113,7 +113,7 @@ const CartModal = ({
                 base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-14',
                 inputWrapper: cn(
                   'h-full rounded-none',
-                  'border border-border-primary bg-white-150',
+                  'border border-border-primary bg-background-secondary',
                   'bg-transparent hover:bg-transparent',
                 ),
               }}
@@ -194,7 +194,7 @@ const CartModal = ({
               Looks like you haven&apos;t added any items to your cart yet.
             </Text>
             <Link
-              href={ROUTES.HOME}
+              href={ROUTES.STORE}
               className={cn(
                 'w-full bg-background-primary text-text-default',
                 'rounded-md p-3 sm:p-4',

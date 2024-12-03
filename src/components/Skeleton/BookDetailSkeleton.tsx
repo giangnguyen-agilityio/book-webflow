@@ -6,7 +6,7 @@ import { BaseSkeleton } from '@/components';
 const BookDetailBaseSkeleton = () => (
   <>
     {/* Book Image Section */}
-    <div className="w-full max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-white-150">
+    <div className="w-full max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
       <BaseSkeleton className="w-full h-[510] max-w-[380] mx-auto" />
     </div>
 

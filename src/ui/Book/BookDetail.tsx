@@ -65,7 +65,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
   return (
     <>
       {/* Book Image Section */}
-      <div className="w-full max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-white-150">
+      <div className="w-full max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
         <ImageFallback
           alt={title}
           height={510}
@@ -134,7 +134,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
               inputWrapper: cn(
                 'h-full rounded-none',
                 'border border-border-default',
-                'bg-white-150 !bg-transparent',
+                'bg-background-secondary !bg-transparent',
               ),
             }}
             onChange={handleQuantityChange}

@@ -7,7 +7,7 @@ const BookCardBaseSkeleton = () => (
   <div>
     <div className="max-w-[400] flex flex-col items-center mx-auto">
       <div className="w-full flex flex-col">
-        <div className="w-full max-h-[500] p-12.5 bg-white-150">
+        <div className="w-full max-h-[500] p-12.5 bg-background-secondary">
           <BaseSkeleton
             className={cn(
               'max-w-[292] h-[396]',

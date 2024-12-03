@@ -38,7 +38,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
     <div className="bg-background-default">
       <div className="max-w-[400] flex flex-col items-center mx-auto">
         <Link className="w-full flex flex-col" href={`/store/${id}`}>
-          <div className="w-full max-h-[500] p-12.5 bg-white-150">
+          <div className="w-full max-h-[500] p-12.5 bg-background-secondary">
             <ImageFallback
               alt={title}
               height={396}

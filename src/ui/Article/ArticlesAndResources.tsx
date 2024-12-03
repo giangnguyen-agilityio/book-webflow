@@ -14,7 +14,7 @@ interface ArticlesAndResourcesProps {
 }
 
 const ArticlesAndResources = ({ articles = [] }: ArticlesAndResourcesProps) => (
-  <section className="background-overlay bg-background-default py-36">
+  <section className="background-overlay bg-background-secondary py-36">
     <div className="container m-auto gap-18 font-inter">
       <div className="text-center mb-12">
         <Heading
@@ -24,7 +24,7 @@ const ArticlesAndResources = ({ articles = [] }: ArticlesAndResourcesProps) => (
           Articles & Resources
         </Heading>
 
-        <Divider className="w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
+        <Divider className="h-1 w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
       </div>
 
       {articles.length > 0 ? (

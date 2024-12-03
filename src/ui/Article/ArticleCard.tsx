@@ -34,7 +34,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
         width={410}
       />
 
-      <div className="bg-background-default p-6 md:py-7">
+      <div className="h-full bg-background-default p-6 md:py-7">
         <Heading
           as="h3"
           className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"

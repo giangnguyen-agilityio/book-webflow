@@ -33,7 +33,7 @@ const Banner = ({ metadataTitle, metadataDescription }: BannerProps) => {
         {title}
       </Heading>
 
-      <Divider className="w-14 mt-5 mb-3 md:mt-8.5 md:mb-7 bg-background-tertiary" />
+      <Divider className="h-1 w-14 mt-5 mb-3 md:mt-8.5 md:mb-7 bg-background-tertiary" />
 
       {metadataDescription && (
         <Text

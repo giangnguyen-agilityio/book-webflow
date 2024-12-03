@@ -41,7 +41,7 @@ const colors = {
   background: {
     default: colorPalette.white[100],
     primary: colorPalette.blue[200],
-    secondary: colorPalette.white[100],
+    secondary: colorPalette.white[150],
     tertiary: colorPalette.yellow[100],
     disabled: colorPalette.gray[100],
   },
