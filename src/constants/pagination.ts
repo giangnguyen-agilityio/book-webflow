@@ -1,6 +1,8 @@
-export const DEFAULT_PAGE = 1;
-
-export const PAGE_SIZE = {
+const DEFAULT_PAGE = 1;
+const PAGE_SIZE = {
   6: 4,
   10: 10,
 };
+const DEFAULT_BOOKS_PER_PAGE = 6;
+
+export { DEFAULT_PAGE, PAGE_SIZE, DEFAULT_BOOKS_PER_PAGE };

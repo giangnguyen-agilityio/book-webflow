@@ -56,7 +56,7 @@ const container = {
     md: '1.125rem', // 18px
     lg: '1.5rem', // 24px
     xl: '3rem', // 48px
-    '2xl': '19.375rem', // 310px
+    '3xl': '19.375rem', // 310px
   },
 };
 
