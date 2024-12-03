@@ -22,10 +22,11 @@ export const CustomPagination = extendVariants(PaginationNextUI, {
   variants: {
     color: {
       primary: {
+        base: 'py-0 px-4',
         item: cn(
           'bg-transparent shadow-none',
-          'data-[active=true]:bg-background-primary data-[active=true]:text-text-primary',
-          '[&[data-hover=true]:not([data-active=true])]:text-text-default dark:[&[data-hover=true]:not([data-active=true])]:bg-background-primary',
+          'font-cardo text-base lg:text-lg xl:text-xl',
+          '[&[data-hover=true]:not([data-active=true])]:text-text-primary dark:[&[data-hover=true]:not([data-active=true])]:bg-background-primary',
         ),
         cursor:
           'bg-background-primary hover:bg-background-primary hover:text-text-default',
@@ -48,7 +49,9 @@ const Pagination = ({ total, ...props }: NextUIPaginationProps) => {
 
   const buttonClass = (isDisabled: boolean) =>
     cn(
-      'text-base p-0 font-semibold bg-transparent data-[hover=true]:bg-transparent',
+      'p-0 font-cardo font-bold',
+      'text-base lg:text-lg xl:text-xl',
+      'bg-transparent data-[hover=true]:bg-transparent',
       {
         'text-text-primary': !isDisabled,
       },
@@ -78,7 +81,7 @@ const Pagination = ({ total, ...props }: NextUIPaginationProps) => {
   };
 
   return (
-    <div className="flex justify-center items-center font-primary font-semibold space-x-2 p-2">
+    <div className="flex justify-end items-center font-primary font-semibold py-12">
       <Button
         disableAnimation
         aria-label="Previous Button"

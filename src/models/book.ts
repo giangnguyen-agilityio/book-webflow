@@ -1,6 +1,6 @@
 import { StaticImageData } from 'next/image';
 
-export interface Book {
+interface Book {
   id: string;
   imageSrc: string | StaticImageData;
   title: string;
@@ -21,3 +21,5 @@ export interface Book {
     };
   };
 }
+
+export type { Book };
