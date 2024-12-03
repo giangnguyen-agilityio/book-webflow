@@ -17,7 +17,7 @@ const NAVIGATION_ITEMS = {
     { url: ROUTES.CONTACT, label: 'Contact', title: 'Contact page' },
   ],
   EXPLORE: [
-    { url: ROUTES.HOME, label: 'Home', title: 'Homepage' },
+    { url: ROUTES.STORE, label: 'Home', title: 'Homepage' },
     { url: ROUTES.ABOUT, label: 'About Us', title: 'About us page' },
     { url: ROUTES.SERVICES, label: 'Services', title: 'Services page' },
     {

@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Main Section */}
           <div className="left-column flex-shrink-0 space-y-6">
             <div className="flex items-center space-x-2">
-              <Link href={ROUTES.HOME}>
+              <Link href={ROUTES.STORE}>
                 <LogoIcon customClass="w-30 h-9 text-text-default" />
               </Link>
             </div>

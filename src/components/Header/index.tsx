@@ -15,7 +15,7 @@ import { usePathname } from 'next/navigation';
 import { LogoIcon } from '@/icons';
 
 // Constants
-import { SOCIAL_LINK_ITEMS } from '@/constants';
+import { ROUTES, SOCIAL_LINK_ITEMS } from '@/constants';
 
 // Components
 import { CartAction, Navbar, Sidebar, SocialLinks } from '@/components';
@@ -47,7 +47,7 @@ const Header = () => {
       <NavbarContent justify="center">
         {/* Logo Website */}
         <NavbarBrand aria-label="Logo website" as="li">
-          <Link href="/">
+          <Link href={ROUTES.STORE}>
             <LogoIcon customClass="w-30 h-9 text-text-default" />
           </Link>
         </NavbarBrand>
