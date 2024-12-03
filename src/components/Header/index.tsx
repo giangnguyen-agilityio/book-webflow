@@ -31,7 +31,7 @@ const Header = () => {
       className="bg-background-primary"
       isMenuOpen={isMenuOpen}
       classNames={{
-        wrapper: 'max-w-none !p-0 !container mx-auto',
+        wrapper: 'w-full max-w-screen-3xl mx-auto',
       }}
       onMenuOpenChange={setIsMenuOpen}
     >
@@ -39,20 +39,21 @@ const Header = () => {
       <NavbarContent className="md:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          as="li"
           className="text-text-default"
         />
       </NavbarContent>
 
       <NavbarContent justify="center">
         {/* Logo Website */}
-        <NavbarBrand as="li">
+        <NavbarBrand aria-label="Logo website" as="li">
           <Link href="/">
             <LogoIcon customClass="w-30 h-9 text-text-default" />
           </Link>
         </NavbarBrand>
 
         {/* Social Network Links */}
-        <NavbarItem className="hidden md:flex gap-2.5">
+        <NavbarItem as="li" className="hidden md:flex gap-2.5">
           {formattedSocialLinks.map(({ url, icon: Icon, title }) => (
             <span key={title} className="text-text-primary">
               <SocialLinks key={title} Icon={Icon} title={title} url={url} />
@@ -68,6 +69,7 @@ const Header = () => {
       <NavbarContent className="!flex-grow-0">
         <CartAction />
       </NavbarContent>
+
       {/* Sidebar Menu */}
       <Sidebar />
     </NavbarNextUI>

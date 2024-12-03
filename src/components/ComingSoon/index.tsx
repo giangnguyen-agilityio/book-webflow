@@ -10,16 +10,16 @@ import { LogoIcon } from '@/icons';
 import { Button, Text, Heading } from '@/components';
 
 const ComingSoon = () => (
-  <div
-    className={cn(
-      'flex flex-col items-center justify-center min-h-screen px-4',
-      'bg-gradient-to-b from-background-primary to-background-primary/80',
-    )}
-  >
-    <div className="font-inter flex flex-col justify-center items-center gap-6">
-      <div className="w-55 lg:w-75 h-full">
+  <section className="background-overlay bg-gradient-to-b from-background-primary to-background-primary/80">
+    <div
+      className={cn(
+        'container min-h-screen m-auto gap-6 font-inter',
+        'flex flex-col justify-center items-center',
+      )}
+    >
+      <h1 className="w-55 lg:w-75 h-full">
         <LogoIcon customClass="w-full h-full text-text-default" />
-      </div>
+      </h1>
 
       <Heading
         className="font-cardo font-semibold text-7xl md:text-9xl"
@@ -55,7 +55,7 @@ const ComingSoon = () => (
         </div>
       </div>
     </div>
-  </div>
+  </section>
 );
 
 export default ComingSoon;
