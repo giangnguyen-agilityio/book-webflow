@@ -13,10 +13,10 @@ import { Text, Heading, SocialLinks } from '@/components';
 const Footer = () => {
   return (
     <footer className="bg-background-primary text-text-default pb-6 pt-6 md:pt-21">
-      <div className="container p-0 mx-auto">
-        <div className="grid gap-y-12 grid-cols-1 md:grid-cols-2">
+      <div className="px-6 w-full max-w-screen-3xl mx-auto">
+        <div className="grid gap-12 grid-cols-1 lg:grid-cols-[auto_1fr]">
           {/* Main Section */}
-          <div className="left-column space-y-6">
+          <div className="left-column flex-shrink-0 space-y-6">
             <div className="flex items-center space-x-2">
               <Link href={ROUTES.HOME}>
                 <LogoIcon customClass="w-30 h-9 text-text-default" />
@@ -45,13 +45,12 @@ const Footer = () => {
             className={cn(
               'right-column gap-16',
               'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
-              'col-span-2 xl:col-span-1',
+              'w-full lg:w-auto lg:max-w-[867px] lg:ml-auto',
             )}
           >
             {/* Explore Section */}
             <div>
               <Heading
-                as="h3"
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
                 textColor="text-text-default"
               >
@@ -78,7 +77,6 @@ const Footer = () => {
             {/* Utility Section */}
             <div>
               <Heading
-                as="h3"
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
                 textColor="text-text-default"
               >
@@ -108,7 +106,6 @@ const Footer = () => {
             {/* Keep in Touch Section */}
             <div>
               <Heading
-                as="h3"
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
                 textColor="text-text-default"
               >

@@ -33,8 +33,8 @@ const CartAction = ({ quantity = 0 }: CartButtonProps) => {
         startContent={<CartIcon />}
         variant="light"
         className={cn(
-          'pr-2 pt-1',
           'text-text-default hover:text-text-tertiary',
+          quantity > 0 && 'pr-2 pt-1',
         )}
       />
       {quantity > 0 && (
