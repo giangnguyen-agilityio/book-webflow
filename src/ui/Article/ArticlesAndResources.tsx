@@ -35,7 +35,7 @@ const ArticlesAndResources = ({ articles = [] }: ArticlesAndResourcesProps) => (
           )}
         >
           {articles.map((item: Article) => (
-            <ArticleCard key={item.id} {...item} />
+            <ArticleCard key={item.id} articleData={item} />
           ))}
         </div>
       ) : (
