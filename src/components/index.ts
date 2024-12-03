@@ -1,4 +1,5 @@
 export * from './common';
+export * from './Modal';
 
 export { default as CartAction } from './Cart';
 export { default as Header } from './Header';
