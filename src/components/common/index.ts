@@ -6,3 +6,4 @@ export { default as Pagination } from './Pagination';
 export { default as Text } from './Text';
 export { default as Heading } from './Heading';
 export { default as BaseModal } from './BaseModal';
+export { default as Toast } from './Toast';
