@@ -8,7 +8,7 @@ import { ROUTES } from '@/constants';
 import { NotFoundIcon } from '@/icons';
 
 // Components
-import { Button } from '@/components';
+import { Button, Heading, Text } from '@/components';
 
 export type NotFoundFallbackProps = {
   title?: string;
@@ -23,42 +23,44 @@ const NotFoundFallback = ({
 }: NotFoundFallbackProps) => (
   <section
     className={cn(
-      'w-full h-screen',
-      'flex flex-col items-center justify-center',
+      'background-overlay',
       "bg-[url('/images/background-image.webp')] bg-cover bg-center bg-no-repeat",
     )}
   >
-    <NotFoundIcon customClass="w-75 h-44.5 md:w-[471px] md:h-[215px]" />
-
-    <h2
+    <div
       className={cn(
-        'font-cardo font-bold text-center text-text-primary',
-        'mt-8.5 mb-4',
-        'text-6xl md:text-7xl',
+        'container w-full h-screen m-auto',
+        'flex flex-col items-center justify-center',
       )}
     >
-      {title}
-    </h2>
+      <NotFoundIcon customClass="w-75 h-44.5 md:w-[471px] md:h-[215px]" />
 
-    <p
-      className={cn(
-        'font-inter font-normal',
-        'text-text-secondary text-center mb-10',
-        'text-base md:text-lg',
-      )}
-    >
-      {message}
-    </p>
+      <Heading
+        as="h1"
+        className={cn('mt-8.5 mb-4', 'text-center text-6xl md:text-7xl')}
+        textColor="text-text-primary"
+      >
+        {title}
+      </Heading>
 
-    <Button
-      aria-label="Back to home button"
-      as={Link}
-      color="primary"
-      href={ROUTES.STORE}
-      onPress={reset}
-    >
-      Back to home
-    </Button>
+      <Text
+        className="mb-10 text-center text-base md:text-lg"
+        textColor="text-text-secondary"
+        type="wrap"
+      >
+        {message}
+      </Text>
+
+      <Button
+        aria-label="Back to home button"
+        as={Link}
+        color="primary"
+        href={ROUTES.STORE}
+        onPress={reset}
+      >
+        Back to home
+      </Button>
+    </div>
   </section>
 );
 

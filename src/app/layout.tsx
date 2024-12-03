@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { Inter, Cardo } from 'next/font/google';
 
 // Providers
@@ -19,6 +20,15 @@ const cardo = Cardo({
   subsets: ['latin'],
   variable: '--font-cardo',
 });
+
+export const metadata: Metadata = {
+  title: 'Book WebFlow Website',
+  description: 'Browse and shop our wide range of products.',
+  openGraph: {
+    title: 'Book WebFlow Website',
+    description: 'Browse and shop our wide range of products.',
+  },
+};
 
 export default function RootLayout({
   children,
