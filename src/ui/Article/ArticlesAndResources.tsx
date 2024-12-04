@@ -14,7 +14,12 @@ interface ArticlesAndResourcesProps {
 }
 
 const ArticlesAndResources = ({ articles = [] }: ArticlesAndResourcesProps) => (
-  <section className="background-overlay bg-background-secondary py-36">
+  <section
+    className={cn(
+      'background-overlay bg-background-secondary',
+      'py-10 xl:py-30 3xl:py-36',
+    )}
+  >
     <div className="container m-auto gap-18 font-inter">
       <div className="text-center mb-12">
         <Heading
