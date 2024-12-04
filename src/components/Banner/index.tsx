@@ -22,13 +22,16 @@ const Banner = ({ metadataTitle, metadataDescription }: BannerProps) => {
     <section
       className={cn(
         'banner bg-background-primary',
-        'flex flex-col justify-center items-center',
-        'pt-36 pb-30',
+        'flex flex-col justify-center text-center items-center',
+        'px-10 pt-20 pb-20 3xl:pt-36 3xl:pb-30',
       )}
     >
       <Heading
         as="h1"
-        className="font-cardo font-bold text-text-default text-7xl md:text-9xl"
+        className={cn(
+          'font-cardo font-bold text-text-default',
+          'text-5xl lg:text-7xl 3xl:text-9xl',
+        )}
       >
         {title}
       </Heading>
