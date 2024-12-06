@@ -12,9 +12,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-05-15',
     description:
-      'Exploring the potential impact of AI on medical diagnosis and treatment.',
+      'This article explores how artificial intelligence is transforming healthcare by enhancing diagnostic accuracy, streamlining administrative processes, and personalizing patient care.',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Artificial intelligence (AI) is revolutionizing the healthcare industry, promising faster and more accurate medical diagnoses, optimized treatment plans, and improved patient outcomes. From leveraging machine learning algorithms to identify disease patterns in medical imaging to deploying AI-powered chatbots for patient interaction, the integration of AI is driving efficiency and accessibility. However, its adoption also raises ethical concerns about data privacy, job displacement, and the risk of biased algorithms. In this article, we delve into the multifaceted impact of AI in healthcare and discuss the challenges and opportunities it presents for medical professionals and patients alike.',
   },
   {
     id: '2',
@@ -23,9 +23,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-07-22',
     description:
-      'Innovative approaches to creating environmentally friendly urban spaces.',
+      'An in-depth look at sustainable urban development strategies, including green infrastructure, renewable energy integration, and eco-friendly building practices.',
     content:
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'As urban populations continue to grow, the need for sustainable city planning becomes increasingly critical. This article examines innovative approaches such as vertical forests, smart grids, and eco-districts designed to minimize environmental impact while enhancing the quality of urban life. By incorporating renewable energy sources, improving public transportation systems, and preserving natural habitats within city limits, planners are redefining what it means to live in harmony with nature. Learn how cities around the world are adopting green practices to combat climate change and promote sustainable growth.',
   },
   {
     id: '3',
@@ -34,9 +34,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-09-03',
     description:
-      'Understanding the potential of quantum computers to revolutionize data processing.',
+      'A comprehensive guide to understanding quantum computing and its potential to solve complex problems beyond the capabilities of classical computers.',
     content:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      'Quantum computing represents a paradigm shift in how we process and analyze data. Unlike classical computers that use bits, quantum computers leverage qubits, which can exist in multiple states simultaneously. This unique capability enables them to perform calculations at unprecedented speeds, solving problems in cryptography, material science, and artificial intelligence. In this article, we discuss the principles of quantum mechanics that underpin this technology, its current limitations, and the industries poised for transformation as quantum computing becomes a practical reality.',
   },
   {
     id: '4',
@@ -45,9 +45,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-11-18',
     description:
-      'Addressing security challenges in the growing Internet of Things ecosystem.',
+      'An examination of the security challenges posed by the Internet of Things and strategies to mitigate risks.',
     content:
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'The Internet of Things (IoT) has connected billions of devices, from smart home systems to industrial equipment, creating a seamless digital ecosystem. However, this connectivity also introduces significant security vulnerabilities, including unauthorized access, data breaches, and malware attacks. This article explores the key threats facing IoT networks and outlines best practices for safeguarding these systems. Topics include device authentication, network encryption, and the role of artificial intelligence in threat detection and response.',
   },
   {
     id: '5',
@@ -56,9 +56,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2024-01-07',
     description:
-      'Examining the mental health impacts of excessive social media use.',
+      'Exploring the mental health implications of excessive social media use and strategies for fostering healthy online habits.',
     content:
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+      'Social media platforms are designed to capture and hold our attention, often leading to addictive behaviors. This article delves into the psychological mechanisms behind social media addiction, including the role of dopamine and the impact of curated content on self-esteem. We also examine the negative effects of excessive use, such as anxiety, depression, and social isolation. Finally, practical tips for setting boundaries and promoting mindful social media use are provided to help readers achieve a healthier digital balance.',
   },
   {
     id: '6',
@@ -67,9 +67,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2024-02-29',
     description:
-      'Advancements in solar, wind, and other sustainable energy technologies.',
+      'Discovering the latest advancements in renewable energy technologies and their potential to drive global sustainability.',
     content:
-      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.',
+      'The shift toward renewable energy sources such as solar, wind, and hydropower is essential for combating climate change and reducing our reliance on fossil fuels. In this article, we highlight groundbreaking innovations, including floating solar farms, next-generation wind turbines, and energy storage solutions. We also discuss the economic and environmental benefits of transitioning to renewable energy, as well as the challenges associated with scaling these technologies for widespread adoption.',
   },
   {
     id: '7',
@@ -78,9 +78,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-06-11',
     description:
-      'Debating the moral implications of CRISPR and other genetic modification techniques.',
+      'Debating the moral and societal implications of using technologies like CRISPR for genetic modification.',
     content:
-      'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.',
+      'Gene editing technologies like CRISPR have opened the door to unprecedented possibilities, from curing genetic disorders to enhancing human capabilities. However, these advancements also raise profound ethical questions. Should we allow genetic modifications for non-medical purposes? What are the long-term effects of altering the human genome? This article explores these complex issues, balancing the promise of scientific progress with the need for ethical guidelines to prevent misuse.',
   },
   {
     id: '8',
@@ -89,9 +89,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-08-19',
     description:
-      'How AI is transforming stock trading and investment strategies.',
+      'An analysis of how machine learning is transforming stock trading, risk assessment, and financial decision-making.',
     content:
-      'Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
+      'Machine learning has become a game-changer in financial markets, enabling traders and analysts to process vast amounts of data and uncover hidden patterns. From algorithmic trading strategies to predictive models for risk management, AI-driven tools are reshaping the financial landscape. This article examines the applications of machine learning in finance, the challenges of model interpretability, and the ethical considerations surrounding AI-driven decision-making in high-stakes environments.',
   },
   {
     id: '9',
@@ -100,9 +100,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-10-05',
     description:
-      'Unraveling the brain processes behind innovative thinking and artistic expression.',
+      'Unraveling the brain mechanisms that drive creative thinking and how to harness them for innovation.',
     content:
-      'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.',
+      'Creativity is one of the most fascinating aspects of human cognition, involving a complex interplay between various brain regions. This article explores the neuroscience behind creative processes, including the role of the prefrontal cortex, the default mode network, and dopamine pathways. We also provide practical insights into how individuals can enhance their creativity through activities such as meditation, brainstorming, and exposure to diverse perspectives.',
   },
   {
     id: '10',
@@ -111,9 +111,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-12-30',
     description:
-      'Exploring the possibilities and challenges of commercial space travel.',
+      'An exploration of the emerging space tourism industry and its potential to make space travel accessible to the masses.',
     content:
-      'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.',
+      'Space tourism is no longer a distant dream, with private companies like SpaceX and Blue Origin leading the charge to commercialize space travel. This article examines the current state of the industry, the challenges of safety and affordability, and the broader implications of humanity venturing into space for leisure. Discover the milestones achieved so far and what lies ahead for this groundbreaking frontier.',
   },
   {
     id: '11',
@@ -122,9 +122,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2024-02-14',
     description:
-      'Predicting how technology will reshape the workplace in the coming decades.',
+      'Analyzing how remote work and artificial intelligence are reshaping workplaces and workforce dynamics.',
     content:
-      'Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos.',
+      'The workplace of the future is rapidly evolving, driven by advancements in technology and shifting societal norms. This article explores how remote work is becoming the new normal, with AI-powered tools enabling seamless collaboration and productivity. We discuss the benefits of these changes, such as increased flexibility and cost savings, as well as the challenges, including maintaining work-life balance and addressing skill gaps in the workforce.',
   },
   {
     id: '12',
@@ -133,9 +133,9 @@ const MOCK_ARTICLE_LIST: Article[] = [
     imageSrc: ImageStore.UnavailableImage,
     createdDate: '2023-04-01',
     description:
-      'Innovative applications of blockchain technology in various industries.',
+      'Exploring innovative applications of blockchain technology in industries such as healthcare, supply chain, and entertainment.',
     content:
-      'Ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint.',
+      'While blockchain is best known as the backbone of cryptocurrencies, its applications extend far beyond digital currencies. This article highlights how blockchain is revolutionizing various sectors, from improving transparency in supply chain management to enabling secure and decentralized healthcare records. We also discuss the potential of smart contracts and tokenization to unlock new business models and address longstanding industry challenges.',
   },
 ];
 
