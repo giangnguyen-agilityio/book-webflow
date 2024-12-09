@@ -54,8 +54,9 @@ const NotFoundFallback = ({
       <Button
         aria-label="Back to home button"
         as={Link}
-        color="primary"
+        color="default"
         href={ROUTES.STORE}
+        variant="solid"
         onPress={reset}
       >
         Back to home

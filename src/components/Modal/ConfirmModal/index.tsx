@@ -46,6 +46,7 @@ const ConfirmModal = ({
         aria-label="Close"
         className="rounded-full"
         size="sm"
+        variant="outline"
         onPress={onCancel}
       >
         <CloseIcon customClass="w-4 h-4" />
@@ -84,10 +85,11 @@ const ConfirmModal = ({
       <Button
         aria-label="Confirm Button"
         className="flex-1 max-w-40 border-1.5"
-        color="primary"
+        color="default"
         data-testid="confirm-button"
         isLoading={isLoading}
         radius="sm"
+        variant="solid"
         onPress={onConfirm}
       >
         Confirm

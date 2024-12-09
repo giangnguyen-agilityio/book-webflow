@@ -33,8 +33,8 @@ const NewsletterSignup = () => (
         type="wrap"
         className={cn(
           '!leading-normal',
-          'font-normal max-w-[657px]',
-          'text-text-primary text-small md:text-base lg:text-lg',
+          'font-normal max-w-[657]',
+          'text-text-primary text-small md:text-md lg:text-lg',
         )}
       >
         Making this the first true value generator on the Internet. It of over
@@ -49,7 +49,7 @@ const NewsletterSignup = () => (
       >
         <Input
           aria-label="Email"
-          className="min-w-fit 3xl:min-w-[530px] text-base"
+          className="min-w-fit 3xl:min-w-[530] text-md"
           placeholder="Your Email ID..."
           radius="none"
           type="email"
@@ -60,8 +60,9 @@ const NewsletterSignup = () => (
 
         <Button
           color="secondary"
+          variant="solid"
           className={cn(
-            'font-cardo font-bold text-text-default',
+            'font-cardo font-bold text-md text-text-default',
             'md:h-auto px-auto md:px-20 3xl:px-27',
           )}
         >

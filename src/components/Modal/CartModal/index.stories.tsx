@@ -56,7 +56,7 @@ export const Default: Story = {
 
     return (
       <>
-        <Button className="text-text-primary" onPress={handleOpen}>
+        <Button variant="outline" onPress={handleOpen}>
           Open Cart
         </Button>
         <CartModal

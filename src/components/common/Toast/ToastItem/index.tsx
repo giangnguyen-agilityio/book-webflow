@@ -58,7 +58,7 @@ const ToastItem = ({ id, message, type, removeToast }: ToastItemProps) => {
           variant="solid"
           className={cn(
             'min-w-8 w-fit h-8 text-current',
-            'data-[hover=true]:border-white-100',
+            'bg-transparent data-[hover=true]:border-white-100',
           )}
           onPress={handleClose}
         >

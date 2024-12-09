@@ -1,22 +1,20 @@
 'use client';
 
-import { extendVariants, Button as ButtonNextUI } from '@nextui-org/react';
+import { extendVariants, Button as ButtonNextUI, cn } from '@nextui-org/react';
 
 export const Button = extendVariants(ButtonNextUI, {
   variants: {
     variant: {
-      solid: 'border-1 border-transparent font-cardo font-bold',
-      outline: 'border-1 border-border-default font-cardo font-bold',
-      light: 'bg-transparent font-cardo font-normal',
+      bordered: 'border-1 data-[hover=true]:border-current',
+      outline:
+        'border-1 text-text-primary border-border-default data-[hover=true]:border-border-secondary',
     },
 
     color: {
-      default:
-        'transition-colors bg-transparent text-text-primary data-[hover=true]:opacity-100 data-[hover=true]:border-border-secondary',
-      primary:
-        'transition-colors bg-background-tertiary text-text-primary data-[hover=true]:opacity-100 data-[hover=true]:border-border-secondary',
-      secondary:
-        'transition-colors bg-background-primary text-text-default data-[hover=true]:opacity-100 data-[hover=true]:bg-opacity-85',
+      default: 'text-text-primary',
+      primary: 'text-text-tertiary',
+      danger: 'text-text-error',
+      success: 'text-text-success',
     },
 
     isIconOnly: {
@@ -38,8 +36,41 @@ export const Button = extendVariants(ButtonNextUI, {
   },
 
   defaultVariants: {
-    variant: 'outline',
-    color: 'default',
     radius: 'none',
   },
+
+  compoundVariants: [
+    {
+      class: cn(
+        'transition-colors',
+        'font-cardo font-bold',
+        'data-[hover=true]:!opacity-100 data-[hover=true]:bg-opacity-85',
+      ),
+    },
+
+    {
+      variant: 'solid',
+      color: 'secondary',
+      class: 'text-text-default bg-background-primary',
+    },
+
+    {
+      variant: 'solid',
+      color: 'default',
+      class:
+        'bg-background-tertiary border-1 border-transparent data-[hover=true]:border-border-secondary',
+    },
+
+    {
+      variant: 'solid',
+      color: ['primary', 'danger', 'success'],
+      class: 'text-text-default',
+    },
+
+    {
+      variant: ['bordered', 'outline'],
+      color: ['default', 'primary', 'danger', 'success'],
+      class: 'border-current',
+    },
+  ],
 });

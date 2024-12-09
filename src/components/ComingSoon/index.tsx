@@ -46,9 +46,10 @@ const ComingSoon = () => (
           <Input placeholder="Enter your email" type="email" />
 
           <Button
-            className="font-semibold border-none outline outline-border-default"
+            className="font-semibold"
             color="primary"
             radius="md"
+            variant="bordered"
           >
             Notify Me
           </Button>

@@ -42,7 +42,7 @@ export const Default: Story = {
 
     return (
       <>
-        <Button className="text-text-primary" onPress={handleOpen}>
+        <Button color="default" onPress={handleOpen}>
           Open Modal
         </Button>
         <BaseModal

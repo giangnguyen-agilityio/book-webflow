@@ -59,8 +59,8 @@ export const Default: Story = {
 
     return (
       <>
-        <Button className="text-text-primary" onPress={handleOpen}>
-          Open Modal
+        <Button variant="outline" onPress={handleOpen}>
+          Open Cart
         </Button>
         <ConfirmModal
           {...args}
