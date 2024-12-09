@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 // Mocks
@@ -11,20 +10,7 @@ import { MOCK_ARTICLE_LIST, MOCK_BOOK_LIST } from '@/mock';
 import { ArticlesAndResources, BookList, NewsletterSignup } from '@/ui';
 
 // Components
-import {
-  ArticlesAndResourcesSkeleton,
-  Banner,
-  BookListSkeleton,
-} from '@/components';
-
-export const metadata: Metadata = {
-  title: 'Store',
-  description: 'Browse and shop our wide range of products.',
-  openGraph: {
-    title: 'Store | Book WebFlow',
-    description: 'Browse and shop our wide range of products.',
-  },
-};
+import { ArticlesAndResourcesSkeleton, BookListSkeleton } from '@/components';
 
 // type HomepageSearchParamsProps = SearchParams;
 
@@ -34,11 +20,6 @@ const Homepage = async () =>
   {
     return (
       <>
-        <Banner
-          metadataDescription={metadata.description}
-          metadataTitle={metadata.title}
-        />
-
         <Suspense
           // TODO: Add key from the searchParams for the suspense to show the fallback correctly
           //  key={page + query}

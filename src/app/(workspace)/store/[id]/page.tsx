@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { MOCK_ARTICLE_LIST, MOCK_BOOK_LIST } from '@/mock';
 
 // UI components
-import { ArticlesAndResources, BookDetail } from '@/ui';
+import { ArticlesAndResources, Benefits, BookDetail } from '@/ui';
 
 // Components
 import { ArticlesAndResourcesSkeleton, BookDetailSkeleton } from '@/components';
@@ -20,7 +20,7 @@ const BookDetailsPage = async (props: BookDetailsPageProps) => {
   const { id } = await props.params;
 
   // TODO: Fetch book details from the database or API instead of using mock data from MOCK_BOOK_LIST
-  const bookData = await MOCK_BOOK_LIST.find((book) => book.id === id);
+  const bookData = MOCK_BOOK_LIST.find((book) => book.id === id);
 
   if (!bookData) {
     notFound();
@@ -30,9 +30,8 @@ const BookDetailsPage = async (props: BookDetailsPageProps) => {
     <>
       <section
         className={cn(
-          'w-full',
-          'py-14 md:py-30 lg:py-30 3xl:py-21',
-          'bg-background-default',
+          'w-full bg-background-default',
+          'py-10 xl:py-14 3xl:py-21',
         )}
       >
         <div className="container mx-auto">
@@ -48,6 +47,8 @@ const BookDetailsPage = async (props: BookDetailsPageProps) => {
         {/* TODO: Will pass the searchParams into the component to fetch the data. */}
         <ArticlesAndResources articles={MOCK_ARTICLE_LIST.slice(0, 3)} />
       </Suspense>
+
+      <Benefits />
     </>
   );
 };
