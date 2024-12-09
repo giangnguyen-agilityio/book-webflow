@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Input } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
@@ -8,7 +9,7 @@ import { cn } from '@nextui-org/theme';
 import { Book } from '@/models';
 
 // Icons
-import { CartIcon } from '@/icons';
+import { CartIcon, LeftArrowIcon } from '@/icons';
 
 // Constants
 import { ImageStore } from '@/constants';
@@ -50,6 +51,13 @@ const BookDetail = ({ data }: BookDetailProps) => {
     { label: 'ISBN-10', value: isbn },
     { label: 'Dimensions', value: `${length} x ${width} x ${height} cm` },
   ];
+
+  const router = useRouter();
+
+  const handleNavigateBack = () => {
+    router.back();
+  };
+
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
     setOrderQuantity(Math.min(Math.max(1, value), quantity));
@@ -63,99 +71,114 @@ const BookDetail = ({ data }: BookDetailProps) => {
   const isOutOfStock = quantity === 0;
 
   return (
-    <>
-      {/* Book Image Section */}
-      <div className="w-full max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
-        <ImageFallback
-          alt={title}
-          height={510}
-          src={imageSrc}
-          width={380}
-          className={cn(
-            'aspect-[380/510] max-w-full max-h-[510]',
-            'mx-auto object-cover shadow-xl',
-            'border-2 sm:border-4 border-border-primary',
-          )}
-        />
-      </div>
+    <div>
+      <Button
+        startContent={<LeftArrowIcon />}
+        variant="flat"
+        className={cn(
+          'mb-4 p-0 min-w-fit',
+          'font-normal text-lg',
+          'hover:underline underline-offset-4',
+        )}
+        onPress={handleNavigateBack}
+      >
+        Back
+      </Button>
 
-      {/* Book Details Section */}
-      <div className="w-full">
-        <div className="flex flex-col gap-7">
-          <div>
-            <Heading
-              as="h1"
-              className="font-cardo text-3xl md:text-5xl font-bold text-text-primary"
-            >
-              {title}
-            </Heading>
+      <div className="flex flex-col lg:flex-row gap-21">
+        {/* Book Image Section */}
+        <div className="w-full max-w-none lg:max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
+          <ImageFallback
+            alt={title}
+            height={510}
+            src={imageSrc}
+            width={380}
+            className={cn(
+              'aspect-[380/510] max-w-full max-h-[510]',
+              'mx-auto object-cover shadow-xl',
+              'border-2 sm:border-4 border-border-primary',
+            )}
+          />
+        </div>
+
+        {/* Book Details Section */}
+        <div className="w-full">
+          <div className="flex flex-col gap-7">
+            <div>
+              <Heading
+                as="h1"
+                className="font-cardo text-3xl md:text-5xl font-bold text-text-primary"
+              >
+                {title}
+              </Heading>
+              <Text
+                as="span"
+                className="font-inter text-xl md:text-3xl font-extrabold text-text-tertiary"
+                type="wrap"
+              >
+                ${price.toFixed(2)} USD
+              </Text>
+            </div>
+
             <Text
-              as="span"
-              className="font-inter text-xl md:text-3xl font-extrabold text-text-tertiary"
+              className="font-inter text-base md:text-lg font-normal text-text-secondary"
               type="wrap"
             >
-              ${price.toFixed(2)} USD
+              {description}
             </Text>
+
+            <dl className="space-y-4 xl:space-y-6">
+              {bookDetails.map(({ label, value }) => (
+                <div key={label} className="grid grid-cols-3 gap-2">
+                  <dt className="font-inter text-base md:text-lg font-normal text-text-secondary">
+                    {label}:
+                  </dt>
+                  <dd className="col-span-2 text-base md:text-lg text-text-secondary">
+                    {value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <Text
-            className="font-inter text-base md:text-lg font-normal text-text-secondary"
-            type="wrap"
-          >
-            {description}
-          </Text>
+          <div className="flex mt-8 gap-2 items-center">
+            <Input
+              aria-label={`Quantity for ${title}`}
+              disabled={isOutOfStock}
+              max={quantity}
+              min={1}
+              type="number"
+              value={String(isOutOfStock ? 0 : orderQuantity)}
+              classNames={{
+                base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
+                input:
+                  'text-center text-lg sm:text-xl md:text-2xl font-medium !text-text-secondary',
+                inputWrapper: cn(
+                  'h-full rounded-none',
+                  'border border-border-default',
+                  'bg-background-secondary !bg-transparent',
+                ),
+              }}
+              onChange={handleQuantityChange}
+            />
 
-          <dl className="space-y-4 xl:space-y-6">
-            {bookDetails.map(({ label, value }) => (
-              <div key={label} className="grid grid-cols-3 gap-2">
-                <dt className="font-inter text-base md:text-lg font-normal text-text-secondary">
-                  {label}:
-                </dt>
-                <dd className="col-span-2 text-base md:text-lg text-text-secondary">
-                  {value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="flex mt-8 gap-2 items-center">
-          <Input
-            aria-label={`Quantity for ${title}`}
-            disabled={isOutOfStock}
-            max={quantity}
-            min={1}
-            type="number"
-            value={String(isOutOfStock ? 0 : orderQuantity)}
-            classNames={{
-              base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
-              input:
-                'text-center text-lg sm:text-xl md:text-2xl font-medium !text-text-secondary',
-              inputWrapper: cn(
-                'h-full rounded-none',
-                'border border-border-default',
-                'bg-background-secondary !bg-transparent',
-              ),
-            }}
-            onChange={handleQuantityChange}
-          />
-
-          <Button
-            color="primary"
-            isDisabled={isOutOfStock}
-            startContent={<CartIcon customClass="w-5 h-5" />}
-            className={cn(
-              'w-full xl:w-94.5',
-              'h-10 sm:h-12 md:h-16.25 py-5',
-              'font-cardo text-base sm:text-lg font-bold',
-            )}
-            onPress={handleAddToCart}
-          >
-            {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
-          </Button>
+            <Button
+              color="primary"
+              isDisabled={isOutOfStock}
+              startContent={<CartIcon customClass="w-5 h-5" />}
+              className={cn(
+                'w-full xl:w-94.5',
+                'h-10 sm:h-12 md:h-16.25 py-5',
+                'font-cardo text-base sm:text-lg font-bold',
+              )}
+              onPress={handleAddToCart}
+            >
+              {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+            </Button>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
