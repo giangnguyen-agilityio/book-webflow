@@ -46,8 +46,8 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
         startContent={<LeftArrowIcon />}
         variant="flat"
         className={cn(
-          'mb-4 p-0 min-w-fit',
-          'font-normal text-lg',
+          'mb-4 p-0 min-w-fit bg-transparent',
+          'font-semibold text-lg',
           'hover:underline underline-offset-4',
         )}
         onPress={handleNavigateBack}
@@ -62,6 +62,8 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
           priority
           alt={title}
           className="border-2 border-blue-150/50"
+          quality={100}
+          sizes="100vw"
           src={imageSrc}
         />
       </div>

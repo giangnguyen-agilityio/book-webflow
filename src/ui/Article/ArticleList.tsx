@@ -2,7 +2,7 @@
 import { Article } from '@/models';
 
 // Constants
-import { DEFAULT_ARTICLES_PER_PAGE } from '@/constants';
+import { DEFAULT_ARTICLES_PER_PAGE, DEFAULT_PAGE } from '@/constants';
 
 // Components
 import { Pagination, Text } from '@/components';
@@ -11,10 +11,11 @@ import { ArticleCard } from '.';
 
 interface ArticleListProps {
   articleList: Article[];
+  count?: number;
 }
 
-const ArticleList = ({ articleList = [] }: ArticleListProps) => {
-  const pageCount = Math.ceil(articleList.length / DEFAULT_ARTICLES_PER_PAGE);
+const ArticleList = ({ articleList = [], count = 0 }: ArticleListProps) => {
+  const pageCount = Math.ceil(count / DEFAULT_ARTICLES_PER_PAGE);
 
   return (
     <section className="container mx-auto py-12">
@@ -25,9 +26,7 @@ const ArticleList = ({ articleList = [] }: ArticleListProps) => {
               <ArticleCard key={article.id} articleData={article} />
             ))}
           </div>
-          {articleList.length > DEFAULT_ARTICLES_PER_PAGE && (
-            <Pagination total={pageCount} />
-          )}
+          {pageCount > DEFAULT_PAGE && <Pagination total={pageCount} />}
         </>
       ) : (
         <div className="text-center">

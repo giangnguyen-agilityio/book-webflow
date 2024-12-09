@@ -6,7 +6,7 @@ import { cn } from '@nextui-org/theme';
 import { Article } from '@/models';
 
 // Constants
-import { ImageStore } from '@/constants';
+import { ImageStore, ROUTES } from '@/constants';
 
 // Components
 import { Heading, ImageFallback, Text } from '@/components';
@@ -26,13 +26,15 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
 
   return (
     <article className="overflow-hidden shadow-md">
-      <ImageFallback
-        alt={title}
-        className="w-full aspect-[410/326] border-2 border-blue-150/50 object-cover"
-        height={326}
-        src={imageSrc}
-        width={410}
-      />
+      <div className="relative w-full aspect-[410/326]">
+        <ImageFallback
+          fill
+          alt={title}
+          className="border-2 border-blue-150/50 object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          src={imageSrc}
+        />
+      </div>
 
       <div className="h-full bg-background-default p-6 md:py-7">
         <Heading
@@ -53,7 +55,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
 
         <div className="flex items-center justify-between">
           <Link
-            href={`/articles/${id}`}
+            href={`${ROUTES.ARTICLES}/${id}`}
             className={cn(
               'text-text-primary underline-offset-4 hover:underline',
               'font-cardo font-bold text-base md:text-md',
@@ -62,9 +64,12 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
             Read more
           </Link>
 
-          <div className="font-inter font-normal text-base md:text-md text-text-primary">
+          <time
+            className="font-inter font-normal text-base md:text-md text-text-primary"
+            dateTime={createdDate}
+          >
             {createdDate}
-          </div>
+          </time>
         </div>
       </div>
     </article>

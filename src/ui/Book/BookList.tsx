@@ -2,7 +2,7 @@
 import { Book } from '@/models';
 
 // Constants
-import { DEFAULT_BOOKS_PER_PAGE } from '@/constants';
+import { DEFAULT_BOOKS_PER_PAGE, DEFAULT_PAGE } from '@/constants';
 
 // Components
 import { Pagination, Text } from '@/components';
@@ -11,10 +11,11 @@ import { BookCard } from '.';
 
 interface BookListProps {
   bookList: Book[];
+  count?: number;
 }
 
-const BookList = ({ bookList = [] }: BookListProps) => {
-  const pageCount = Math.ceil(bookList.length / DEFAULT_BOOKS_PER_PAGE);
+const BookList = ({ bookList = [], count = 0 }: BookListProps) => {
+  const pageCount = Math.ceil(count / DEFAULT_BOOKS_PER_PAGE);
 
   return (
     <section className="container mx-auto py-12">
@@ -25,9 +26,7 @@ const BookList = ({ bookList = [] }: BookListProps) => {
               <BookCard key={book.id} bookData={book} />
             ))}
           </div>
-          {bookList.length > DEFAULT_BOOKS_PER_PAGE && (
-            <Pagination total={pageCount} />
-          )}
+          {pageCount > DEFAULT_PAGE && <Pagination total={pageCount} />}
         </>
       ) : (
         <div className="text-center">
