@@ -1,52 +1,91 @@
 import Link from 'next/link';
+import { cn } from '@nextui-org/theme';
 
 // Constants
 import { ImageStore, ROUTES } from '@/constants';
 
 // Components
-import { ImageFallback } from '@/components';
+import { Button, ImageFallback, Text } from '@/components';
 
 export type ErrorFallbackProps = {
   message?: string;
   reset?: () => void;
 };
 
-export const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
-  <div className="flex flex-col h-full gap-4 items-center justify-center">
+const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
+  <div
+    className={cn(
+      'flex flex-col',
+      'gap-3 items-center justify-center',
+      'py-10 md:py-20',
+    )}
+  >
     <ImageFallback
       alt="The error image"
       height={500}
       src={ImageStore.ErrorImage}
       width={500}
     />
-    <p className="text-gray-500 text-lg text-center">
+
+    <Text
+      className="text-center text-medium md:text-base"
+      textColor="text-gray-500"
+      type="wrap"
+    >
       An error occurred. For more help, feel free to reach out to our support
       team.
-    </p>
+    </Text>
 
     {message && (
-      <p className="text-text-primary font-semibold text-lg text-center whitespace-pre-line">
-        Detail error:
-        {`\n`}
-        <span className="text-text-error/80 font-normal">{message}</span>
-      </p>
+      <Text
+        className="font-semibold text-center text-lg md:text-xl"
+        textColor="text-text-primary"
+        type="wrap"
+      >
+        Error details:
+        <br />
+        <Text
+          as="span"
+          className="text-medium md:text-base"
+          textColor="text-text-error/80"
+          type="wrap"
+        >
+          {message}
+        </Text>
+      </Text>
     )}
 
-    <p className="text-gray-500 text-lg text-center">
+    <Text
+      className="text-center text-md md:text-lg"
+      textColor="text-gray-500"
+      type="wrap"
+    >
       Please&nbsp;
-      <span
-        className="text-text-primary font-semibold hover:underline cursor-pointer"
-        onClick={reset}
+      <Button
+        disableAnimation
+        className={cn(
+          'p-0 min-w-fit bg-transparent',
+          'font-inter font-semibold',
+          'text-md md:text-lg text-text-primary',
+          'hover:underline underline-offset-4',
+        )}
+        onPress={reset}
       >
         reset the page&nbsp;
-      </span>
+      </Button>
       or&nbsp;
       <Link
-        className="text-text-primary font-semibold hover:underline"
         href={ROUTES.STORE}
+        className={cn(
+          'text-text-primary font-semibold',
+          'text-md md:text-lg',
+          'transition-all hover:underline underline-offset-4',
+        )}
       >
         back to home
       </Link>
-    </p>
+    </Text>
   </div>
 );
+
+export default ErrorFallback;
