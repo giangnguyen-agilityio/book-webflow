@@ -5,10 +5,13 @@ import { ComingSoon } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Our Services',
-  description: 'Discover the range of services we offer to meet your needs.',
+  description:
+    'Discover the comprehensive range of book-related services we offer to meet your reading needs.',
   openGraph: {
     title: 'Our Services | Book WebFlow',
-    description: 'Discover the range of services we offer to meet your needs.',
+    description:
+      'Discover the comprehensive range of book-related services we offer to meet your reading needs.',
+    type: 'website',
   },
 };
 

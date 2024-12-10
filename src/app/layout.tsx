@@ -13,20 +13,35 @@ const inter = Inter({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
 });
 
 const cardo = Cardo({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-cardo',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Book WebFlow Website',
-  description: 'Browse and shop our wide range of products.',
+  title: {
+    template: '%s | Book WebFlow',
+    default: 'Book WebFlo',
+  },
+  description:
+    'Browse and shop our curated collection of books. Find your next great read at Book WebFlow.',
+  keywords: ['books', 'bookstore', 'online books', 'ebooks', 'reading'],
   openGraph: {
-    title: 'Book WebFlow Website',
-    description: 'Browse and shop our wide range of products.',
+    title: 'Book WebFlow',
+    description:
+      'Browse and shop our curated collection of books. Find your next great read at Book WebFlow.',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Book WebFlow',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -36,13 +51,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning lang="en">
       <body
         className={`${inter.className} ${inter.variable} ${cardo.variable}`}
       >
         <Providers>
           <Header />
-          <main>{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
           <Toast />
         </Providers>

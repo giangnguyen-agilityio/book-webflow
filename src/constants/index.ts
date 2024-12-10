@@ -5,3 +5,4 @@ export * from './params';
 export * from './routes';
 export * from './links';
 export * from './metadata';
+export * from './messages';
