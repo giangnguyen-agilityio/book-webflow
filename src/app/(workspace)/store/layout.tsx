@@ -4,13 +4,10 @@ import type { Metadata } from 'next';
 import { Banner } from '@/components';
 
 export const metadata: Metadata = {
-  title: {
-    template: 'Store | Book WebFlow',
-    default: 'Book WebFlow',
-  },
+  title: 'My Store',
   description: 'Browse and shop our wide range of products.',
   openGraph: {
-    title: 'Store | Book WebFlow',
+    title: 'My Store | Book WebFlow',
     description: 'Browse and shop our wide range of products.',
   },
 };
