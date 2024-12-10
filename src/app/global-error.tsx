@@ -1,10 +1,16 @@
 'use client';
 
-export default function GlobalError() {
+// Components
+import { ErrorFallback } from '@/components';
+
+// Types
+import { PageErrorProps } from '@/types';
+
+export default function GlobalError({ error, reset }: PageErrorProps) {
   return (
     <html lang="en">
       <body>
-        <h2>Something went wrong!</h2>
+        <ErrorFallback message={error.message} reset={reset} />
       </body>
     </html>
   );
