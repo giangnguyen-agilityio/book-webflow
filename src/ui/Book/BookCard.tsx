@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import Link from 'next/link';
 import { cn } from '@nextui-org/theme';
 
@@ -8,7 +8,10 @@ import { cn } from '@nextui-org/theme';
 import { Book } from '@/models';
 
 // Constants
-import { ImageStore } from '@/constants';
+import { ImageStore, ROUTES } from '@/constants';
+
+// Context
+import { useCartContext } from '@/context';
 
 // Components
 import { Button, Heading, ImageFallback, Text } from '@/components';
@@ -17,7 +20,7 @@ interface BookCardProps {
   bookData: Book;
 }
 
-// const DEFAULT_ORDER_QUANTITY = 1;
+const DEFAULT_ORDER_QUANTITY = 1;
 
 const BookCard = ({ bookData }: BookCardProps) => {
   const {
@@ -27,17 +30,30 @@ const BookCard = ({ bookData }: BookCardProps) => {
     title = 'N/A',
     price = 0,
     description = 'N/A',
+    quantity = 0,
   } = bookData;
 
-  const handleAddToCart = () => {
-    // TODO: Implement the function to add the book to the cart
-    // addToCart(bookData, DEFAULT_ORDER_QUANTITY);
-  };
+  const { cartItems, addToCart } = useCartContext();
+
+  // Find if item exists in cart to get actual quantity
+  const cartItem = cartItems.find((item) => item.id === id);
+  const availableQuantity = cartItem ? cartItem.quantity : quantity;
+  const isOutOfStock = availableQuantity === 0;
+
+  const handleAddToCart = useCallback(() => {
+    if (!isOutOfStock) {
+      addToCart(bookData, DEFAULT_ORDER_QUANTITY);
+    }
+  }, [bookData, isOutOfStock, addToCart]);
 
   return (
-    <div className="bg-background-default">
+    <article className="bg-background-default">
       <div className="max-w-[400] flex flex-col items-center mx-auto">
-        <Link className="w-full flex flex-col" href={`/store/${id}`}>
+        <Link
+          aria-label={`View details for ${title}`}
+          className="w-full flex flex-col"
+          href={`${ROUTES.STORE}/${id}`}
+        >
           <div className="w-full max-h-[500] p-12.5 bg-background-secondary">
             <ImageFallback
               alt={title}
@@ -90,7 +106,10 @@ const BookCard = ({ bookData }: BookCardProps) => {
             </Text>
 
             <div className="flex items-center gap-2 mb-4">
-              <span className="w-4 h-4 rounded-full bg-background-tertiary" />
+              <span
+                aria-hidden="true"
+                className="w-4 h-4 rounded-full bg-background-tertiary"
+              />
               <Text className="font-cardo font-bold text-base lg:text-3xl text-text-primary">
                 {label}
               </Text>
@@ -99,16 +118,20 @@ const BookCard = ({ bookData }: BookCardProps) => {
         </Link>
 
         <Button
+          aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
+          disabled={isOutOfStock}
+          variant="outline"
           className={cn(
             'self-start h-fit w-fit 3xl:w-55 py-2 3xl:py-5',
             'font-cardo font-bold text-lg',
+            'transition-colors duration-300',
           )}
           onPress={handleAddToCart}
         >
-          Order Today
+          {isOutOfStock ? 'Out of Stock' : 'Order Today'}
         </Button>
       </div>
-    </div>
+    </article>
   );
 };
 

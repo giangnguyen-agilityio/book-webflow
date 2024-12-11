@@ -1,8 +1,13 @@
 import { notFound } from 'next/navigation';
 import { cn } from '@nextui-org/theme';
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 
-import { MOCK_ARTICLE_LIST, MOCK_BOOK_LIST } from '@/mock';
+// Constants
+import { DEFAULT_LATEST_ARTICLES_NUMBER, DEFAULT_PAGE } from '@/constants';
+
+// APIs
+import { getBookById, getArticleList } from '@/apis';
 
 // UI components
 import { ArticlesAndResources, Benefits, BookDetail } from '@/ui';
@@ -16,15 +21,47 @@ interface BookDetailsPageProps {
   }>;
 }
 
-const BookDetailsPage = async (props: BookDetailsPageProps) => {
-  const { id } = await props.params;
+export async function generateMetadata({
+  params,
+}: BookDetailsPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const bookData = await getBookById(id);
 
-  // TODO: Fetch book details from the database or API instead of using mock data from MOCK_BOOK_LIST
-  const bookData = MOCK_BOOK_LIST.find((book) => book.id === id);
+  if (!bookData) {
+    return {
+      title: 'Book Not Found',
+      description: 'The requested book could not be found',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return {
+    title: bookData.title,
+    description: bookData.description,
+    openGraph: {
+      title: `${bookData.title} | Book WebFlow`,
+      description: bookData.description,
+      type: 'book',
+      url: `/store/${id}`,
+    },
+  };
+}
+
+const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
+  const { id } = await params;
+  const [bookData, articleListData] = await Promise.all([
+    getBookById(id),
+    getArticleList(DEFAULT_PAGE, DEFAULT_LATEST_ARTICLES_NUMBER),
+  ]);
 
   if (!bookData) {
     notFound();
   }
+
+  const { articles } = articleListData;
 
   return (
     <>
@@ -36,7 +73,7 @@ const BookDetailsPage = async (props: BookDetailsPageProps) => {
       >
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12">
-            <Suspense key={id} fallback={<BookDetailSkeleton />}>
+            <Suspense fallback={<BookDetailSkeleton />}>
               <BookDetail data={bookData} />
             </Suspense>
           </div>
@@ -44,8 +81,7 @@ const BookDetailsPage = async (props: BookDetailsPageProps) => {
       </section>
 
       <Suspense fallback={<ArticlesAndResourcesSkeleton />}>
-        {/* TODO: Will pass the searchParams into the component to fetch the data. */}
-        <ArticlesAndResources articles={MOCK_ARTICLE_LIST.slice(0, 3)} />
+        <ArticlesAndResources articles={articles} />
       </Suspense>
 
       <Benefits />

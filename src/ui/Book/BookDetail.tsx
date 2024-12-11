@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Input } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
@@ -17,12 +17,17 @@ import { ImageStore } from '@/constants';
 // Components
 import { Button, Heading, ImageFallback, Text } from '@/components';
 
+// Context
+import { useCartContext } from '@/context';
+
 interface BookDetailProps {
   data: Book;
 }
 
 const BookDetail = ({ data }: BookDetailProps) => {
   const [orderQuantity, setOrderQuantity] = useState(1);
+  const { cartItems, addToCart } = useCartContext();
+  const router = useRouter();
 
   const {
     id = 'N/A',
@@ -52,23 +57,27 @@ const BookDetail = ({ data }: BookDetailProps) => {
     { label: 'Dimensions', value: `${length} x ${width} x ${height} cm` },
   ];
 
-  const router = useRouter();
+  const cartItem = cartItems.find((item) => item.id === id);
+  const availableQuantity = cartItem ? cartItem.quantity : quantity;
+  const isOutOfStock = availableQuantity === 0;
 
-  const handleNavigateBack = () => {
+  const handleNavigateBack = useCallback(() => {
     router.back();
-  };
+  }, [router]);
 
-  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
-    setOrderQuantity(Math.min(Math.max(1, value), quantity));
-  };
+  const handleQuantityChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = parseInt(event.target.value, 10);
+      const finalQuantity = Math.min(value, availableQuantity);
 
-  const handleAddToCart = () => {
-    // TODO: Implement the function to add the book to the cart
-    console.log(`Book ID: ${id}, Ordered Quantity: ${orderQuantity}`);
-  };
+      setOrderQuantity(finalQuantity);
+    },
+    [availableQuantity],
+  );
 
-  const isOutOfStock = quantity === 0;
+  const handleAddToCart = useCallback(() => {
+    addToCart(data, orderQuantity);
+  }, [data, orderQuantity, addToCart]);
 
   return (
     <div>
@@ -76,8 +85,8 @@ const BookDetail = ({ data }: BookDetailProps) => {
         startContent={<LeftArrowIcon />}
         variant="flat"
         className={cn(
-          'mb-4 p-0 min-w-fit',
-          'font-normal text-lg',
+          'mb-4 p-0 min-w-fit bg-transparent',
+          'font-semibold text-lg',
           'hover:underline underline-offset-4',
         )}
         onPress={handleNavigateBack}
@@ -145,7 +154,6 @@ const BookDetail = ({ data }: BookDetailProps) => {
             <Input
               aria-label={`Quantity for ${title}`}
               disabled={isOutOfStock}
-              max={quantity}
               min={1}
               type="number"
               value={String(isOutOfStock ? 0 : orderQuantity)}
@@ -163,9 +171,11 @@ const BookDetail = ({ data }: BookDetailProps) => {
             />
 
             <Button
-              color="primary"
-              isDisabled={isOutOfStock}
+              aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
+              color="default"
+              disabled={isOutOfStock}
               startContent={<CartIcon customClass="w-5 h-5" />}
+              variant="solid"
               className={cn(
                 'w-full xl:w-94.5',
                 'h-10 sm:h-12 md:h-16.25 py-5',

@@ -1,10 +1,14 @@
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-// Mocks
-import { MOCK_ARTICLE_LIST, MOCK_BOOK_LIST } from '@/mock';
-
 // Types
-// import { SearchParams } from '@/types';
+import { SearchParams } from '@/types';
+
+// Constants
+import { DEFAULT_LATEST_ARTICLES_NUMBER, DEFAULT_PAGE } from '@/constants';
+
+// APIs
+import { getArticleList, getBookList } from '@/apis';
 
 // UI components
 import { ArticlesAndResources, BookList, NewsletterSignup } from '@/ui';
@@ -12,31 +16,45 @@ import { ArticlesAndResources, BookList, NewsletterSignup } from '@/ui';
 // Components
 import { ArticlesAndResourcesSkeleton, BookListSkeleton } from '@/components';
 
-// type HomepageSearchParamsProps = SearchParams;
+type StorePageProps = {
+  searchParams?: Promise<SearchParams>;
+};
 
-const Homepage = async () =>
-  // TODO: Add the search parameters to the props
-  // {searchParams}: {searchParams?: HomepageSearchParamsProps}
-  {
-    return (
-      <>
-        <Suspense
-          // TODO: Add key from the searchParams for the suspense to show the fallback correctly
-          //  key={page + query}
-          fallback={<BookListSkeleton />}
-        >
-          {/* TODO: Will pass the searchParams into the component to fetch the data. */}
-          <BookList bookList={MOCK_BOOK_LIST} />
-        </Suspense>
+export const metadata: Metadata = {
+  title: 'Store',
+  description: 'Browse and shop our wide range of books and products.',
+  openGraph: {
+    title: 'Store | Book WebFlow',
+    description: 'Browse and shop our wide range of books and products.',
+    type: 'website',
+  },
+};
 
-        <Suspense fallback={<ArticlesAndResourcesSkeleton />}>
-          {/* TODO: Will pass the searchParams into the component to fetch the data. */}
-          <ArticlesAndResources articles={MOCK_ARTICLE_LIST.slice(0, 3)} />
-        </Suspense>
+const StorePage = async ({ searchParams }: StorePageProps) => {
+  const { page = DEFAULT_PAGE } = (await searchParams) || {};
 
-        <NewsletterSignup />
-      </>
-    );
-  };
+  // Fetch data in parallel for better performance
+  const [bookListData, articleListData] = await Promise.all([
+    getBookList(page),
+    getArticleList(page, DEFAULT_LATEST_ARTICLES_NUMBER),
+  ]);
 
-export default Homepage;
+  const { books, count } = bookListData;
+  const { articles } = articleListData;
+
+  return (
+    <>
+      <Suspense key={page} fallback={<BookListSkeleton />}>
+        <BookList bookList={books} count={count} />
+      </Suspense>
+
+      <Suspense fallback={<ArticlesAndResourcesSkeleton />}>
+        <ArticlesAndResources articles={articles} />
+      </Suspense>
+
+      <NewsletterSignup />
+    </>
+  );
+};
+
+export default StorePage;

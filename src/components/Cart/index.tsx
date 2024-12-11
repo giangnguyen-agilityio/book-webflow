@@ -6,12 +6,18 @@ import { NavbarItem, Button, cn } from '@nextui-org/react';
 // Icons
 import { CartIcon } from '@/icons';
 
-interface CartButtonProps {
-  quantity?: number;
-}
-const CartAction = ({ quantity = 0 }: CartButtonProps) => {
-  let formattedQuantity = '';
+// Context
+import { useCartContext } from '@/context';
 
+interface CartButtonProps {
+  onPress?: () => void;
+}
+
+const CartAction = ({ onPress }: CartButtonProps) => {
+  const { cartItems } = useCartContext();
+  const quantity = cartItems.length;
+
+  let formattedQuantity = '';
   switch (true) {
     case quantity < 10:
       formattedQuantity = `0${quantity}`;
@@ -29,13 +35,14 @@ const CartAction = ({ quantity = 0 }: CartButtonProps) => {
       <Button
         isIconOnly
         aria-label="Cart Button"
-        color="primary"
+        radius="md"
         startContent={<CartIcon />}
         variant="light"
         className={cn(
           'text-text-default hover:text-text-tertiary',
           quantity > 0 && 'pr-2 pt-1',
         )}
+        onPress={onPress}
       />
       {quantity > 0 && (
         <span

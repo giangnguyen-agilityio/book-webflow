@@ -2,7 +2,7 @@ import { Divider } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
 // Constants
-import { DEFAULT_ARTICLES_AND_RESOURCES_PER_PAGE } from '@/constants';
+import { DEFAULT_LATEST_ARTICLES_NUMBER } from '@/constants';
 
 // Components
 import { Heading } from '@/components';
@@ -29,7 +29,7 @@ const ArticlesAndResourcesSkeleton = () => (
           'gap-6 xl:gap-8.5',
         )}
       >
-        {[...Array(DEFAULT_ARTICLES_AND_RESOURCES_PER_PAGE)].map((_, index) => (
+        {[...Array(DEFAULT_LATEST_ARTICLES_NUMBER)].map((_, index) => (
           <ArticleCardSkeleton key={index} />
         ))}
       </div>

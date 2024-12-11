@@ -12,8 +12,11 @@ type TBooksResponse = {
   count: number;
 };
 
-const getBookList = async (page?: number): Promise<TBooksResponse> => {
-  const endpoint = `${API_PATH.BOOKS}?page=${page}&limit=${DEFAULT_BOOKS_PER_PAGE}`;
+const getBookList = async (
+  page?: number,
+  limit?: number,
+): Promise<TBooksResponse> => {
+  const endpoint = `${API_PATH.BOOKS}?page=${page}&limit=${limit || DEFAULT_BOOKS_PER_PAGE}`;
 
   try {
     const data = await httpClient.get<TBooksResponse>({

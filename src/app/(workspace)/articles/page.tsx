@@ -1,8 +1,14 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-// Mock
-import { MOCK_ARTICLE_LIST } from '@/mock';
+// APIs
+import { getArticleList } from '@/apis';
+
+// Types
+import { SearchParams } from '@/types';
+
+// Constants
+import { DEFAULT_PAGE } from '@/constants';
 
 // UI Components
 import { ArticleList } from '@/ui';
@@ -10,30 +16,37 @@ import { ArticleList } from '@/ui';
 // Components
 import { ArticleListSkeleton, Banner } from '@/components';
 
+type ArticlesPageProps = {
+  searchParams?: Promise<SearchParams>;
+};
+
 export const metadata: Metadata = {
   title: 'Articles',
-  description: 'Read our latest articles and blog posts on various topics.',
+  description:
+    'Read our latest articles and blog posts on books, literature, and reading.',
   openGraph: {
     title: 'Articles | Book WebFlow',
-    description: 'Read our latest articles and blog posts on various topics.',
+    description:
+      'Read our latest articles and blog posts on books, literature, and reading.',
+    type: 'website',
   },
 };
 
-const ArticlesPage = () => (
-  <>
-    <Banner
-      metadataDescription={metadata.description}
-      metadataTitle={metadata.title}
-    />
-    <Suspense
-      // TODO: Add key from the searchParams for the suspense to show the fallback correctly
-      //  key={page + query}
-      fallback={<ArticleListSkeleton />}
-    >
-      {/* TODO: Will pass the searchParams into the component to fetch the data. */}
-      <ArticleList articleList={MOCK_ARTICLE_LIST} />
-    </Suspense>
-  </>
-);
+const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
+  const { page = DEFAULT_PAGE } = (await searchParams) || {};
+  const { articles, count } = await getArticleList(page);
+
+  return (
+    <>
+      <Banner
+        metadataDescription={metadata.description}
+        metadataTitle={metadata.title}
+      />
+      <Suspense key={page} fallback={<ArticleListSkeleton />}>
+        <ArticleList articleList={articles} count={count} />
+      </Suspense>
+    </>
+  );
+};
 
 export default ArticlesPage;
