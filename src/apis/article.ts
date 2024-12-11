@@ -1,5 +1,3 @@
-'use server';
-
 // Constants
 import { API_PATH, DEFAULT_ARTICLES_PER_PAGE } from '@/constants';
 
@@ -14,8 +12,11 @@ type TArticlesResponse = {
   count: number;
 };
 
-const getArticleList = async (page?: number): Promise<TArticlesResponse> => {
-  const endpoint = `${API_PATH.ARTICLES}?page=${page}&limit=${DEFAULT_ARTICLES_PER_PAGE}`;
+const getArticleList = async (
+  page?: number,
+  limit?: number,
+): Promise<TArticlesResponse> => {
+  const endpoint = `${API_PATH.ARTICLES}?page=${page}&limit=${limit || DEFAULT_ARTICLES_PER_PAGE}`;
 
   try {
     const data = await httpClient.get<TArticlesResponse>({

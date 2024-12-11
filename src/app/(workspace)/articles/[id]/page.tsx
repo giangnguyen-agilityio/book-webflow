@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 import { cn } from '@nextui-org/theme';
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 
-// Mock
-import { MOCK_ARTICLE_LIST } from '@/mock';
+// APIs
+import { getArticleById } from '@/apis';
 
 // UI components
 import { ArticleDetail } from '@/ui';
@@ -17,19 +18,43 @@ interface ArticleDetailsPageProps {
   }>;
 }
 
-const ArticleDetailsPage = async (props: ArticleDetailsPageProps) => {
-  const { id } = await props.params;
+export async function generateMetadata({
+  params,
+}: ArticleDetailsPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const articleData = await getArticleById(id);
 
-  // TODO: Fetch article details from the database or API instead of using mock data from MOCK_ARTICLE_LIST
-  const currentArticle = MOCK_ARTICLE_LIST.find((Article) => Article.id === id);
+  if (!articleData) {
+    return {
+      title: 'Article Not Found',
+    };
+  }
 
-  if (!currentArticle) {
+  return {
+    title: articleData.title,
+    description: articleData.description,
+    openGraph: {
+      title: `${articleData.title} | Book WebFlow`,
+      description: articleData.description,
+      type: 'article',
+      url: `/articles/${id}`,
+    },
+  };
+}
+
+export default async function ArticleDetailsPage({
+  params,
+}: ArticleDetailsPageProps) {
+  const { id } = await params;
+  const articleData = await getArticleById(id);
+
+  if (!articleData) {
     notFound();
   }
 
   return (
     <>
-      <Banner metadataTitle={currentArticle.title} />
+      <Banner metadataTitle={articleData.title} />
 
       <section
         className={cn(
@@ -38,11 +63,9 @@ const ArticleDetailsPage = async (props: ArticleDetailsPageProps) => {
         )}
       >
         <Suspense key={id} fallback={<ArticleListSkeleton />}>
-          <ArticleDetail data={currentArticle} />
+          <ArticleDetail data={articleData} />
         </Suspense>
       </section>
     </>
   );
-};
-
-export default ArticleDetailsPage;
+}
