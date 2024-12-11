@@ -16,11 +16,27 @@ const meta: Meta<typeof LoadingIndicator> = {
       options: ['sm', 'md', 'lg'],
       control: { type: 'select' },
     },
+    fullScreen: {
+      description: 'Display loading indicator in full screen mode',
+      control: 'boolean',
+    },
+    label: {
+      description: 'Label text for the loading indicator',
+      control: 'text',
+    },
+    containerClassName: {
+      description: 'Additional classes for the container',
+      control: 'text',
+    },
+    labelClassName: {
+      description: 'Additional classes for the label',
+      control: 'text',
+    },
   },
 
   decorators: [
     (Story) => (
-      <div className="w-80 h-48">
+      <div className="w-80 h-48 flex justify-center items-center">
         <Story />
       </div>
     ),
@@ -32,21 +48,45 @@ export default meta;
 type Story = StoryObj<typeof LoadingIndicator>;
 
 export const Default: Story = {
-  args: { size: 'lg' },
-  render: () => <LoadingIndicator />,
+  args: {
+    size: 'lg',
+    fullScreen: false,
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    size: 'lg',
+    fullScreen: false,
+    label: 'Loading...',
+  },
 };
 
 export const Small: Story = {
-  args: { size: 'sm' },
-  render: () => <LoadingIndicator size="sm" />,
+  args: {
+    size: 'sm',
+    fullScreen: false,
+  },
 };
 
 export const Medium: Story = {
-  args: { size: 'md' },
-  render: () => <LoadingIndicator size="md" />,
+  args: {
+    size: 'md',
+    fullScreen: false,
+  },
 };
 
 export const Large: Story = {
-  args: { size: 'lg' },
-  render: () => <LoadingIndicator size="lg" />,
+  args: {
+    size: 'lg',
+    fullScreen: false,
+  },
+};
+
+export const FullScreen: Story = {
+  args: {
+    size: 'lg',
+    fullScreen: true,
+    label: 'Loading...',
+  },
 };

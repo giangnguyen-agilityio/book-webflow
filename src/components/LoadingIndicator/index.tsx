@@ -1,29 +1,55 @@
-import { Spinner } from '@nextui-org/react';
+import { memo } from 'react';
 import { cn } from '@nextui-org/theme';
+import { Spinner, SpinnerProps } from '@nextui-org/react';
 
-interface ILoadingIndicatorProps {
-  size?: 'sm' | 'md' | 'lg';
+interface LoadingIndicatorProps extends Omit<SpinnerProps, 'labelColor'> {
+  fullScreen?: boolean;
+  containerClassName?: string;
+  labelClassName?: string;
 }
 
-const LoadingIndicator = ({ size = 'lg' }: ILoadingIndicatorProps) => (
-  <div
-    aria-label="Loading Indicator"
-    data-testid="loading-indicator"
-    className={cn(
+const LoadingIndicator = ({
+  label = '',
+  fullScreen = true,
+  size = 'lg',
+  classNames = {},
+  containerClassName,
+  labelClassName = '',
+  ...props
+}: LoadingIndicatorProps) => {
+  const containerClasses = cn(
+    'flex items-center justify-center',
+    fullScreen && [
       'fixed inset-0 z-50',
-      'flex items-center justify-center',
-      'bg-gradient-to-b from-background-primary to-background-primary/80 bg-opacity-75',
-    )}
-  >
-    <Spinner
-      data-testid="spinner"
-      size={size}
-      classNames={{
-        circle1: 'border-b-border-default',
-        circle2: 'border-b-border-default',
-      }}
-    />
-  </div>
-);
+      'bg-background-primary',
+      'backdrop-blur-sm',
+    ],
+    containerClassName,
+  );
 
-export default LoadingIndicator;
+  const customClassNames = {
+    circle1: 'border-b-border-default',
+    circle2: 'border-b-border-default',
+    label: cn('text-text-tertiary', labelClassName),
+    ...classNames,
+  };
+
+  return (
+    <div
+      aria-label={label}
+      className={containerClasses}
+      data-testid="loading-indicator"
+      role="status"
+    >
+      <Spinner
+        classNames={customClassNames}
+        data-testid="spinner"
+        label={label}
+        size={size}
+        {...props}
+      />
+    </div>
+  );
+};
+
+export default memo(LoadingIndicator);
