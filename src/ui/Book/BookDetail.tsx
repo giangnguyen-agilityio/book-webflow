@@ -116,13 +116,15 @@ const BookDetail = ({ data }: BookDetailProps) => {
             <div>
               <Heading
                 as="h1"
-                className="font-cardo text-3xl md:text-5xl font-bold text-text-primary"
+                className="font-cardo text-3xl md:text-5xl font-bold"
+                textColor="text-text-primary"
               >
                 {title}
               </Heading>
               <Text
                 as="span"
-                className="font-inter text-xl md:text-3xl font-extrabold text-text-tertiary"
+                className="font-inter text-xl md:text-3xl font-extrabold"
+                textColor="text-text-tertiary"
                 type="wrap"
               >
                 ${price.toFixed(2)} USD
@@ -130,7 +132,8 @@ const BookDetail = ({ data }: BookDetailProps) => {
             </div>
 
             <Text
-              className="font-inter text-base md:text-lg font-normal text-text-secondary"
+              className="font-inter text-base md:text-lg font-normal"
+              textColor="text-text-secondary"
               type="wrap"
             >
               {description}

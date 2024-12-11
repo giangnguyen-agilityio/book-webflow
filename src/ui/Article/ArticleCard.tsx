@@ -25,7 +25,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
   } = articleData;
 
   return (
-    <article className="overflow-hidden shadow-md">
+    <article className="overflow-hidden shadow-md flex flex-col h-full">
       <div className="relative w-full aspect-[410/326]">
         <ImageFallback
           fill
@@ -36,24 +36,26 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
         />
       </div>
 
-      <div className="h-full bg-background-default p-6 md:py-7">
-        <Heading
-          as="h3"
-          className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"
-          textColor="text-text-primary"
-        >
-          {title}
-        </Heading>
+      <div className="flex-1 flex flex-col bg-background-default p-6 md:py-7">
+        <div className="flex-1">
+          <Heading
+            as="h3"
+            className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"
+            textColor="text-text-primary"
+          >
+            {title}
+          </Heading>
 
-        <Text
-          className="font-inter font-normal mb-7 line-clamp-3"
-          textColor="text-text-secondary"
-          type="wrap"
-        >
-          {description}
-        </Text>
+          <Text
+            className="font-inter font-normal line-clamp-3"
+            textColor="text-text-secondary"
+            type="wrap"
+          >
+            {description}
+          </Text>
+        </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-7">
           <Link
             href={`${ROUTES.ARTICLES}/${id}`}
             className={cn(

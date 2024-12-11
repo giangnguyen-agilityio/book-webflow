@@ -28,8 +28,9 @@ const Banner = ({ metadataTitle, metadataDescription }: BannerProps) => {
     >
       <Heading
         as="h1"
+        textColor="text-text-default"
         className={cn(
-          'font-cardo font-bold text-text-default',
+          'font-cardo font-bold',
           'text-5xl lg:text-7xl 3xl:text-9xl',
         )}
       >
@@ -40,11 +41,12 @@ const Banner = ({ metadataTitle, metadataDescription }: BannerProps) => {
 
       {metadataDescription && (
         <Text
+          textColor="text-text-link"
           type="wrap"
           className={cn(
             'px-2 max-w-[633px]',
             'font-inter font-normal',
-            'text-center text-base md:text-lg text-text-link',
+            'text-center text-base md:text-lg',
           )}
         >
           {metadataDescription}

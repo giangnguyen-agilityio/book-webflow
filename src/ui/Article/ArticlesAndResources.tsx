@@ -53,7 +53,8 @@ const ArticlesAndResources = ({ articles = [] }: ArticlesAndResourcesProps) => (
             No articles available at the moment.
           </Text>
           <Text
-            className="text-base sm:text-xl text-text-secondary mt-2"
+            className="text-base sm:text-xl mt-2"
+            textColor="text-text-secondary"
             type="wrap"
           >
             Check back later for new content!

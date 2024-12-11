@@ -14,7 +14,7 @@ const colorPalette = {
   gray: {
     100: '#d9d9d9', // Light Silver
     150: '#a1a1a1', // Quick Silver
-    200: '#969aa0', // Spanish Gray
+    200: '#727780', // AuroMetalSaurus
   },
   green: {
     100: '#c1dcdc', // Columbia Blue

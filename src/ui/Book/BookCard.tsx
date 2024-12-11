@@ -86,9 +86,10 @@ const BookCard = ({ bookData }: BookCardProps) => {
 
               <Text
                 as="span"
+                textColor="text-text-tertiary"
                 className={cn(
                   'font-inter font-bold min-w-fit',
-                  'text-xl lg:text-2xl 3xl:text-4xl text-text-tertiary',
+                  'text-xl lg:text-2xl 3xl:text-4xl',
                 )}
               >
                 ${price.toFixed(2)}
@@ -96,10 +97,11 @@ const BookCard = ({ bookData }: BookCardProps) => {
             </div>
 
             <Text
+              textColor="text-text-secondary"
               type="wrap"
               className={cn(
                 'mb-6 line-clamp-2',
-                'font-inter text-base xl:text-xl text-text-secondary',
+                'font-inter text-base xl:text-xl',
               )}
             >
               {description}
@@ -110,7 +112,10 @@ const BookCard = ({ bookData }: BookCardProps) => {
                 aria-hidden="true"
                 className="w-4 h-4 rounded-full bg-background-tertiary"
               />
-              <Text className="font-cardo font-bold text-base lg:text-3xl text-text-primary">
+              <Text
+                className="font-cardo font-bold text-base lg:text-3xl"
+                textColor="text-text-primary"
+              >
                 {label}
               </Text>
             </div>

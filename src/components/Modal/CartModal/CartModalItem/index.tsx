@@ -55,16 +55,18 @@ const CartModalItem = ({
           <div className="flex justify-between">
             <div>
               <Text
+                textColor="text-text-primary"
                 className={cn(
-                  'font-cardo font-bold text-text-primary',
+                  'font-cardo font-bold',
                   'text-xl sm:text-2xl md:text-3xl',
                 )}
               >
                 {title}
               </Text>
               <Text
+                textColor="text-text-secondary"
                 className={cn(
-                  'font-inter font-medium text-text-secondary',
+                  'font-inter font-medium',
                   'text-base sm:text-lg md:text-xl',
                 )}
               >

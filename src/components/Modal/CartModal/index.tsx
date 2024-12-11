@@ -111,8 +111,9 @@ const CartModal = ({
         >
           <Heading
             as="h2"
+            textColor="text-text-primary"
             className={cn(
-              'font-cardo font-bold text-text-primary',
+              'font-cardo font-bold',
               'text-5xl sm:text-7xl md:text-9xl',
             )}
           >
@@ -181,14 +182,18 @@ const CartModal = ({
             >
               <div className="flex justify-between w-full">
                 <Text
+                  textColor="text-text-primary"
                   className={cn(
-                    'font-cardo font-semibold text-text-primary',
+                    'font-cardo font-semibold',
                     'text-xl sm:text-2xl md:text-3xl',
                   )}
                 >
                   Sub-Total
                 </Text>
-                <Text className="font-inter text-lg sm:text-xl font-bold text-text-primary">
+                <Text
+                  className="font-inter text-lg sm:text-xl font-bold"
+                  textColor="text-text-primary"
+                >
                   ${subtotal.toFixed(2)} USD
                 </Text>
               </div>

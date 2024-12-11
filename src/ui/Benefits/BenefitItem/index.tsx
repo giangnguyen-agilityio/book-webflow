@@ -18,19 +18,18 @@ const BenefitItem = ({ Icon, title, description }: BenefitItemProps) => (
 
     <Heading
       as="h3"
-      className={cn(
-        'font-cardo font-bold mb-2.5',
-        'text-text-primary text-3xl lg:text-5xl',
-      )}
+      className={cn('font-cardo font-bold mb-2.5', 'text-3xl lg:text-5xl')}
+      textColor="text-text-primary"
     >
       {title}
     </Heading>
 
     <Text
+      textColor="text-text-primary"
       type="wrap"
       className={cn(
         'max-w-[365] font-inter font-normal',
-        'text-text-primary text-base md:text-lg',
+        'text-base md:text-lg',
       )}
     >
       {description}
