@@ -8,7 +8,7 @@
 
 ### ⌛ Timeline
 
-- 7 working days
+- 14 working days
 
 ### 💻 Tech stacks
 
@@ -121,13 +121,12 @@ Check and update config image hosting on `next.config.mjs` file follow [Next.js 
 ├── .storybook                      # Storybook folder
 ├── public                          # Public assets folder
 ├── src
-│   ├── actions                     # Next.js actions
+│   ├── apis                        # APIs
 │   ├── app                         # Next.js App (App Router)
 │   ├── components                  # React components
 │   ├── constants                   # App constants
 │   ├── context                     # App context
 │   ├── icons                       # Icons folder
-│   ├── layouts                     # React components for app layout
 │   ├── mocks                       # App mock data
 │   ├── models                      # Model type definitions
 │   ├── services                    # Handle data with API: GET, POST, PUT, DELETE
@@ -136,6 +135,7 @@ Check and update config image hosting on `next.config.mjs` file follow [Next.js 
 │   ├── ui                          # Feature components
 │   ├── utils                       # Utilities folder
 ├── .editorconfig                   # Editor configuration
+├── .env                            # Env
 ├── .env.sample                     # Env sample
 ├── .eslintrc.json                  # ESLint configuration
 ├── .gitignore                      # Git ignore file

@@ -46,7 +46,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
         <br />
         <Text
           as="span"
-          className="text-medium md:text-base"
+          className="max-w-lg text-medium md:text-base"
           textColor="text-text-error/80"
           type="wrap"
         >
