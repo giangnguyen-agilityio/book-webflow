@@ -12,9 +12,13 @@
     "coverage": "jest --coverage",
     "test:update": "jest --updateSnapshot",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@milahu/patch-package": "^6.4.14",
+    "@nextui-org/navbar": "2.0.37",
+    "@nextui-org/pagination": "2.0.36",
     "@nextui-org/react": "^2.4.8",
     "@nextui-org/system": "^2.2.6",
     "@nextui-org/theme": "^2.2.11",
