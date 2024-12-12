@@ -33,7 +33,7 @@ const NewsletterSignup = () => (
         type="wrap"
         className={cn(
           '!leading-normal',
-          'font-normal max-w-[657]',
+          'font-normal max-w-[657px]',
           'text-text-primary text-small md:text-md lg:text-lg',
         )}
       >
@@ -49,7 +49,7 @@ const NewsletterSignup = () => (
       >
         <Input
           aria-label="Email"
-          className="min-w-fit 3xl:min-w-[530] text-md"
+          className="min-w-fit 3xl:min-w-[530px] text-md"
           placeholder="Your Email ID..."
           radius="none"
           type="email"

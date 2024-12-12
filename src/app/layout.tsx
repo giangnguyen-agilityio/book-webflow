@@ -52,12 +52,10 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body
-        className={`${inter.className} ${inter.variable} ${cardo.variable}`}
-      >
+      <body className={`${inter.variable} ${cardo.variable} antialiased`}>
         <Providers>
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main>{children}</main>
           <Footer />
           <Toast />
         </Providers>

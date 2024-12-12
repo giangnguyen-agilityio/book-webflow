@@ -28,7 +28,7 @@ const BenefitItem = ({ Icon, title, description }: BenefitItemProps) => (
       textColor="text-text-primary"
       type="wrap"
       className={cn(
-        'max-w-[365] font-inter font-normal',
+        'max-w-[365px] font-inter font-normal',
         'text-base md:text-lg',
       )}
     >

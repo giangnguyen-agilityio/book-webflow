@@ -5,12 +5,12 @@ import { BaseSkeleton } from '@/components';
 
 const BookCardBaseSkeleton = () => (
   <div>
-    <div className="max-w-[400] flex flex-col items-center mx-auto">
+    <div className="max-w-[400px] flex flex-col items-center mx-auto">
       <div className="w-full flex flex-col">
-        <div className="w-full max-h-[500] p-12.5 bg-background-secondary">
+        <div className="w-full max-h-[500px] p-12.5 bg-background-secondary">
           <BaseSkeleton
             className={cn(
-              'max-w-[292] h-[396]',
+              'max-w-[292px] h-[396px]',
               'border-2 border-border-primary',
             )}
           />

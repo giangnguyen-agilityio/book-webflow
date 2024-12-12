@@ -56,7 +56,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
       </Button>
 
       {/* Article Image Section */}
-      <div className="relative w-full max-h-[700] rounded-sm aspect-video">
+      <div className="relative w-full max-h-[700px] rounded-sm aspect-video">
         <ImageFallback
           fill
           priority

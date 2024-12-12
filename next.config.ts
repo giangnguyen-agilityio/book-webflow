@@ -15,11 +15,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ibb.co',
-        port: '',
-        pathname: '/**',
       },
     ],
   },
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;

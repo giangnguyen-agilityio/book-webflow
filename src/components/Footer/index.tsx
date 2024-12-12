@@ -12,8 +12,13 @@ import { Text, Heading, SocialLinks } from '@/components';
 
 const Footer = () => {
   return (
-    <footer className="bg-background-primary text-text-default pb-6 pt-6 md:pt-21">
-      <div className="px-6 w-full max-w-screen-3xl mx-auto">
+    <footer className="bg-background-primary text-text-default">
+      <div
+        className={cn(
+          'w-full max-w-screen-3xl mx-auto',
+          'px-6 pb-6 pt-6 md:pt-21',
+        )}
+      >
         <div className="grid gap-12 grid-cols-1 lg:grid-cols-[auto_1fr]">
           {/* Main Section */}
           <div className="left-column flex-shrink-0 space-y-6">

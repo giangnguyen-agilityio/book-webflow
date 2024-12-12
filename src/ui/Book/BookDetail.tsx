@@ -96,14 +96,14 @@ const BookDetail = ({ data }: BookDetailProps) => {
 
       <div className="flex flex-col lg:flex-row gap-21">
         {/* Book Image Section */}
-        <div className="w-full max-w-none lg:max-w-[580] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
+        <div className="w-full max-w-none lg:max-w-[580px] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
           <ImageFallback
             alt={title}
             height={510}
             src={imageSrc}
             width={380}
             className={cn(
-              'aspect-[380/510] max-w-full max-h-[510]',
+              'aspect-[380/510] max-w-full max-h-[510px]',
               'mx-auto object-cover shadow-xl',
               'border-2 sm:border-4 border-border-primary',
             )}

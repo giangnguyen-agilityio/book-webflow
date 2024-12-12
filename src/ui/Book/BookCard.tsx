@@ -48,20 +48,21 @@ const BookCard = ({ bookData }: BookCardProps) => {
 
   return (
     <article className="bg-background-default">
-      <div className="max-w-[400] flex flex-col items-center mx-auto">
+      <div className="max-w-[400px] flex flex-col items-center mx-auto">
         <Link
           aria-label={`View details for ${title}`}
           className="w-full flex flex-col"
           href={`${ROUTES.STORE}/${id}`}
         >
-          <div className="w-full max-h-[500] p-12.5 bg-background-secondary">
+          <div className="w-full max-h-[500px] p-12.5 bg-background-secondary">
             <ImageFallback
               alt={title}
               height={396}
+              quality={100}
               src={imageSrc}
               width={292}
               className={cn(
-                'aspect-[292/396] object-cover',
+                'mx-auto aspect-[292/396] object-cover',
                 'border-2 border-border-primary shadow',
               )}
             />

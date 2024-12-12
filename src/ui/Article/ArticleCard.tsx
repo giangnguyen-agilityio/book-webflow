@@ -63,7 +63,8 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
               'font-cardo font-bold text-base md:text-md',
             )}
           >
-            Read more
+            <span className="sr-only">Read more about {title}</span>
+            <span aria-hidden="true">Read more</span>
           </Link>
 
           <time
