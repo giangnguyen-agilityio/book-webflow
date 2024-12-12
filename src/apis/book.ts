@@ -1,3 +1,5 @@
+'use server';
+
 // Constants
 import { API_PATH, DEFAULT_BOOKS_PER_PAGE } from '@/constants';
 
@@ -21,9 +23,6 @@ const getBookList = async (
   try {
     const data = await httpClient.get<TBooksResponse>({
       endpoint,
-      config: {
-        cache: 'force-cache',
-      },
     });
 
     return data;
@@ -38,9 +37,6 @@ const getBookById = async (id?: string): Promise<Book> => {
   try {
     const data = await httpClient.get<TBooksResponse>({
       endpoint,
-      config: {
-        cache: 'force-cache',
-      },
     });
 
     return data.books?.[0];

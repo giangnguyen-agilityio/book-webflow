@@ -1,3 +1,5 @@
+'use server';
+
 // Constants
 import { API_PATH, DEFAULT_ARTICLES_PER_PAGE } from '@/constants';
 
@@ -21,9 +23,6 @@ const getArticleList = async (
   try {
     const data = await httpClient.get<TArticlesResponse>({
       endpoint,
-      config: {
-        cache: 'force-cache',
-      },
     });
 
     return data;
@@ -38,9 +37,6 @@ const getArticleById = async (id?: string): Promise<Article> => {
   try {
     const data = await httpClient.get<TArticlesResponse>({
       endpoint,
-      config: {
-        cache: 'force-cache',
-      },
     });
 
     return data.articles?.[0];
