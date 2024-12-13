@@ -10,7 +10,12 @@ import { Heading } from '@/components';
 import { ArticleCardSkeleton } from '.';
 
 const ArticlesAndResourcesSkeleton = () => (
-  <section className="background-overlay bg-background-default py-36">
+  <div
+    className={cn(
+      'background-overlay bg-background-secondary',
+      'py-10 xl:py-30 3xl:py-36',
+    )}
+  >
     <div className="container m-auto gap-18 font-inter">
       <div className="text-center mb-12">
         <Heading
@@ -20,7 +25,7 @@ const ArticlesAndResourcesSkeleton = () => (
           Articles & Resources
         </Heading>
 
-        <Divider className="w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
+        <Divider className="h-1 w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
       </div>
 
       <div
@@ -34,7 +39,7 @@ const ArticlesAndResourcesSkeleton = () => (
         ))}
       </div>
     </div>
-  </section>
+  </div>
 );
 
 export default ArticlesAndResourcesSkeleton;

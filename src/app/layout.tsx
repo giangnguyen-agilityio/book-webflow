@@ -55,7 +55,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${cardo.variable} antialiased`}>
         <Providers>
           <Header />
-          <main>{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
           <Toast />
         </Providers>

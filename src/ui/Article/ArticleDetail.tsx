@@ -47,7 +47,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
         variant="flat"
         className={cn(
           'mb-4 p-0 min-w-fit bg-transparent',
-          'font-semibold text-lg',
+          'font-semibold text-lg text-text-primary',
           'hover:underline underline-offset-4',
         )}
         onPress={handleNavigateBack}

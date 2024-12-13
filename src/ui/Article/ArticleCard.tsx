@@ -30,7 +30,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
         <ImageFallback
           fill
           alt={title}
-          className="border-2 border-blue-150/50 object-cover"
+          className="mx-auto border-2 border-blue-150/50 object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={imageSrc}
         />
@@ -39,7 +39,6 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
       <div className="flex-1 flex flex-col bg-background-default p-6 md:py-7">
         <div className="flex-1">
           <Heading
-            as="h3"
             className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"
             textColor="text-text-primary"
           >
