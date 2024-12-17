@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Constants
 import { IMAGE_BLUR_SRC } from '@/constants';
 
-import ImageFallback from './index';
+import ImageFallback from '.';
 
 const meta: Meta<typeof ImageFallback> = {
   title: 'Components/ImageFallback',

@@ -17,7 +17,7 @@ const Toast = () => {
     { type: 'success', color: 'success' } as const,
     { type: 'error', color: 'danger' } as const,
     { type: 'info', color: 'secondary' } as const,
-    { type: 'warning', color: 'primary' } as const,
+    { type: 'warning', color: 'warning' } as const,
   ];
 
   return (

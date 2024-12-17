@@ -23,7 +23,7 @@ export const Button = extendVariants(ButtonNextUI, {
     },
 
     disabled: {
-      true: 'bg-gray-100 text-gray-150 border-transparent cursor-not-allowed data-[hover=true]:border-transparent',
+      true: 'bg-gray-100 text-gray-200 border-transparent cursor-not-allowed data-[hover=true]:!border-transparent !bg-opacity-100',
     },
 
     size: {
