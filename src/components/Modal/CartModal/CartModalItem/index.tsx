@@ -50,6 +50,10 @@ const CartModalItem = ({
             'border-2 sm:border-4 border-blue-150',
             'object-cover',
           )}
+          sizes="(max-width: 320px) 280px,
+                 (max-width: 375px) 335px,
+                 (max-width: 425px) 385px,
+                 130px"
         />
         <div className="flex-grow flex flex-col justify-between">
           <div className="flex justify-between">

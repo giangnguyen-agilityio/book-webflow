@@ -23,6 +23,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
     <ImageFallback
       alt="The error image"
       height={500}
+      sizes="(max-width: 425px) 33vw, 500px"
       src={ImageStore.ErrorImage}
       width={500}
     />

@@ -31,8 +31,12 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
           fill
           alt={title}
           className="mx-auto border-2 border-blue-150/50 object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={imageSrc}
+          sizes="(max-width: 425px) 95vw,
+                 (max-width: 768px) 46vw,
+                 (max-width: 1024px) 30vw,
+                 (max-width: 1440px) 26vw,
+                 410px"
         />
       </div>
 
