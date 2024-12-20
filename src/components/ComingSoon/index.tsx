@@ -1,13 +1,10 @@
-'use client';
-
-import { Input } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
 // Icons
 import { LogoIcon } from '@/icons';
 
 // Components
-import { Button, Text, Heading } from '@/components';
+import { Button, Text, Heading, Input } from '@/components';
 
 const ComingSoon = () => (
   <section className="background-overlay bg-gradient-to-b from-background-primary to-background-primary/80">
@@ -43,7 +40,7 @@ const ComingSoon = () => (
         </Text>
 
         <div className="flex max-w-md mx-auto gap-3">
-          <Input placeholder="Enter your email" type="email" />
+          <Input placeholder="Enter your email" radius="md" type="email" />
 
           <Button
             className="font-semibold"

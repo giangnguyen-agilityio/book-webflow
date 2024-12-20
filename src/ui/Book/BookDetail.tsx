@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useCallback } from 'react';
-import { Input } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
 // Models
@@ -15,7 +14,7 @@ import { CartIcon, LeftArrowIcon } from '@/icons';
 import { ImageStore } from '@/constants';
 
 // Components
-import { Button, Heading, ImageFallback, Text } from '@/components';
+import { Button, Heading, ImageFallback, Text, Input } from '@/components';
 
 // Context
 import { useCartContext } from '@/context';
@@ -157,19 +156,15 @@ const BookDetail = ({ data }: BookDetailProps) => {
           <div className="flex mt-8 gap-2 items-center">
             <Input
               aria-label={`Quantity for ${title}`}
+              color="secondary"
               disabled={isOutOfStock}
               min={1}
+              size="lg"
               type="number"
               value={String(isOutOfStock ? 0 : orderQuantity)}
               classNames={{
                 base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
-                input:
-                  'text-center text-lg sm:text-xl md:text-2xl font-medium !text-text-secondary',
-                inputWrapper: cn(
-                  'h-full rounded-none',
-                  'border border-border-default',
-                  'bg-background-secondary !bg-transparent',
-                ),
+                input: 'font-medium text-center',
               }}
               onChange={handleQuantityChange}
             />

@@ -1,6 +1,3 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { cn } from '@nextui-org/theme';
 
 // Constants
@@ -9,11 +6,8 @@ import { ImageStore } from '@/constants';
 // Models
 import { Article } from '@/models';
 
-// Icons
-import { LeftArrowIcon } from '@/icons';
-
 // Components
-import { Button, ImageFallback, Text } from '@/components';
+import { BackButton, ImageFallback, Text } from '@/components';
 
 interface ArticleDetailProps {
   data: Article;
@@ -29,12 +23,6 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
     content = 'N/A',
   } = data;
 
-  const router = useRouter();
-
-  const handleNavigateBack = () => {
-    router.back();
-  };
-
   return (
     <article
       className={cn(
@@ -42,18 +30,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
         'font-inter font-normal',
       )}
     >
-      <Button
-        startContent={<LeftArrowIcon />}
-        variant="flat"
-        className={cn(
-          'mb-4 p-0 min-w-fit bg-transparent',
-          'font-semibold text-lg text-text-primary',
-          'hover:underline underline-offset-4',
-        )}
-        onPress={handleNavigateBack}
-      >
-        Back
-      </Button>
+      <BackButton />
 
       {/* Article Image Section */}
       <div className="relative w-full max-h-[700px] rounded-sm aspect-video">
