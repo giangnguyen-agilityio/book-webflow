@@ -17,6 +17,17 @@ const config: Config = {
     '!<rootDir>/node_modules/',
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/images/(.*)$': '<rootDir>/public/images/$1',
+  },
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/app/',
+    '/models/',
+    '/themes/',
+    '/types/',
+  ],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
