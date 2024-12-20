@@ -54,7 +54,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
           className="w-full flex flex-col"
           href={`${ROUTES.STORE}/${id}`}
         >
-          <div className="w-full max-h-[500px] p-12.5 bg-background-secondary">
+          <div className="w-full max-h-[500px] p-8 md:p-10 lg:p-12.5 bg-background-secondary">
             <ImageFallback
               alt={title}
               height={396}
@@ -65,6 +65,11 @@ const BookCard = ({ bookData }: BookCardProps) => {
                 'mx-auto aspect-[292/396] object-cover',
                 'border-2 border-border-primary shadow',
               )}
+              sizes="(max-width: 425px) 90vw,
+                     (max-width: 768px) 33vw,
+                     (max-width: 1024px) 25vw,
+                     (max-width: 1440px) 20vw,
+                     292px"
             />
           </div>
 

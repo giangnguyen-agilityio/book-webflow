@@ -63,7 +63,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
           alt={title}
           className="border-2 border-blue-150/50"
           quality={100}
-          sizes="100vw"
+          sizes="(max-width: 425px) 304px, (max-width: 768px) 732px, (max-width: 1024px) 976px, 100vw"
           src={imageSrc}
         />
       </div>

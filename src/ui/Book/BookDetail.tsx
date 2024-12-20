@@ -100,6 +100,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
           <ImageFallback
             alt={title}
             height={510}
+            sizes="(max-width: 425px) 224px, 380px"
             src={imageSrc}
             width={380}
             className={cn(
