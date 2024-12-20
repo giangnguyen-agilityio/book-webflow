@@ -1,14 +1,12 @@
-'use client';
-
 import { memo } from 'react';
-import { Divider, Input } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
 // Models
 import { CartItem } from '@/models';
 
 // Components
-import { Button, Text, ImageFallback } from '@/components';
+import { Button, Text, ImageFallback, Input } from '@/components';
 
 interface CartModalItemProps {
   item: CartItem;
@@ -80,22 +78,15 @@ const CartModalItem = ({
 
             <Input
               aria-label={`Quantity for ${title}`}
+              color="primary"
               max={remainingStock}
               min="1"
+              size="lg"
               type="number"
               value={String(orderedQuantity)}
               classNames={{
-                input: cn(
-                  'font-medium text-lg sm:text-xl md:text-2xl',
-                  '!text-text-primary',
-                ),
                 base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-14',
-                inputWrapper: cn(
-                  'h-full rounded-none',
-                  'border border-border-primary bg-background-secondary',
-                  'bg-transparent hover:bg-transparent focus-within:ring-2',
-                  'transition-all duration-200',
-                ),
+                input: 'font-medium',
               }}
               onChange={handleQuantityChange}
             />

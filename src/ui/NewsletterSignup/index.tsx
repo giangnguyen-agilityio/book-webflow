@@ -1,10 +1,8 @@
-'use client';
-
-import { Divider, Input } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
 
 // Components
-import { Heading, Text, Button } from '@/components';
+import { Heading, Text, Button, Input } from '@/components';
 
 const NewsletterSignup = () => (
   <section
@@ -49,13 +47,10 @@ const NewsletterSignup = () => (
       >
         <Input
           aria-label="Email"
-          className="min-w-fit 3xl:min-w-[530px] text-md"
+          className="min-w-fit 3xl:min-w-[530px]"
           placeholder="Your Email ID..."
-          radius="none"
+          size="md"
           type="email"
-          classNames={{
-            inputWrapper: 'md:min-h-16',
-          }}
         />
 
         <Button
