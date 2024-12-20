@@ -5,10 +5,7 @@ import { Suspense } from 'react';
 import { SearchParams } from '@/types';
 
 // Constants
-import { DEFAULT_LATEST_ARTICLES_NUMBER, DEFAULT_PAGE } from '@/constants';
-
-// APIs
-import { getArticleList, getBookList } from '@/apis';
+import { DEFAULT_PAGE } from '@/constants';
 
 // UI components
 import { ArticlesAndResources, BookList, NewsletterSignup } from '@/ui';
@@ -33,23 +30,14 @@ export const metadata: Metadata = {
 const StorePage = async ({ searchParams }: StorePageProps) => {
   const { page = DEFAULT_PAGE } = (await searchParams) || {};
 
-  // Fetch data in parallel for better performance
-  const [bookListData, articleListData] = await Promise.all([
-    getBookList(page),
-    getArticleList(page, DEFAULT_LATEST_ARTICLES_NUMBER),
-  ]);
-
-  const { books, count } = bookListData;
-  const { articles } = articleListData;
-
   return (
     <>
       <Suspense key={page} fallback={<BookListSkeleton />}>
-        <BookList bookList={books} count={count} />
+        <BookList page={page} />
       </Suspense>
 
       <Suspense fallback={<ArticlesAndResourcesSkeleton />}>
-        <ArticlesAndResources articles={articles} />
+        <ArticlesAndResources />
       </Suspense>
 
       <NewsletterSignup />

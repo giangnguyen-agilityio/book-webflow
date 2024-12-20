@@ -9,6 +9,7 @@ import {
   ModalHeader,
 } from '@nextui-org/react';
 import { cn } from '@nextui-org/theme';
+import dynamic from 'next/dynamic';
 
 // Constants
 import { ROUTES, CART_MESSAGES } from '@/constants';
@@ -20,7 +21,11 @@ import { CloseIcon } from '@/icons';
 import { CartItem } from '@/models';
 
 // Components
-import { Button, Text, Heading, BaseModal, ConfirmModal } from '@/components';
+import { Button, Text, Heading, BaseModal } from '@/components';
+
+const ConfirmModal = dynamic(() => import('@/components/Modal/ConfirmModal'), {
+  ssr: false,
+});
 
 import CartModalItem from './CartModalItem';
 

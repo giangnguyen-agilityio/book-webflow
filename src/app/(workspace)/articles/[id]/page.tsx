@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
-import { cn } from '@nextui-org/theme';
-import { Suspense } from 'react';
+import { cn } from '@nextui-org/react';
 import { Metadata } from 'next';
 
 // APIs
@@ -10,7 +9,7 @@ import { getArticleById } from '@/apis';
 import { ArticleDetail } from '@/ui';
 
 // Components
-import { ArticleListSkeleton, Banner } from '@/components';
+import { Banner } from '@/components';
 
 interface ArticleDetailsPageProps {
   params: Promise<{
@@ -62,9 +61,7 @@ export default async function ArticleDetailsPage({
           'py-10 xl:py-14 3xl:py-21',
         )}
       >
-        <Suspense key={id} fallback={<ArticleListSkeleton />}>
-          <ArticleDetail data={articleData} />
-        </Suspense>
+        <ArticleDetail data={articleData} />
       </section>
     </>
   );
