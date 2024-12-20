@@ -1,5 +1,5 @@
-// Models
-import { Book } from '@/models';
+// APIs
+import { getBookList } from '@/apis';
 
 // Constants
 import { DEFAULT_BOOKS_PER_PAGE, DEFAULT_PAGE } from '@/constants';
@@ -10,19 +10,19 @@ import { Pagination, Text } from '@/components';
 import { BookCard } from '.';
 
 interface BookListProps {
-  bookList: Book[];
-  count?: number;
+  page?: number;
 }
 
-const BookList = ({ bookList = [], count = 0 }: BookListProps) => {
+const BookList = async ({ page = DEFAULT_PAGE }: BookListProps) => {
+  const { books = [], count = 0 } = await getBookList(page);
   const pageCount = Math.ceil(count / DEFAULT_BOOKS_PER_PAGE);
 
   return (
     <section className="container mx-auto py-12">
-      {bookList.length > 0 ? (
+      {books.length > 0 ? (
         <>
           <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {bookList.map((book) => (
+            {books.map((book) => (
               <BookCard key={book.id} bookData={book} />
             ))}
           </div>

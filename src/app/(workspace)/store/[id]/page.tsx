@@ -3,17 +3,14 @@ import { cn } from '@nextui-org/theme';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 
-// Constants
-import { DEFAULT_LATEST_ARTICLES_NUMBER, DEFAULT_PAGE } from '@/constants';
-
 // APIs
-import { getBookById, getArticleList } from '@/apis';
+import { getBookById } from '@/apis';
 
 // UI components
 import { ArticlesAndResources, Benefits, BookDetail } from '@/ui';
 
 // Components
-import { ArticlesAndResourcesSkeleton, BookDetailSkeleton } from '@/components';
+import { ArticlesAndResourcesSkeleton } from '@/components';
 
 interface BookDetailsPageProps {
   params: Promise<{
@@ -52,16 +49,11 @@ export async function generateMetadata({
 
 const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
   const { id } = await params;
-  const [bookData, articleListData] = await Promise.all([
-    getBookById(id),
-    getArticleList(DEFAULT_PAGE, DEFAULT_LATEST_ARTICLES_NUMBER),
-  ]);
+  const bookData = await getBookById(id);
 
   if (!bookData) {
     notFound();
   }
-
-  const { articles } = articleListData;
 
   return (
     <>
@@ -73,15 +65,13 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
       >
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12">
-            <Suspense fallback={<BookDetailSkeleton />}>
-              <BookDetail data={bookData} />
-            </Suspense>
+            <BookDetail data={bookData} />
           </div>
         </div>
       </section>
 
       <Suspense fallback={<ArticlesAndResourcesSkeleton />}>
-        <ArticlesAndResources articles={articles} />
+        <ArticlesAndResources />
       </Suspense>
 
       <Benefits />

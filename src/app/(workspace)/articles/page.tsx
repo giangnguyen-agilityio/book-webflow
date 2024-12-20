@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-// APIs
-import { getArticleList } from '@/apis';
-
 // Types
 import { SearchParams } from '@/types';
 
@@ -34,7 +31,6 @@ export const metadata: Metadata = {
 
 const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
   const { page = DEFAULT_PAGE } = (await searchParams) || {};
-  const { articles, count } = await getArticleList(page);
 
   return (
     <>
@@ -43,7 +39,7 @@ const ArticlesPage = async ({ searchParams }: ArticlesPageProps) => {
         metadataTitle={metadata.title}
       />
       <Suspense key={page} fallback={<ArticleListSkeleton />}>
-        <ArticleList articleList={articles} count={count} />
+        <ArticleList page={page} />
       </Suspense>
     </>
   );

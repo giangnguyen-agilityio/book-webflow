@@ -10,6 +10,7 @@ import {
   NavbarItem,
 } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 // Icons
 import { LogoIcon } from '@/icons';
@@ -21,13 +22,9 @@ import { useCartContext } from '@/context';
 import { ROUTES, SOCIAL_LINK_ITEMS } from '@/constants';
 
 // Components
-import {
-  CartAction,
-  Navbar,
-  Sidebar,
-  SocialLinks,
-  CartModal,
-} from '@/components';
+import { CartAction, Navbar, Sidebar, SocialLinks } from '@/components';
+
+const CartModal = dynamic(() => import('@/components/Modal/CartModal'));
 
 const Header = () => {
   const pathname = usePathname();

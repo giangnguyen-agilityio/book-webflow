@@ -1,5 +1,5 @@
-// Models
-import { Article } from '@/models';
+// APIs
+import { getArticleList } from '@/apis';
 
 // Constants
 import { DEFAULT_ARTICLES_PER_PAGE, DEFAULT_PAGE } from '@/constants';
@@ -10,19 +10,19 @@ import { Pagination, Text } from '@/components';
 import { ArticleCard } from '.';
 
 interface ArticleListProps {
-  articleList: Article[];
-  count?: number;
+  page?: number;
 }
 
-const ArticleList = ({ articleList = [], count = 0 }: ArticleListProps) => {
+const ArticleList = async ({ page = DEFAULT_PAGE }: ArticleListProps) => {
+  const { articles = [], count = 0 } = await getArticleList(page);
   const pageCount = Math.ceil(count / DEFAULT_ARTICLES_PER_PAGE);
 
   return (
     <section className="container mx-auto py-12">
-      {articleList.length > 0 ? (
+      {articles.length > 0 ? (
         <>
           <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {articleList.map((article) => (
+            {articles.map((article) => (
               <ArticleCard key={article.id} articleData={article} />
             ))}
           </div>
