@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
-import { cn } from '@nextui-org/theme';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+
+// Utils
+import { cn } from '@/utils';
 
 // APIs
 import { getBookById } from '@/apis';

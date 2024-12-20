@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ElementType } from 'react';
-import { cn } from '@nextui-org/react';
+
+// Utils
+import { cn } from '@/utils';
 
 // Types
 import { CustomClassType } from '@/types';

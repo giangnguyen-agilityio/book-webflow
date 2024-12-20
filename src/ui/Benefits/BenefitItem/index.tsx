@@ -1,5 +1,7 @@
 import { ElementType } from 'react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Components
 import { Heading, Text } from '@/components';

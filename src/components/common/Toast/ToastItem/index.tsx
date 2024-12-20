@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Types
 import { IToast } from '@/context';

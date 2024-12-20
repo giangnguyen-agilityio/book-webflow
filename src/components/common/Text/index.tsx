@@ -1,5 +1,7 @@
 import { memo, ReactNode } from 'react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { TEXT_SIZE_MAP } from '@/constants';

@@ -6,7 +6,9 @@ import {
   NavbarMenuItem,
   useNavbarContext,
 } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { NAVIGATION_ITEMS, SOCIAL_LINK_ITEMS } from '@/constants';

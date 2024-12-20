@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
-import { cn } from '@nextui-org/react';
 import { Metadata } from 'next';
 
 // APIs
 import { getArticleById } from '@/apis';
+
+// Utils
+import { cn } from '@/utils';
 
 // UI components
 import { ArticleDetail } from '@/ui';

@@ -1,11 +1,10 @@
 import { Divider } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
 
 // Components
 import { Heading, Text } from '@/components';
 
 // Utils
-import { formatMetadataTitle } from '@/utils';
+import { cn, formatMetadataTitle } from '@/utils';
 
 // Types
 import { MetadataDescription, MetadataTitle } from '@/types';

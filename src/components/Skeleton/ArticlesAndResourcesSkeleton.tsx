@@ -1,5 +1,7 @@
 import { Divider } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { DEFAULT_LATEST_ARTICLES_NUMBER } from '@/constants';
