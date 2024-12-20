@@ -6,8 +6,10 @@ import {
   Pagination as PaginationNextUI,
   PaginationProps as NextUIPaginationProps,
 } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+// Utils
+import { cn } from '@/utils';
 
 // Icons
 import { LeftArrowIcon, RightArrowIcon } from '@/icons';

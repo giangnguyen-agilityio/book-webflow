@@ -2,7 +2,9 @@
 
 import { memo, useCallback } from 'react';
 import Link from 'next/link';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Models
 import { Book } from '@/models';

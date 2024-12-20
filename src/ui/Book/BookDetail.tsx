@@ -2,7 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useCallback } from 'react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Models
 import { Book } from '@/models';

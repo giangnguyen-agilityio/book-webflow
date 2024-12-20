@@ -1,6 +1,8 @@
 import { memo } from 'react';
-import { cn } from '@nextui-org/theme';
 import { Spinner, SpinnerProps } from '@nextui-org/react';
+
+// Utils
+import { cn } from '@/utils';
 
 interface LoadingIndicatorProps extends Omit<SpinnerProps, 'labelColor'> {
   fullScreen?: boolean;

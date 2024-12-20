@@ -4,7 +4,9 @@ import {
   Skeleton as SkeletonNextUI,
   SkeletonProps as SkeletonNextUIProps,
 } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 export interface SkeletonProps extends SkeletonNextUIProps {
   className?: string;

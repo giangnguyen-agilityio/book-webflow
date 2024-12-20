@@ -1,5 +1,7 @@
 import { Divider } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Models
 import { Article } from '@/models';

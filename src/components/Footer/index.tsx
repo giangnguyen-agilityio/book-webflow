@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { cn } from '@nextui-org/theme';
+
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { NAVIGATION_ITEMS, ROUTES, SOCIAL_LINK_ITEMS } from '@/constants';

@@ -8,8 +8,10 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react';
-import { cn } from '@nextui-org/theme';
 import dynamic from 'next/dynamic';
+
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { ROUTES, CART_MESSAGES } from '@/constants';

@@ -5,5 +5,4 @@ export const ROUTES = {
   SERVICES: '/services',
   CONTACT: '/contact',
   COMING_SOON: '/coming-soon',
-  NOT_FOUND: '/not-found',
 };

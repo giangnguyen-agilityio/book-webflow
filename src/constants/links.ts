@@ -35,7 +35,7 @@ const NAVIGATION_ITEMS = {
       label: 'Style guide',
       title: 'Style guide page',
     },
-    { url: ROUTES.NOT_FOUND, label: '404 not found', title: 'Not found page' },
+    { url: '', label: '404 not found', title: 'Not found page' },
     {
       url: '',
       label: 'Password protected',

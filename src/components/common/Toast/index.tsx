@@ -1,6 +1,7 @@
 'use client';
 
-import { cn } from '@nextui-org/theme';
+// Utils
+import { cn } from '@/utils';
 
 // Contexts
 import { useToast } from '@/context';

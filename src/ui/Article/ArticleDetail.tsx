@@ -1,4 +1,5 @@
-import { cn } from '@nextui-org/theme';
+// Utils
+import { cn } from '@/utils';
 
 // Constants
 import { ImageStore } from '@/constants';
