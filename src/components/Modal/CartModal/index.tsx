@@ -88,18 +88,18 @@ const CartModal = ({
     }
   }, [itemToRemove, onRemoveItem]);
 
-  const handleCancelRemove = useCallback(() => {
+  const handleCancelRemove = () => {
     setItemToRemove(null);
-  }, []);
+  };
 
-  const handleContinueShopping = useCallback(() => {
+  const handleContinueShopping = () => {
     onClose();
-  }, [onClose]);
+  };
 
-  const handleCheckout = useCallback(() => {
+  const handleCheckout = () => {
     onCheckout();
     onClose();
-  }, [onCheckout, onClose]);
+  };
 
   return (
     <>

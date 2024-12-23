@@ -81,7 +81,10 @@ const Header = () => {
         </NavbarContent>
 
         {/* Navbar */}
-        <Navbar customClass="hidden mr-0 md:flex lg:mr-4" pathname={pathname} />
+        <Navbar
+          customClass="hidden mr-0 md:flex lg:mr-4"
+          pathname={pathname ?? ''}
+        />
 
         {/* Cart Icon */}
         <NavbarContent className="!flex-grow-0">

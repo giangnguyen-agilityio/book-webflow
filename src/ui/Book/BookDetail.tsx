@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 // Utils
 import { cn } from '@/utils';
@@ -62,23 +62,19 @@ const BookDetail = ({ data }: BookDetailProps) => {
   const availableQuantity = cartItem ? cartItem.quantity : quantity;
   const isOutOfStock = availableQuantity === 0;
 
-  const handleNavigateBack = useCallback(() => {
+  const handleNavigateBack = () => {
     router.back();
-  }, [router]);
+  };
 
-  const handleQuantityChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseInt(event.target.value, 10);
-      const finalQuantity = Math.min(value, availableQuantity);
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10);
+    const finalQuantity = Math.min(value, availableQuantity);
+    setOrderQuantity(finalQuantity);
+  };
 
-      setOrderQuantity(finalQuantity);
-    },
-    [availableQuantity],
-  );
-
-  const handleAddToCart = useCallback(() => {
+  const handleAddToCart = () => {
     addToCart(data, orderQuantity);
-  }, [data, orderQuantity, addToCart]);
+  };
 
   return (
     <div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import Link from 'next/link';
 
 // Utils
@@ -42,11 +42,11 @@ const BookCard = ({ bookData }: BookCardProps) => {
   const availableQuantity = cartItem ? cartItem.quantity : quantity;
   const isOutOfStock = availableQuantity === 0;
 
-  const handleAddToCart = useCallback(() => {
+  const handleAddToCart = () => {
     if (!isOutOfStock) {
       addToCart(bookData, DEFAULT_ORDER_QUANTITY);
     }
-  }, [bookData, isOutOfStock, addToCart]);
+  };
 
   return (
     <article className="bg-background-default">
