@@ -47,6 +47,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
           <Heading
             className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"
             textColor="text-text-primary"
+            title={title}
           >
             {title}
           </Heading>

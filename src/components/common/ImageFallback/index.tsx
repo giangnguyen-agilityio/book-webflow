@@ -45,6 +45,7 @@ const ImageFallback = ({
       src={imgSrc}
       onError={handleFallbackImage}
       onLoad={handleLoad}
+      title={alt}
       {...rest}
     />
   );

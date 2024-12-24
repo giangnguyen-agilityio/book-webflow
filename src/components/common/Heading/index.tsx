@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, HTMLAttributes } from 'react';
 
 // Utils
 import { cn } from '@/utils';
@@ -6,7 +6,7 @@ import { cn } from '@/utils';
 // Constants
 import { HEADING_SIZE_MAP } from '@/constants';
 
-interface HeadingProps {
+interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   children: ReactNode;
   size?: 'base' | 'sm' | 'md' | 'lg' | 'xl';
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -22,6 +22,7 @@ const Heading = ({
   size = 'base',
   customSize = '',
   textColor = 'text-text-primary',
+  ...props
 }: HeadingProps) => {
   const ariaLevels: { [key: string]: number } = {
     h1: 1,
@@ -44,6 +45,7 @@ const Heading = ({
         customSize || fontSizeClass,
         className,
       )}
+      {...props}
     >
       {children}
     </Component>

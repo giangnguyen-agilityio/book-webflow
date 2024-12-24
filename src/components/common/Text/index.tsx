@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { memo, ReactNode, HTMLAttributes } from 'react';
 
 // Utils
 import { cn } from '@/utils';
@@ -6,7 +6,8 @@ import { cn } from '@/utils';
 // Constants
 import { TEXT_SIZE_MAP } from '@/constants';
 
-interface TextProps {
+interface TextProps
+  extends HTMLAttributes<HTMLParagraphElement | HTMLSpanElement> {
   children: ReactNode;
   size?:
     | 'base'
@@ -42,6 +43,7 @@ const Text = ({
   textColor = 'text-text-secondary',
   customSize = '',
   className = '',
+  ...props
 }: TextProps) => {
   const fontSizeClass = TEXT_SIZE_MAP[size];
 
@@ -54,6 +56,7 @@ const Text = ({
         textColor,
         className,
       )}
+      {...props}
     >
       {children}
     </Component>

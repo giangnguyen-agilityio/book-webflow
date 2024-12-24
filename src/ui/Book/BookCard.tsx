@@ -84,6 +84,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
             >
               <Heading
                 textColor="text-text-primary"
+                title={title}
                 className={cn(
                   'w-75 truncate font-cardo font-bold',
                   'text-xl lg:text-3xl 3xl:text-5xl',
