@@ -1,118 +1,130 @@
-# Book Webflow website
+<div align="center">
+  <h1>Book Webflow Website</h1>
+  <p>The website built with <strong>Next JS</strong> for book shopping and article reading</p>
 
-### 📝 Overview
+  <nav>
+    <a href="#-features">Features</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#-getting-started">Getting Started</a> •
+    <a href="#development">Development</a> •
+    <a href="#-project-structure">Project Structure</a>
+  </nav>
 
-- This document is intended to describe the requirements for my NextJS practice.
-- Design: [Figma](https://www.figma.com/design/vrDLGDlGWrBahadzcS1giu/Book-Webflow-Website?node-id=0-1&t=ovHcM9338fZQvLAU-1)
-- Plan: [Note](https://docs.google.com/document/d/18ck2zC5BfYcEsuesnNMAp6PRkZykmzDL1P743xlzK5w/edit?usp=sharing)
+  <div class="mt-2">
+    <img src="https://img.shields.io/badge/React-18-gray?logo=react&logoColor=white&labelColor=black" alt="React 18">
+    <img src="https://img.shields.io/badge/Next.js-15-gray?logo=next.js&logoColor=white&labelColor=black" alt="Next.js 15">
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+    <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  </div>
+</div>
 
-### ⌛ Timeline
+## 🔑 Features
 
-- 14 working days
+<details>
+<summary><strong>Store</strong></summary>
 
-### 💻 Tech stacks
+- Show the book list with pagination
+- View book details with quantity selection
+- Add books to the cart with quantity validation
+- Show the notification system for cart actions
+</details>
 
-- [React 18](https://react.dev/)
-- [NextJS](https://nextjs.org/)
-- [NextUI](https://nextui.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [Typescript](https://www.typescriptlang.org/)
-- [MockAPI](https://mockapi.io/)
+<details>
+<summary><strong>Shopping Cart</strong></summary>
 
-### 🛠️ Development tools
+- View cart items in the modal
+- Update item quantities with stock validation
+- Remove items from the cart
+- Calculate subtotal
+- Checkout flow with cart reset
+</details>
 
-- [Husky](https://typicode.github.io/husky/)
-- [Prettier](https://prettier.io/)
-- [Eslint](https://eslint.org/)
-- [Commitlint](https://commitlint.js.org/)
-- [Storybook](https://github.com/storybookjs/storybook/tree/next/code/lib/cli)
-- [Vercel](https://vercel.com)
+<details>
+<summary><strong>Articles & Resources</strong></summary>
 
-### 🎯 Targets
+- Show the article list with pagination
+- Read the detailed articles
+- Latest articles showcase **(3 articles)** on main pages
+- Article preview and **"Read More"** functionality
+</details>
 
-- Understand and apply the core concepts of NextJS
-- Utilize NextUI to create and customize UI components that match the design.
-- Use Storybook to document React components.
-- Improve PageSpeed scores to achieve the highest score around 90-95.
-- Ensure responsive design that supports three device types: Mobile, Tablet, and Desktop.
+## Tech Stack
 
-### 🗂️ Features
+<table>
+  <tr>
+    <td align="center"><img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png?size=48" width="30" height="30"/><br/>React 18</td>
+    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" width="30" height="30"/><br/>Next.js 15</td>
+    <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="30" height="30"/><br/>TypeScript</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/67109815?s=48&v=4" width="30" height="30"/><br/>Tailwind CSS</td>
+  </tr>
+</table>
 
-Build a simple website with the following features:
+## Development Tools
 
-- **Common:**
+<table>
+  <tr>
+    <td align="center"><img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/eslint/eslint.png" width="30" height="30"/><br/>ESLint</td>
+    <td align="center"><img src="https://prettier.io/icon.png" width="30" height="30"/><br/>Prettier</td>
+    <td align="center"><img src="https://avatars.githubusercontent.com/u/15703675?s=200&v=4" width="30" height="30"/><br/>Husky</td>
+    <td align="center"><img src="https://commitlint.js.org/assets/icon.svg" width="30" height="30"/><br/>Commitlint</td>
+    <td align="center"><img src="https://raw.githubusercontent.com/storybookjs/brand/master/icon/icon-storybook-default.svg" width="30" height="30"/><br/>Storybook</td>
+    <td align="center"><img src="https://assets.vercel.com/image/upload/v1607554385/repositories/vercel/logo.png" width="30" height="30"/><br/>Vercel</td>
+  </tr>
+</table>
 
-  - The header and footer should be shown on all pages
-  - Navigation of the Header and Explore section at Footer will have the following items:
-    - **My Store** page
-    - **Articles** page
-    - **Cart** icon: (Click on this icon will open the Cart modal)
-  - Show active status for the menu item when accessing the page (Text will be changed to **_Yellow_** color)
-  - Users can be directed to the 404-page error if they access a page that does not exist
+## ⚡ Getting Started
 
-- **My Store page**
+### Prerequisites
 
-  - Users can see the book list
-  - Users can see pagination if the total books > 6
-  - Users can be directed to the Book Detail page when clicking on any book item (without the **Order Today** button)
-  - Users can click on the **Order Today** button to add a book to their cart if the total of that book ≥ 1
-  - Users can see a snack bar notification for adding a book to cart status
+```bash
+node v18.19.0
+pnpm 9.12.3
+```
 
-- **Book Detail page**
+### Quick Start
 
-  - Users can see the book's detailed information
-  - Users can update quantity input. The default should be 1 and the number cannot < 1
-  - Users can click on **Add to Cart** when the total of books that are chosen ≥ 1
-  - Users can see a snack bar notification after adding a book into cart
+1️⃣ Clone and switch to feature branch:
 
-- **Cart**
-  - Users can click on the Cart icon on the header to open the Cart modal
-  - Users can see all added books in the Cart
-  - Users can update the quantity of each item but the quantity can’t > the total of books
-  - Users can remove items from the cart
-  - Users can see subtotal
-  - Users can be directed to the Checkout page when they click on the **Continue to Checkout** button. (**Note:** you don’t need to handle payment, the checkout page can be shown as an incoming page. After checkout the cart will reset)
-- **Articles**
-  - Users can see the **Articles & Resources** section at the bottom of each page, except the **Articles** and **Article Detail** page. This section shows only the three latest articles and does not have pagination.
-  - Users can see pagination if the total **Articles** > 9
-  - Users can see the **Article Detail** page when they click on the **Read More** link
+```bash
+git clone git@gitlab.asoft-python.com:giang.nguyen/next-training.git
+cd next-training
+git checkout feature/practice-one
+```
 
-## How to run
+2️⃣ Install dependencies:
 
-### 📦 Prerequisites
+```bash
+pnpm install
+```
 
-Make sure you install packages with correct version below:
+3️⃣ Set up environment:
 
-- [node v18.19.0](https://nodejs.org/en/download/package-manager)
-- [pnpm 9.12.3](https://pnpm.io/installation)
+- Copy `.env.sample` to `.env`
+- Check and update config image hosting on `next.config.mjs` file follow [Next.js document](https://nextjs.org/docs/messages/next-image-unconfigured-host)
 
-- **Note:**:
-  - Please add `.env` into root of project source code, refer `.env.sample`.
+4️⃣ Start development server:
 
-Check and update config image hosting on `next.config.mjs` file follow [Next.js document](https://nextjs.org/docs/messages/next-image-unconfigured-host)
+```bash
+pnpm dev
+```
 
-### 📥 Get source code
+## Development
 
-| Command                                                                | Action                      |
-| :--------------------------------------------------------------------- | :-------------------------- |
-| `git clone git@gitlab.asoft-python.com:giang.nguyen/next-training.git` | Clone Repository with SSH   |
-| `git checkout feature/practice-one`                                    | Checkout to the main Branch |
+| Command            | Description              | Port |
+| ------------------ | ------------------------ | ---- |
+| `pnpm dev`         | Start development server | 3000 |
+| `pnpm build`       | Build for production     | -    |
+| `pnpm start`       | Start production server  | 3000 |
+| `pnpm storybook`   | Launch Storybook         | 6006 |
+| `pnpm test`        | Run tests                | -    |
+| `pnpm coverage`    | Generate coverage report | -    |
+| `pnpm test:update` | Update the Snapshot      | -    |
+| `pnpm lint`        | Run linter               | -    |
 
-### ⚙️ Build and Run app
+## 📁 Project Structure
 
-| Command              | Action                                     | Port                  |
-| :------------------- | :----------------------------------------- | :-------------------- |
-| `$ pnpm install`     | Install packages dependencies              | N/A                   |
-| `$ pnpm build`       | Build app with optimized production mode   | N/A                   |
-| `$ pnpm start`       | Starts the application in production mode. | http://localhost:3000 |
-| `$ pnpm dev`         | Run the app in development mode            | http://localhost:3000 |
-| `$ pnpm storybook`   | Run Storybook.                             | http://localhost:6006 |
-| `$ pnpm test`        | Run Unit Test                              | N/A                   |
-| `$ pnpm coverage`    | Generate code coverage                     | N/A                   |
-| `$ pnpm test:update` | Update the Snapshot                        | N/A                   |
-| `$ pnpm lint`        | Run the Eslint                             | N/A                   |
-
-### 📁 Project structure
+<details>
+<summary>Click to expand</summary>
 
 ```shell
 .
@@ -134,25 +146,16 @@ Check and update config image hosting on `next.config.mjs` file follow [Next.js 
 │   ├── types                       # Type definitions
 │   ├── ui                          # Feature components
 │   ├── utils                       # Utilities folder
-├── .editorconfig                   # Editor configuration
 ├── .env                            # Env
 ├── .env.sample                     # Env sample
-├── .eslintrc.json                  # ESLint configuration
-├── .gitignore                      # Git ignore file
-├── .lintstagedrc                   # Lint-stage
-├── .prettierrc                     # Prettier configuration
-├── .commitlint.config.js           # Commitlint configuration
-├── jest.config.ts                  # Jest configuration
-├── jest.setup.ts                   # Jest setup configuration
-├── next.config.mjs                 # Next.js configuration
-├── postcss.config.mjs              # Post CSS configuration
-├── tailwind.config.ts              # Tailwind CSS configuration
-├── tsconfig.json                   # TypeScript configuration
-├── pnpm-lock.yaml
-└── package.json
+└── [config files...]               # Various configurations
 ```
 
-### 👨‍💻 Author
+</details>
+
+## Author
 
 - Giang Nguyen.
 - Email: giang.nguyen@asnet.com.vn.
+
+---
