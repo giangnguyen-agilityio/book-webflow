@@ -3,16 +3,14 @@
 // Constants
 import { API_PATH, DEFAULT_BOOKS_PER_PAGE } from '@/constants';
 
-// Models
-import { Book } from '@/models';
+// Types
+import { TBooksResponse, TBookResponse } from '@/types';
 
 // Services
 import { httpClient } from '@/services';
 
-type TBooksResponse = {
-  books: Book[];
-  count: number;
-};
+// Utils
+import { formatErrorMessage } from '@/utils';
 
 const getBookList = async (
   page?: number,
@@ -27,11 +25,13 @@ const getBookList = async (
 
     return data;
   } catch (error) {
-    throw new Error(String(error));
+    return {
+      error: formatErrorMessage(error),
+    };
   }
 };
 
-const getBookById = async (id?: string): Promise<Book> => {
+const getBookById = async (id?: string): Promise<TBookResponse> => {
   const endpoint = `${API_PATH.BOOKS}?id=${id}`;
 
   try {
@@ -39,9 +39,13 @@ const getBookById = async (id?: string): Promise<Book> => {
       endpoint,
     });
 
-    return data.books?.[0];
+    return {
+      book: data.books?.[0],
+    };
   } catch (error) {
-    throw new Error(String(error));
+    return {
+      error: formatErrorMessage(error),
+    };
   }
 };
 

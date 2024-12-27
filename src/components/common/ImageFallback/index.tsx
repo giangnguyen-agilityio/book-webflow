@@ -43,9 +43,9 @@ const ImageFallback = ({
       blurDataURL={blurDataURL}
       placeholder="blur"
       src={imgSrc}
+      title={alt}
       onError={handleFallbackImage}
       onLoad={handleLoad}
-      title={alt}
       {...rest}
     />
   );

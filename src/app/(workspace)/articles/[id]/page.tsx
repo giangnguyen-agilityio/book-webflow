@@ -23,20 +23,20 @@ export async function generateMetadata({
   params,
 }: ArticleDetailsPageProps): Promise<Metadata> {
   const { id } = await params;
-  const articleData = await getArticleById(id);
+  const { article, error } = await getArticleById(id);
 
-  if (!articleData) {
+  if (!article || error) {
     return {
       title: 'Article Not Found',
     };
   }
 
   return {
-    title: articleData.title,
-    description: articleData.description,
+    title: article.title,
+    description: article.description,
     openGraph: {
-      title: `${articleData.title} | Book WebFlow`,
-      description: articleData.description,
+      title: `${article.title} | Book WebFlow`,
+      description: article.description,
       type: 'article',
       url: `/articles/${id}`,
     },
@@ -47,15 +47,15 @@ export default async function ArticleDetailsPage({
   params,
 }: ArticleDetailsPageProps) {
   const { id } = await params;
-  const articleData = await getArticleById(id);
+  const { article, error } = await getArticleById(id);
 
-  if (!articleData) {
+  if (!article || error) {
     notFound();
   }
 
   return (
     <>
-      <Banner metadataTitle={articleData.title} />
+      <Banner metadataTitle={article.title} />
 
       <section
         className={cn(
@@ -63,7 +63,7 @@ export default async function ArticleDetailsPage({
           'py-10 xl:py-14 3xl:py-21',
         )}
       >
-        <ArticleDetail data={articleData} />
+        <ArticleDetail data={article} />
       </section>
     </>
   );

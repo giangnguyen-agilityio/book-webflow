@@ -34,7 +34,7 @@ describe('Book API', () => {
       const result = await getBookList();
 
       expect(result).toEqual(mockResponse);
-      expect(result.books.length).toBeLessThanOrEqual(DEFAULT_BOOKS_PER_PAGE);
+      expect(result.books?.length).toBeLessThanOrEqual(DEFAULT_BOOKS_PER_PAGE);
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?page=undefined&limit=${DEFAULT_BOOKS_PER_PAGE}`,
       });
@@ -53,7 +53,7 @@ describe('Book API', () => {
       const result = await getBookList(page, limit);
 
       expect(result).toEqual(mockResponse);
-      expect(result.books.length).toBeLessThanOrEqual(limit);
+      expect(result.books?.length).toBeLessThanOrEqual(limit);
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?page=${page}&limit=${limit}`,
       });
@@ -82,7 +82,11 @@ describe('Book API', () => {
         new Error(errorMessage),
       );
 
-      await expect(getBookList()).rejects.toThrow(errorMessage);
+      const result = await getBookList();
+
+      expect(result).toEqual({
+        error: errorMessage,
+      });
     });
   });
 
@@ -91,23 +95,17 @@ describe('Book API', () => {
       const targetBook = MOCK_BOOK_LIST[0];
       const mockResponse = {
         books: [targetBook],
-        count: 1,
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
       const result = await getBookById(targetBook.id);
 
-      expect(result).toEqual(targetBook);
+      expect(result).toEqual({
+        book: targetBook,
+      });
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?id=${targetBook.id}`,
       });
-
-      // Verify the returned book has all required properties
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('title');
-      expect(result).toHaveProperty('price');
-      expect(result).toHaveProperty('description');
-      expect(result).toHaveProperty('bookInformation');
     });
 
     it('should handle non-existent book id', async () => {
@@ -117,9 +115,9 @@ describe('Book API', () => {
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
-      const result = await getBookById('non-existent-id');
+      const { book } = await getBookById('non-existent-id');
 
-      expect(result).toBeUndefined();
+      expect(book).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?id=non-existent-id`,
       });
@@ -131,7 +129,11 @@ describe('Book API', () => {
         new Error(errorMessage),
       );
 
-      await expect(getBookById('1')).rejects.toThrow(errorMessage);
+      const result = await getBookById('1');
+
+      expect(result).toEqual({
+        error: errorMessage,
+      });
     });
 
     it('should handle undefined id parameter', async () => {
@@ -141,9 +143,9 @@ describe('Book API', () => {
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
-      const result = await getBookById(undefined);
+      const { book } = await getBookById(undefined);
 
-      expect(result).toBeUndefined();
+      expect(book).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?id=undefined`,
       });

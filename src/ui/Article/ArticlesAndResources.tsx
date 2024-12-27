@@ -13,12 +13,12 @@ import { getArticleList } from '@/apis';
 import { DEFAULT_LATEST_ARTICLES_NUMBER, DEFAULT_PAGE } from '@/constants';
 
 // Components
-import { Heading, Text } from '@/components';
+import { Message, Heading } from '@/components';
 
 import { ArticleCard } from '.';
 
 const ArticlesAndResources = async () => {
-  const { articles = [] } = await getArticleList(
+  const { articles, error } = await getArticleList(
     DEFAULT_PAGE,
     DEFAULT_LATEST_ARTICLES_NUMBER,
   );
@@ -42,33 +42,36 @@ const ArticlesAndResources = async () => {
           <Divider className="h-1 w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
         </div>
 
-        {articles.length > 0 ? (
+        {error && (
+          <Message
+            description="Please try again later."
+            title={error}
+            classNames={{
+              title: 'text-xl sm:text-2xl',
+              description: 'text-base sm:text-xl',
+            }}
+          />
+        )}
+
+        {articles?.length === 0 ? (
+          <Message
+            description="Please try again later or check your connection."
+            title="No articles available at the moment."
+            classNames={{
+              title: 'text-xl sm:text-2xl',
+              description: 'text-base sm:text-xl',
+            }}
+          />
+        ) : (
           <div
             className={cn(
               'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
               'gap-6 xl:gap-8.5',
             )}
           >
-            {articles.map((item: Article) => (
+            {articles?.map((item: Article) => (
               <ArticleCard key={item.id} articleData={item} />
             ))}
-          </div>
-        ) : (
-          <div className="text-center">
-            <Text
-              className="text-xl sm:text-2xl"
-              textColor="text-text-primary"
-              type="wrap"
-            >
-              No articles available at the moment.
-            </Text>
-            <Text
-              className="text-base sm:text-xl mt-2"
-              textColor="text-text-secondary"
-              type="wrap"
-            >
-              Check back later for new content!
-            </Text>
           </div>
         )}
       </div>
