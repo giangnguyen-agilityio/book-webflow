@@ -59,7 +59,7 @@ describe('ArticlesAndResources component', () => {
       screen.getByText('No articles available at the moment.'),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('Check back later for new content!'),
+      screen.getByText('Please try again later or check your connection.'),
     ).toBeInTheDocument();
   });
 

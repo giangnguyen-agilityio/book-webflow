@@ -34,7 +34,7 @@ describe('Article API', () => {
       const result = await getArticleList();
 
       expect(result).toEqual(mockResponse);
-      expect(result.articles.length).toBeLessThanOrEqual(
+      expect(result.articles?.length).toBeLessThanOrEqual(
         DEFAULT_ARTICLES_PER_PAGE,
       );
       expect(httpClient.get).toHaveBeenCalledWith({
@@ -55,7 +55,7 @@ describe('Article API', () => {
       const result = await getArticleList(page, limit);
 
       expect(result).toEqual(mockResponse);
-      expect(result.articles.length).toBeLessThanOrEqual(limit);
+      expect(result.articles?.length).toBeLessThanOrEqual(limit);
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.ARTICLES}?page=${page}&limit=${limit}`,
       });
@@ -67,7 +67,11 @@ describe('Article API', () => {
         new Error(errorMessage),
       );
 
-      await expect(getArticleList()).rejects.toThrow(errorMessage);
+      const result = await getArticleList();
+
+      expect(result).toEqual({
+        error: errorMessage,
+      });
     });
   });
 
@@ -76,13 +80,14 @@ describe('Article API', () => {
       const targetArticle = MOCK_ARTICLE_LIST[0];
       const mockResponse = {
         articles: [targetArticle],
-        count: 1,
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
       const result = await getArticleById(targetArticle.id);
 
-      expect(result).toEqual(targetArticle);
+      expect(result).toEqual({
+        article: targetArticle,
+      });
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.ARTICLES}?id=${targetArticle.id}`,
       });
@@ -95,9 +100,9 @@ describe('Article API', () => {
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
-      const result = await getArticleById('non-existent-id');
+      const { article } = await getArticleById('non-existent-id');
 
-      expect(result).toBeUndefined();
+      expect(article).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.ARTICLES}?id=non-existent-id`,
       });
@@ -109,7 +114,11 @@ describe('Article API', () => {
         new Error(errorMessage),
       );
 
-      await expect(getArticleById('1')).rejects.toThrow(errorMessage);
+      const result = await getArticleById('1');
+
+      expect(result).toEqual({
+        error: errorMessage,
+      });
     });
   });
 });

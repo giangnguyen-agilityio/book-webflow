@@ -3,16 +3,14 @@
 // Constants
 import { API_PATH, DEFAULT_ARTICLES_PER_PAGE } from '@/constants';
 
-// Models
-import { Article } from '@/models';
+// Types
+import { TArticlesResponse, TArticleResponse } from '@/types';
 
 // Services
 import { httpClient } from '@/services';
 
-type TArticlesResponse = {
-  articles: Article[];
-  count: number;
-};
+// Utils
+import { formatErrorMessage } from '@/utils';
 
 const getArticleList = async (
   page?: number,
@@ -27,11 +25,13 @@ const getArticleList = async (
 
     return data;
   } catch (error) {
-    throw new Error(String(error));
+    return {
+      error: formatErrorMessage(error),
+    };
   }
 };
 
-const getArticleById = async (id?: string): Promise<Article> => {
+const getArticleById = async (id?: string): Promise<TArticleResponse> => {
   const endpoint = `${API_PATH.ARTICLES}?id=${id}`;
 
   try {
@@ -39,9 +39,13 @@ const getArticleById = async (id?: string): Promise<Article> => {
       endpoint,
     });
 
-    return data.articles?.[0];
+    return {
+      article: data.articles?.[0],
+    };
   } catch (error) {
-    throw new Error(String(error));
+    return {
+      error: formatErrorMessage(error),
+    };
   }
 };
 

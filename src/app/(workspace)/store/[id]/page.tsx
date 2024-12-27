@@ -24,9 +24,9 @@ export async function generateMetadata({
   params,
 }: BookDetailsPageProps): Promise<Metadata> {
   const { id } = await params;
-  const bookData = await getBookById(id);
+  const { book, error } = await getBookById(id);
 
-  if (!bookData) {
+  if (!book || error) {
     return {
       title: 'Book Not Found',
       description: 'The requested book could not be found',
@@ -38,11 +38,11 @@ export async function generateMetadata({
   }
 
   return {
-    title: bookData.title,
-    description: bookData.description,
+    title: book.title,
+    description: book.description,
     openGraph: {
-      title: `${bookData.title} | Book WebFlow`,
-      description: bookData.description,
+      title: `${book.title} | Book WebFlow`,
+      description: book.description,
       type: 'book',
       url: `/store/${id}`,
     },
@@ -51,9 +51,9 @@ export async function generateMetadata({
 
 const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
   const { id } = await params;
-  const bookData = await getBookById(id);
+  const { book, error } = await getBookById(id);
 
-  if (!bookData) {
+  if (!book || error) {
     notFound();
   }
 
@@ -67,7 +67,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
       >
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12">
-            <BookDetail data={bookData} />
+            <BookDetail data={book} />
           </div>
         </div>
       </section>
