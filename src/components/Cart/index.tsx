@@ -39,7 +39,7 @@ const CartAction = ({ onPress }: CartButtonProps) => {
         startContent={<CartIcon />}
         variant="light"
         className={cn(
-          'text-text-default hover:text-text-tertiary',
+          'text-foreground hover:text-secondary',
           quantity > 0 && 'pr-2 pt-1',
         )}
         onPress={onPress}
@@ -50,7 +50,7 @@ const CartAction = ({ onPress }: CartButtonProps) => {
             'font-extrabold text-[10px]',
             'absolute top-0 right-0',
             'w-5 h-5 flex items-center justify-center rounded-full',
-            'bg-text-tertiary text-text-primary',
+            'bg-secondary text-primary',
           )}
         >
           {formattedQuantity}

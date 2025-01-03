@@ -32,7 +32,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
         <ImageFallback
           fill
           alt={title}
-          className="mx-auto border-2 border-blue-150/50 object-cover"
+          className="mx-auto border-2 border-foreground-500/50 object-cover"
           src={imageSrc}
           sizes="(max-width: 425px) 95vw,
                  (max-width: 768px) 46vw,
@@ -42,11 +42,11 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
         />
       </div>
 
-      <div className="flex-1 flex flex-col bg-background-default p-6 md:py-7">
+      <div className="flex-1 flex flex-col bg-background p-6 md:py-7">
         <div className="flex-1">
           <Heading
             className="font-cardo font-bold text-xl md:text-3xl mb-3.5 line-clamp-2"
-            textColor="text-text-primary"
+            textColor="text-primary"
             title={title}
           >
             {title}
@@ -54,7 +54,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
 
           <Text
             className="font-inter font-normal line-clamp-3"
-            textColor="text-text-secondary"
+            textColor="text-foreground-200"
             type="wrap"
           >
             {description}
@@ -65,7 +65,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
           <Link
             href={`${ROUTES.ARTICLES}/${id}`}
             className={cn(
-              'text-text-primary underline-offset-4 hover:underline',
+              'text-primary underline-offset-4 hover:underline',
               'font-cardo font-bold text-base md:text-md',
             )}
           >
@@ -74,7 +74,7 @@ const ArticleCard = ({ articleData }: ArticleCardProps) => {
           </Link>
 
           <time
-            className="font-inter font-normal text-base md:text-md text-text-primary"
+            className="font-inter font-normal text-base md:text-md text-primary"
             dateTime={createdDate}
           >
             {createdDate}

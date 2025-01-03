@@ -42,7 +42,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
     {message && (
       <Text
         className="font-semibold text-center text-lg md:text-xl"
-        textColor="text-text-primary"
+        textColor="text-primary"
         type="wrap"
       >
         Error details:
@@ -50,7 +50,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
         <Text
           as="span"
           className="max-w-lg text-medium md:text-base"
-          textColor="text-text-error/80"
+          textColor="text-danger/80"
           type="wrap"
         >
           {message}
@@ -69,7 +69,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
         className={cn(
           'p-0 min-w-fit bg-transparent',
           'font-inter font-semibold',
-          'text-md md:text-lg text-text-primary',
+          'text-md md:text-lg text-primary',
           'hover:underline underline-offset-4',
         )}
         onPress={reset}
@@ -80,7 +80,7 @@ const ErrorFallback = ({ message = '', reset }: ErrorFallbackProps) => (
       <Link
         href={ROUTES.STORE}
         className={cn(
-          'text-text-primary font-semibold',
+          'text-primary font-semibold',
           'text-md md:text-lg',
           'transition-all hover:underline underline-offset-4',
         )}

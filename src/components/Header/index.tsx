@@ -46,7 +46,7 @@ const Header = () => {
   return (
     <>
       <NavbarNextUI
-        className="bg-background-primary"
+        className="bg-background-200"
         isMenuOpen={isMenuOpen}
         classNames={{
           wrapper: 'w-full max-w-screen-3xl mx-auto',
@@ -58,7 +58,7 @@ const Header = () => {
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             as="li"
-            className="text-text-default"
+            className="text-background"
           />
         </NavbarContent>
 
@@ -66,14 +66,14 @@ const Header = () => {
           {/* Logo Website */}
           <NavbarBrand aria-label="Logo website" as="li">
             <Link href={ROUTES.STORE}>
-              <LogoIcon customClass="w-30 h-9 text-text-default" />
+              <LogoIcon customClass="w-30 h-9 text-background" />
             </Link>
           </NavbarBrand>
 
           {/* Social Network Links */}
           <NavbarItem as="li" className="hidden md:flex gap-2.5">
             {formattedSocialLinks.map(({ url, icon: Icon, title }) => (
-              <span key={`social-${title}`} className="text-text-primary">
+              <span key={`social-${title}`} className="text-primary">
                 <SocialLinks Icon={Icon} title={title} url={url} />
               </span>
             ))}

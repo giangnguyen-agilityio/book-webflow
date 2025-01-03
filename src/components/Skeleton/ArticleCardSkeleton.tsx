@@ -5,7 +5,7 @@ const ArticleCardSkeleton = () => (
   <div className="overflow-hidden shadow-md flex flex-col h-full">
     <BaseSkeleton className="w-full aspect-[410/326] rounded-none rounded-t-lg" />
 
-    <div className="flex-1 flex flex-col bg-background-default p-6 md:py-7">
+    <div className="flex-1 flex flex-col bg-background p-6 md:py-7">
       <div className="flex-1">
         <BaseSkeleton className="h-8 md:h-14 w-full mb-3.5" />
         <BaseSkeleton className="h-4 w-full mb-2" />

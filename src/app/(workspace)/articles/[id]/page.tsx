@@ -58,10 +58,7 @@ export default async function ArticleDetailsPage({
       <Banner metadataTitle={article.title} />
 
       <section
-        className={cn(
-          'w-full bg-background-default',
-          'py-10 xl:py-14 3xl:py-21',
-        )}
+        className={cn('w-full bg-background', 'py-10 xl:py-14 3xl:py-21')}
       >
         <ArticleDetail data={article} />
       </section>

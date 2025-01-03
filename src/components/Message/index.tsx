@@ -20,7 +20,7 @@ const Message = ({ title, description, classNames = {} }: MessageProps) => (
     data-testid="message-wrapper"
   >
     <Text
-      textColor="text-text-primary"
+      textColor="text-primary"
       type="wrap"
       className={cn(
         'font-cardo text-3xl font-bold sm:text-4xl',
@@ -31,7 +31,7 @@ const Message = ({ title, description, classNames = {} }: MessageProps) => (
     </Text>
     <Text
       className={cn('mt-2 text-small md:text-sm', classNames.description)}
-      textColor="text-text-secondary"
+      textColor="text-foreground-200"
       type="wrap"
     >
       {description}

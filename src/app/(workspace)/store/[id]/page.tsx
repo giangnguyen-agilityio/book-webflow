@@ -60,10 +60,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
   return (
     <>
       <section
-        className={cn(
-          'w-full bg-background-default',
-          'py-10 xl:py-14 3xl:py-21',
-        )}
+        className={cn('w-full bg-background', 'py-10 xl:py-14 3xl:py-21')}
       >
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12">

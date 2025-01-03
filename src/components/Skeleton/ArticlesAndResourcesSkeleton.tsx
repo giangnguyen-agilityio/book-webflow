@@ -14,7 +14,7 @@ import { ArticleCardSkeleton } from '.';
 const ArticlesAndResourcesSkeleton = () => (
   <div
     className={cn(
-      'background-overlay bg-background-secondary',
+      'background-overlay bg-background-100',
       'py-10 xl:py-30 3xl:py-36',
     )}
   >
@@ -22,12 +22,12 @@ const ArticlesAndResourcesSkeleton = () => (
       <div className="text-center mb-12">
         <Heading
           className="font-cardo font-bold text-4xl sm:text-6xl md:text-8xl"
-          textColor="text-text-primary"
+          textColor="text-primary"
         >
           Articles & Resources
         </Heading>
 
-        <Divider className="h-1 w-13.75 mt-6 mb-12.5 bg-background-tertiary mx-auto" />
+        <Divider className="h-1 w-13.75 mt-6 mb-12.5 bg-secondary mx-auto" />
       </div>
 
       <div

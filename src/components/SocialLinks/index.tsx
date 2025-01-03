@@ -24,7 +24,7 @@ const SocialLinks = ({
     title={title}
     className={cn(
       'w-11 h-11 flex justify-center items-center',
-      'bg-background-default border md:border-none',
+      'bg-background border md:border-none',
       customClass,
     )}
   >

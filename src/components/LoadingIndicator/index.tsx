@@ -23,16 +23,16 @@ const LoadingIndicator = ({
     'flex items-center justify-center',
     fullScreen && [
       'fixed inset-0 z-50',
-      'bg-background-primary',
+      'bg-background-200',
       'backdrop-blur-sm',
     ],
     containerClassName,
   );
 
   const customClassNames = {
-    circle1: 'border-b-border-default',
-    circle2: 'border-b-border-default',
-    label: cn('text-text-tertiary', labelClassName),
+    circle1: 'border-b-secondary',
+    circle2: 'border-b-secondary',
+    label: cn('text-secondary', labelClassName),
     ...classNames,
   };
 

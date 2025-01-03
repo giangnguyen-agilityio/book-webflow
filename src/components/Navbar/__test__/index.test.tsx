@@ -46,7 +46,7 @@ describe('Navbar component', () => {
 
     const activeLink = screen.getByText(NAVIGATION_ITEMS.MAIN[0].label);
 
-    expect(activeLink).toHaveClass('text-text-tertiary', 'underline');
+    expect(activeLink).toHaveClass('text-secondary', 'underline');
   });
 
   it('should highlight active item when pathname includes label', () => {
@@ -55,6 +55,6 @@ describe('Navbar component', () => {
 
     const activeLink = screen.getByText(NAVIGATION_ITEMS.MAIN[0].label);
 
-    expect(activeLink).toHaveClass('text-text-tertiary', 'underline');
+    expect(activeLink).toHaveClass('text-secondary', 'underline');
   });
 });

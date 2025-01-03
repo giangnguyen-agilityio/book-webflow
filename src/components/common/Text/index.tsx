@@ -40,7 +40,7 @@ const Text = ({
   children,
   size = 'base',
   type = 'nowrap',
-  textColor = 'text-text-secondary',
+  textColor = 'text-foreground-200',
   customSize = '',
   className = '',
   ...props

@@ -3,7 +3,6 @@ import { nextui } from '@nextui-org/react';
 
 import {
   borderWidth,
-  colorPalette,
   colors,
   fontSize,
   height,
@@ -26,32 +25,30 @@ const config: Config = {
         cardo: ['var(--font-cardo)'],
       },
       fontSize,
-      borderWidth: {
-        ...borderWidth,
-      },
-      colors: {
-        ...colorPalette,
-        ...colors,
-      },
-      screens: {
-        ...screens,
-      },
-      spacing: {
-        ...spacing,
-      },
-      width: {
-        ...width,
-      },
-      height: {
-        ...height,
-      },
+      borderWidth,
+      screens,
+      spacing,
+      width,
+      height,
       backgroundImage: {
         'not-found-bg': 'url(/images/background-image.webp)',
       },
     },
   },
+
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      addCommonColors: true,
+      defaultTheme: 'light',
+      defaultExtendTheme: 'light',
+      themes: {
+        light: {
+          colors,
+        },
+      },
+    }),
+  ],
 };
 
 export default config;
