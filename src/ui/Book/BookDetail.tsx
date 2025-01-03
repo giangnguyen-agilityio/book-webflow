@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 // Utils
-import { cn } from '@/utils';
+import { cn, getInventoryStatus } from '@/utils';
 
 // Models
 import { Book } from '@/models';
@@ -31,7 +31,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
   const router = useRouter();
 
   const {
-    id = 'N/A',
+    id,
     imageSrc = ImageStore.UnavailableImage,
     title = 'N/A',
     price = 0,
@@ -61,6 +61,9 @@ const BookDetail = ({ data }: BookDetailProps) => {
   const cartItem = cartItems.find((item) => item.id === id);
   const availableQuantity = cartItem ? cartItem.quantity : quantity;
   const isOutOfStock = availableQuantity === 0;
+  const isLowStock = availableQuantity < 5;
+
+  const inventoryStatus = getInventoryStatus(availableQuantity);
 
   const handleNavigateBack = () => {
     router.back();
@@ -68,11 +71,19 @@ const BookDetail = ({ data }: BookDetailProps) => {
 
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value, 10);
+
+    if (value < 1) {
+      setOrderQuantity(1);
+      return;
+    }
+
     const finalQuantity = Math.min(value, availableQuantity);
     setOrderQuantity(finalQuantity);
   };
 
   const handleAddToCart = () => {
+    if (isOutOfStock) return;
+
     addToCart(data, orderQuantity);
   };
 
@@ -127,6 +138,17 @@ const BookDetail = ({ data }: BookDetailProps) => {
               >
                 ${price.toFixed(2)} USD
               </Text>
+
+              <Text
+                className={cn(
+                  'mt-2 font-medium',
+                  'text-base md:text-lg text-success',
+                  isLowStock && 'text-warning',
+                  isOutOfStock && 'text-danger',
+                )}
+              >
+                {inventoryStatus}
+              </Text>
             </div>
 
             <Text
@@ -170,6 +192,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
             <Button
               aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
               color="default"
+              disableAnimation={isOutOfStock}
               disabled={isOutOfStock}
               startContent={<CartIcon customClass="w-5 h-5" />}
               variant="solid"
@@ -180,7 +203,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
               )}
               onPress={handleAddToCart}
             >
-              {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+              Add to Cart
             </Button>
           </div>
         </div>

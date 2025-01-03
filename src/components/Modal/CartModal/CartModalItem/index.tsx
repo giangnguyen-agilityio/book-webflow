@@ -35,7 +35,6 @@ const CartModalItem = ({
 
   // Calculate remaining stock
   const remainingStock = quantity + orderedQuantity;
-  const isLowStock = quantity < 5;
 
   return (
     <div>
@@ -94,27 +93,18 @@ const CartModalItem = ({
             />
           </div>
 
-          <div className="flex justify-between items-center mt-2 sm:mt-0">
-            <Button
-              color="default"
-              variant="flat"
-              className={cn(
-                'w-fit p-0 hover:underline',
-                'bg-transparent font-normal text-lg sm:text-xl md:text-2xl',
-              )}
-              onPress={handleRemoveClick}
-            >
-              Remove
-            </Button>
-            <Text
-              className={cn(
-                'text-sm text-foreground-200',
-                isLowStock && 'text-danger font-medium',
-              )}
-            >
-              {`Only ${quantity} left in stock`}
-            </Text>
-          </div>
+          <Button
+            color="default"
+            variant="flat"
+            className={cn(
+              'w-fit p-0 hover:underline',
+              'mt-2 sm:mt-0',
+              'bg-transparent font-normal text-lg sm:text-xl md:text-2xl',
+            )}
+            onPress={handleRemoveClick}
+          >
+            Remove
+          </Button>
         </div>
       </div>
       {showDivider && <Divider className="bg-background-500 mt-4 sm:mt-6" />}

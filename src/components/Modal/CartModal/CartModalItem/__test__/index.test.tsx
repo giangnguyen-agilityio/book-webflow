@@ -48,19 +48,6 @@ describe('CartModalItem component', () => {
     expect(defaultProps.onRemoveClick).toHaveBeenCalledWith('1');
   });
 
-  it('should show low stock warning when quantity is less than 5', () => {
-    const lowStockItem = {
-      ...mockItem,
-      quantity: 3,
-    };
-
-    wrapper(<CartModalItem {...defaultProps} item={lowStockItem} />);
-
-    const stockText = screen.getByText('Only 3 left in stock');
-
-    expect(stockText).toHaveClass('text-danger');
-  });
-
   it('should not show divider when showDivider is false', () => {
     const { container } = wrapper(
       <CartModalItem {...defaultProps} showDivider={false} />,
