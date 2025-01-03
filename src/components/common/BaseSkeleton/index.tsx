@@ -14,7 +14,7 @@ export interface SkeletonProps extends SkeletonNextUIProps {
 
 export const BaseSkeleton = ({ className, ...props }: SkeletonProps) => (
   <SkeletonNextUI
-    className={cn('bg-background-primary/20 rounded-md', className)}
+    className={cn('bg-background-200/20 rounded-md', className)}
     {...props}
   />
 );

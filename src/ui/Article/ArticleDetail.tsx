@@ -27,7 +27,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
   return (
     <article
       className={cn(
-        'container mx-auto bg-background-default',
+        'container mx-auto bg-background',
         'font-inter font-normal',
       )}
     >
@@ -39,7 +39,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
           fill
           priority
           alt={title}
-          className="border-2 border-blue-150/50"
+          className="border-2 border-foreground-500/50"
           quality={100}
           sizes="(max-width: 425px) 304px, (max-width: 768px) 732px, (max-width: 1024px) 976px, 100vw"
           src={imageSrc}
@@ -50,7 +50,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
         className={cn(
           'flex items-center gap-1 mt-4 mb-8',
           'font-cardo font-bold text-xl 3xl:text-3xl',
-          'text-text-primary',
+          'text-primary',
         )}
       >
         <time dateTime={createdDate}>{createdDate}</time>
@@ -61,7 +61,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
       <div className="flex flex-col gap-6">
         <Text
           className="text-base md:text-lg"
-          textColor="text-text-secondary"
+          textColor="text-foreground-200"
           type="wrap"
         >
           {description}
@@ -69,7 +69,7 @@ const ArticleDetail = ({ data }: ArticleDetailProps) => {
 
         <Text
           className="text-base md:text-lg"
-          textColor="text-text-primary"
+          textColor="text-primary"
           type="wrap"
         >
           {content}

@@ -28,10 +28,10 @@ export const CustomPagination = extendVariants(PaginationNextUI, {
         item: cn(
           'bg-transparent shadow-none',
           'font-cardo text-base lg:text-lg xl:text-xl',
-          '[&[data-hover=true]:not([data-active=true])]:text-text-primary dark:[&[data-hover=true]:not([data-active=true])]:bg-background-primary',
+          '[&[data-hover=true]:not([data-active=true])]:text-primary dark:[&[data-hover=true]:not([data-active=true])]:bg-background-200',
         ),
         cursor:
-          'bg-background-primary hover:bg-background-primary hover:text-text-default',
+          'bg-background-200 hover:bg-background-200 hover:text-background',
       },
     },
   },
@@ -55,7 +55,7 @@ const Pagination = ({ total, ...props }: NextUIPaginationProps) => {
       'text-base lg:text-lg xl:text-xl',
       'bg-transparent data-[hover=true]:bg-transparent',
       {
-        'text-text-primary': !isDisabled,
+        'text-primary': !isDisabled,
       },
     );
 

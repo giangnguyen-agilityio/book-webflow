@@ -27,7 +27,7 @@ const BackButton = ({ customClass }: CustomClassType) => {
       variant="flat"
       className={cn(
         'mb-4 p-0 min-w-fit bg-transparent',
-        'font-semibold text-lg text-text-primary',
+        'font-semibold text-lg text-primary',
         'hover:underline underline-offset-4',
         customClass,
       )}

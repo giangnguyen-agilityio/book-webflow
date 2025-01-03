@@ -26,8 +26,8 @@ const Navbar = ({ pathname, customClass = '' }: NavbarProps) => (
             href={url}
             title={title}
             className={cn(
-              'transition-colors text-text-default hover:text-text-tertiary hover:underline',
-              isActive && 'text-text-tertiary underline',
+              'transition-colors text-foreground hover:text-secondary hover:underline',
+              isActive && 'text-secondary underline',
             )}
           >
             {label}

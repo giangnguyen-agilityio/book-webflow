@@ -40,14 +40,14 @@ const NotFoundFallback = ({
       <Heading
         as="h1"
         className={cn('mt-8.5 mb-4', 'text-center text-6xl md:text-7xl')}
-        textColor="text-text-primary"
+        textColor="text-primary"
       >
         {title}
       </Heading>
 
       <Text
         className="mb-10 text-center text-base md:text-lg"
-        textColor="text-text-secondary"
+        textColor="text-foreground-200"
         type="wrap"
       >
         {message}

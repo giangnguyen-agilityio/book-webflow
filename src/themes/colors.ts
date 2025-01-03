@@ -1,3 +1,5 @@
+import { ThemeColors } from '@nextui-org/react';
+
 const colorPalette = {
   white: {
     100: '#ffffff', // White
@@ -26,31 +28,46 @@ const colorPalette = {
 };
 
 const colors = {
-  text: {
-    default: colorPalette.white[100],
-    primary: colorPalette.blue[200],
-    secondary: colorPalette.gray[200],
-    tertiary: colorPalette.yellow[100],
-    disabled: colorPalette.gray[150],
-    link: colorPalette.blue[150],
-    linkHover: colorPalette.yellow[100],
-    success: colorPalette.green[150],
-    error: colorPalette.red[100],
-  },
-
+  // Base colors
   background: {
-    default: colorPalette.white[100],
-    primary: colorPalette.blue[200],
-    secondary: colorPalette.white[150],
-    tertiary: colorPalette.yellow[100],
-    disabled: colorPalette.gray[100],
+    DEFAULT: colorPalette.white[100],
+    50: colorPalette.white[100], // default background
+    100: colorPalette.white[150], // primary background
+    200: colorPalette.blue[200], // secondary background
+    300: colorPalette.yellow[100], // tertiary background
+    400: colorPalette.gray[100], // quaternary background
+    500: colorPalette.blue[100], // disabled background
+  },
+  foreground: {
+    DEFAULT: colorPalette.white[100],
+    50: colorPalette.white[100], // text-default
+    100: colorPalette.blue[200], // text-primary
+    200: colorPalette.gray[200], // text-secondary
+    300: colorPalette.yellow[100], // text-tertiary
+    400: colorPalette.gray[150], // text-disabled
+    500: colorPalette.blue[150], // text-link
+    600: colorPalette.yellow[100], // text-linkHover
+    700: colorPalette.green[150], // text-success
+    800: colorPalette.red[100], // text-error
   },
 
-  border: {
-    default: colorPalette.yellow[100],
-    primary: colorPalette.blue[100],
-    secondary: colorPalette.blue[200],
+  // Semantic colors
+  primary: {
+    DEFAULT: colorPalette.blue[200],
+    foreground: colorPalette.white[100],
   },
-};
+  secondary: {
+    DEFAULT: colorPalette.yellow[100],
+    foreground: colorPalette.blue[200],
+  },
+  success: {
+    DEFAULT: colorPalette.green[150],
+    foreground: colorPalette.white[100],
+  },
+  danger: {
+    DEFAULT: colorPalette.red[100],
+    foreground: colorPalette.white[100],
+  },
+} as ThemeColors;
 
 export { colorPalette, colors };

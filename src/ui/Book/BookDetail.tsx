@@ -83,7 +83,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
         variant="flat"
         className={cn(
           'mb-4 p-0 min-w-fit bg-transparent',
-          'font-semibold text-lg text-text-primary',
+          'font-semibold text-lg text-primary',
           'hover:underline underline-offset-4',
         )}
         onPress={handleNavigateBack}
@@ -93,7 +93,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
 
       <div className="flex flex-col lg:flex-row gap-21">
         {/* Book Image Section */}
-        <div className="w-full max-w-none lg:max-w-[580px] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-secondary">
+        <div className="w-full max-w-none lg:max-w-[580px] px-10 py-10 3xl:px-20 3xl:py-18 bg-background-100">
           <ImageFallback
             alt={title}
             height={510}
@@ -103,7 +103,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
             className={cn(
               'aspect-[380/510] max-w-full max-h-[510px]',
               'mx-auto object-cover shadow-xl',
-              'border-2 sm:border-4 border-border-primary',
+              'border-2 sm:border-4 border-foreground-500',
             )}
           />
         </div>
@@ -115,14 +115,14 @@ const BookDetail = ({ data }: BookDetailProps) => {
               <Heading
                 as="h1"
                 className="font-cardo text-3xl md:text-5xl font-bold"
-                textColor="text-text-primary"
+                textColor="text-primary"
               >
                 {title}
               </Heading>
               <Text
                 as="span"
                 className="font-inter text-xl md:text-3xl font-extrabold"
-                textColor="text-text-tertiary"
+                textColor="text-secondary"
                 type="wrap"
               >
                 ${price.toFixed(2)} USD
@@ -131,7 +131,7 @@ const BookDetail = ({ data }: BookDetailProps) => {
 
             <Text
               className="font-inter text-base md:text-lg font-normal"
-              textColor="text-text-secondary"
+              textColor="text-foreground-200"
               type="wrap"
             >
               {description}
@@ -140,10 +140,10 @@ const BookDetail = ({ data }: BookDetailProps) => {
             <dl className="space-y-4 xl:space-y-6">
               {bookDetails.map(({ label, value }) => (
                 <div key={label} className="grid grid-cols-3 gap-2">
-                  <dt className="font-inter text-base md:text-lg font-normal text-text-secondary">
+                  <dt className="font-inter text-base md:text-lg font-normal text-foreground-200">
                     {label}:
                   </dt>
-                  <dd className="col-span-2 text-base md:text-lg text-text-secondary">
+                  <dd className="col-span-2 text-base md:text-lg text-foreground-200">
                     {value}
                   </dd>
                 </div>

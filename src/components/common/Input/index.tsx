@@ -10,19 +10,19 @@ const Input = extendVariants(InputNextUI, {
     color: {
       primary: {
         inputWrapper: cn(
-          'border border-border-primary',
-          '!bg-transparent hover:!bg-blue-100 focus-within:ring-2',
+          'border border-background-500',
+          '!bg-transparent hover:!bg-background-500 focus-within:ring-2',
           'transition-all duration-200',
         ),
-        input: 'text-text-primary placeholder:text-text-primary',
+        input: 'text-foreground-100 placeholder:text-foreground-100',
       },
       secondary: {
         inputWrapper: cn(
-          'border border-border-default',
-          '!bg-transparent focus-within:ring-2 ring-border-default',
+          'border border-background-300',
+          '!bg-transparent focus-within:ring-2 ring-background-300',
           'transition-all duration-200',
         ),
-        input: 'text-text-secondary placeholder:text-text-secondary',
+        input: 'text-foreground-200 placeholder:text-foreground-200',
       },
     },
     size: {
@@ -43,6 +43,7 @@ const Input = extendVariants(InputNextUI, {
   defaultVariants: {
     size: 'sm',
     radius: 'none',
+    color: 'primary',
   },
 });
 

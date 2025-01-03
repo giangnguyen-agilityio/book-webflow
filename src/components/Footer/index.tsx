@@ -14,7 +14,7 @@ import { Text, Heading, SocialLinks } from '@/components';
 
 const Footer = () => {
   return (
-    <footer className="bg-background-primary text-text-default">
+    <footer className="bg-background-200 text-foreground">
       <div
         className={cn(
           'w-full max-w-screen-3xl mx-auto',
@@ -26,13 +26,13 @@ const Footer = () => {
           <div className="left-column flex-shrink-0 space-y-6">
             <div className="flex items-center space-x-2">
               <Link href={ROUTES.STORE}>
-                <LogoIcon customClass="w-30 h-9 text-text-default" />
+                <LogoIcon customClass="w-30 h-9 text-foreground" />
               </Link>
             </div>
 
             <ul className="flex space-x-4">
               {SOCIAL_LINK_ITEMS.map(({ url, icon: Icon, title }) => (
-                <li key={title} className="border border-border-default">
+                <li key={title} className="border border-secondary">
                   <SocialLinks
                     key={title}
                     Icon={Icon}
@@ -40,7 +40,7 @@ const Footer = () => {
                     url={url}
                     customClass={cn(
                       'p-2 transition-colors',
-                      'bg-background-primary hover:bg-background-tertiary/60',
+                      'bg-background-200 hover:bg-secondary/60',
                     )}
                   />
                 </li>
@@ -59,7 +59,7 @@ const Footer = () => {
             <div>
               <Heading
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
-                textColor="text-text-default"
+                textColor="text-foreground"
               >
                 Explore
               </Heading>
@@ -67,10 +67,10 @@ const Footer = () => {
                 {NAVIGATION_ITEMS.EXPLORE.map(({ url, label, title }) => (
                   <li key={label} title={title}>
                     <Link className="flex items-center space-x-2" href={url}>
-                      <HorizontalDotsIcon customClass="w-6 h-6 text-text-tertiary" />
+                      <HorizontalDotsIcon customClass="w-6 h-6 text-secondary" />
                       <Text
                         as="span"
-                        className="text-text-link hover:text-text-linkHover"
+                        className="text-foreground-500 hover:text-secondary"
                         size="md"
                       >
                         {label}
@@ -85,7 +85,7 @@ const Footer = () => {
             <div>
               <Heading
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
-                textColor="text-text-default"
+                textColor="text-foreground"
               >
                 Utility Pages
               </Heading>
@@ -93,13 +93,13 @@ const Footer = () => {
                 {NAVIGATION_ITEMS.UTILITY.map(({ url, label, title }) => (
                   <li key={label} title={title}>
                     <Link
-                      className="flex items-center space-x-2 hover:text-text-linkHover"
+                      className="flex items-center space-x-2 hover:text-secondary"
                       href={url}
                     >
-                      <HorizontalDotsIcon customClass="w-6 h-6 text-text-tertiary" />
+                      <HorizontalDotsIcon customClass="w-6 h-6 text-secondary" />
                       <Text
                         as="span"
-                        className="text-text-link hover:text-text-linkHover"
+                        className="text-foreground-500 hover:text-secondary"
                         size="md"
                       >
                         {label}
@@ -114,7 +114,7 @@ const Footer = () => {
             <div>
               <Heading
                 className="mb-6 font-cardo font-bold text-xl md:text-3xl"
-                textColor="text-text-default"
+                textColor="text-foreground"
               >
                 Keep in Touch
               </Heading>
@@ -123,11 +123,11 @@ const Footer = () => {
                   <Text
                     className="mb-2 font-cardo font-bold"
                     size="md"
-                    textColor="text-text-default"
+                    textColor="text-foreground"
                   >
                     Address :
                   </Text>
-                  <Text size="md" textColor="text-text-link" type="wrap">
+                  <Text size="md" textColor="text-foreground-500" type="wrap">
                     {`24A Kingston St, Los Vegas \n NC 28202, USA.`}
                   </Text>
                 </div>
@@ -135,12 +135,12 @@ const Footer = () => {
                   <Text
                     className="mb-2 font-cardo font-bold"
                     size="md"
-                    textColor="text-text-default"
+                    textColor="text-foreground"
                   >
                     Mail :
                   </Text>
                   <Link
-                    className="break-words text-md text-text-link hover:text-text-linkHover"
+                    className="break-words text-md text-foreground-500 hover:text-secondary"
                     href="mailto:support@doctors.com"
                   >
                     support@doctors.com
@@ -150,12 +150,12 @@ const Footer = () => {
                   <Text
                     className="mb-2 font-cardo font-bold"
                     size="md"
-                    textColor="text-text-default"
+                    textColor="text-foreground"
                   >
                     Phone :
                   </Text>
                   <Link
-                    className="text-md text-text-link hover:text-text-linkHover"
+                    className="text-md text-foreground-500 hover:text-secondary"
                     href="tel:+22123456790"
                   >
                     (+22) 123 - 4567 - 900
@@ -167,8 +167,8 @@ const Footer = () => {
         </div>
 
         {/* Copyright Section */}
-        <div className="mt-19 pt-4.5 border-t border-white text-center text-text-link">
-          <Text textColor="text-text-link" type="wrap">
+        <div className="mt-19 pt-4.5 border-t border-foreground-500 text-center">
+          <Text textColor="text-foreground-500" type="wrap">
             Copyright © 2024, VictorFlow - All rights reserved.
           </Text>
         </div>

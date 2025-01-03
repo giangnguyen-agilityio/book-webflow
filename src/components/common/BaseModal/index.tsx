@@ -30,9 +30,9 @@ const BaseModal = ({
     placement={placement}
     scrollBehavior="inside"
     classNames={{
-      base: 'rounded-none bg-background-default max-w-[800px] !my-auto',
-      closeButton: 'text-text-primary',
-      header: 'bg-background-tertiary font-cardo font-bold text-text-primary',
+      base: 'rounded-none bg-background max-w-[800px] !my-auto',
+      closeButton: 'text-primary',
+      header: 'bg-secondary font-cardo font-bold text-primary',
     }}
     onClose={onClose}
     {...rest}

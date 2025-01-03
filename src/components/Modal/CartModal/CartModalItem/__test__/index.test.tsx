@@ -58,7 +58,7 @@ describe('CartModalItem component', () => {
 
     const stockText = screen.getByText('Only 3 left in stock');
 
-    expect(stockText).toHaveClass('text-text-error');
+    expect(stockText).toHaveClass('text-danger');
   });
 
   it('should not show divider when showDivider is false', () => {

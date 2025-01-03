@@ -21,7 +21,7 @@ const Heading = ({
   className = '',
   size = 'base',
   customSize = '',
-  textColor = 'text-text-primary',
+  textColor = 'text-primary',
   ...props
 }: HeadingProps) => {
   const ariaLevels: { [key: string]: number } = {

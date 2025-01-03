@@ -47,7 +47,7 @@ const CartModalItem = ({
           width={130}
           className={cn(
             'w-full sm:w-32 md:w-[130px] min-h-44',
-            'border-2 sm:border-4 border-blue-150',
+            'border-2 sm:border-4 border-foreground-500',
             'object-cover',
           )}
           sizes="(max-width: 320px) 280px,
@@ -59,7 +59,7 @@ const CartModalItem = ({
           <div className="flex justify-between">
             <div>
               <Text
-                textColor="text-text-primary"
+                textColor="text-primary"
                 className={cn(
                   'font-cardo font-bold',
                   'text-xl sm:text-2xl md:text-3xl',
@@ -68,7 +68,7 @@ const CartModalItem = ({
                 {title}
               </Text>
               <Text
-                textColor="text-text-secondary"
+                textColor="text-foreground-200"
                 className={cn(
                   'font-inter font-medium',
                   'text-base sm:text-lg md:text-xl',
@@ -108,8 +108,8 @@ const CartModalItem = ({
             </Button>
             <Text
               className={cn(
-                'text-sm text-text-secondary',
-                isLowStock && 'text-text-error font-medium',
+                'text-sm text-foreground-200',
+                isLowStock && 'text-danger font-medium',
               )}
             >
               {`Only ${quantity} left in stock`}
@@ -117,7 +117,7 @@ const CartModalItem = ({
           </div>
         </div>
       </div>
-      {showDivider && <Divider className="bg-blue-150 mt-4 sm:mt-6" />}
+      {showDivider && <Divider className="bg-background-500 mt-4 sm:mt-6" />}
     </div>
   );
 };

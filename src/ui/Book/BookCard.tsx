@@ -49,14 +49,14 @@ const BookCard = ({ bookData }: BookCardProps) => {
   };
 
   return (
-    <article className="bg-background-default">
+    <article className="bg-background">
       <div className="max-w-[400px] flex flex-col items-center mx-auto">
         <Link
           aria-label={`View details for ${title}`}
           className="w-full flex flex-col"
           href={`${ROUTES.STORE}/${id}`}
         >
-          <div className="w-full max-h-[500px] p-8 md:p-10 lg:p-12.5 bg-background-secondary">
+          <div className="w-full max-h-[500px] p-8 md:p-10 lg:p-12.5 bg-background-100">
             <ImageFallback
               alt={title}
               height={396}
@@ -65,7 +65,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
               width={292}
               className={cn(
                 'mx-auto aspect-[292/396] object-cover',
-                'border-2 border-border-primary shadow',
+                'border-2 shadow',
               )}
               sizes="(max-width: 425px) 90vw,
                      (max-width: 768px) 33vw,
@@ -83,7 +83,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
               )}
             >
               <Heading
-                textColor="text-text-primary"
+                textColor="text-primary"
                 title={title}
                 className={cn(
                   'w-75 truncate font-cardo font-bold',
@@ -95,7 +95,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
 
               <Text
                 as="span"
-                textColor="text-text-tertiary"
+                textColor="text-secondary"
                 className={cn(
                   'font-inter font-bold min-w-fit',
                   'text-xl lg:text-2xl 3xl:text-4xl',
@@ -106,7 +106,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
             </div>
 
             <Text
-              textColor="text-text-secondary"
+              textColor="text-foreground-200"
               type="wrap"
               className={cn(
                 'mb-6 line-clamp-2',
@@ -119,11 +119,11 @@ const BookCard = ({ bookData }: BookCardProps) => {
             <div className="flex items-center gap-2 mb-4">
               <span
                 aria-hidden="true"
-                className="w-4 h-4 rounded-full bg-background-tertiary"
+                className="w-4 h-4 rounded-full bg-secondary"
               />
               <Text
                 className="font-cardo font-bold text-base lg:text-3xl"
-                textColor="text-text-primary"
+                textColor="text-primary"
               >
                 {label}
               </Text>

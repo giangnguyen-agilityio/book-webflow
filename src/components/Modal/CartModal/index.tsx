@@ -113,12 +113,12 @@ const CartModal = ({
           className={cn(
             'flex justify-between items-center',
             'px-4 sm:px-6 md:px-8 py-4 sm:py-6',
-            'bg-background-tertiary',
+            'bg-secondary',
           )}
         >
           <Heading
             as="h2"
-            textColor="text-text-primary"
+            textColor="text-primary"
             className={cn(
               'font-cardo font-bold',
               'text-5xl sm:text-7xl md:text-9xl',
@@ -163,7 +163,7 @@ const CartModal = ({
                 as={Link}
                 href={ROUTES.STORE}
                 className={cn(
-                  'w-fit h-fit bg-background-primary text-text-default',
+                  'w-fit h-fit bg-background-200 text-background',
                   'rounded-md p-3 sm:p-4',
                   'font-cardo font-bold text-base sm:text-lg',
                   'hover:underline hover:underline-offset-4',
@@ -178,7 +178,7 @@ const CartModal = ({
 
         {cartItems.length > 0 && (
           <>
-            <Divider className="bg-blue-150" />
+            <Divider className="bg-foreground-500" />
 
             <ModalFooter
               className={cn(
@@ -189,7 +189,7 @@ const CartModal = ({
             >
               <div className="flex justify-between w-full">
                 <Text
-                  textColor="text-text-primary"
+                  textColor="text-primary"
                   className={cn(
                     'font-cardo font-semibold',
                     'text-xl sm:text-2xl md:text-3xl',
@@ -199,7 +199,7 @@ const CartModal = ({
                 </Text>
                 <Text
                   className="font-inter text-lg sm:text-xl font-bold"
-                  textColor="text-text-primary"
+                  textColor="text-primary"
                 >
                   ${subtotal.toFixed(2)} USD
                 </Text>

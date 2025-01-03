@@ -55,6 +55,6 @@ export const Default: Story = {
     );
   },
   args: {
-    children: <div className="p-6">This is the modal content</div>,
+    children: <div className="p-6 text-black">This is the modal content</div>,
   },
 };

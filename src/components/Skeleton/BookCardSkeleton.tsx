@@ -5,13 +5,13 @@ import { cn } from '@/utils';
 import { BaseSkeleton } from '@/components';
 
 const BookCardSkeleton = () => (
-  <div className="bg-background-default">
+  <div className="bg-background">
     <div className="max-w-[400px] flex flex-col items-center mx-auto">
-      <div className="w-full max-h-[500px] p-12.5 bg-background-secondary">
+      <div className="w-full max-h-[500px] p-12.5 bg-background-100">
         <BaseSkeleton
           className={cn(
             'mx-auto aspect-[292/396] object-cover',
-            'border-2 border-border-primary shadow',
+            'border-2 border-background-500 shadow',
           )}
         />
       </div>
