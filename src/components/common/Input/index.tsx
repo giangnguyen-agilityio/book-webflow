@@ -11,7 +11,7 @@ const Input = extendVariants(InputNextUI, {
       primary: {
         inputWrapper: cn(
           'border border-background-500',
-          '!bg-transparent hover:!bg-background-500 focus-within:ring-2',
+          '!bg-background hover:!bg-background-500 focus-within:ring-2',
           'transition-all duration-200',
         ),
         input: 'text-foreground-100 placeholder:text-foreground-100',
@@ -19,7 +19,7 @@ const Input = extendVariants(InputNextUI, {
       secondary: {
         inputWrapper: cn(
           'border border-background-300',
-          '!bg-transparent focus-within:ring-2 ring-background-300',
+          '!bg-background focus-within:ring-2 ring-background-300',
           'transition-all duration-200',
         ),
         input: 'text-foreground-200 placeholder:text-foreground-200',

@@ -21,6 +21,8 @@ import {
   ShieldIcon,
   ThunderIcon,
   TwitterIcon,
+  EyeFilledIcon,
+  EyeSlashFilledIcon,
 } from '@/icons';
 
 const icons = [
@@ -39,6 +41,8 @@ const icons = [
   { component: ThunderIcon, label: 'Thunder' },
   { component: TwitterIcon, label: 'Twitter' },
   { component: NotFoundIcon, label: 'Not Found' },
+  { component: EyeFilledIcon, label: 'Eye Filled' },
+  { component: EyeSlashFilledIcon, label: 'Eye Slash Filled' },
 ];
 
 const meta: Meta = {

@@ -5,7 +5,7 @@ import { Inter, Cardo } from 'next/font/google';
 import Providers from '@/app/providers';
 
 // Components
-import { Footer, Header, Toast } from '@/components';
+import { Toast } from '@/components';
 
 import './globals.css';
 
@@ -54,9 +54,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${inter.variable} ${cardo.variable} antialiased`}>
         <Providers>
-          <Header />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          {children}
           <Toast />
         </Providers>
       </body>

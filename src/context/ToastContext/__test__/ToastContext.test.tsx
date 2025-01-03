@@ -90,4 +90,34 @@ describe('ToastContext', () => {
     expect(result.current.toasts[1].message).toBe('Error message');
     expect(result.current.toasts[2].message).toBe('Info message');
   });
+
+  it('should remove all toasts', () => {
+    const { result } = renderHook(() => useToast(), { wrapper });
+
+    act(() => {
+      result.current.addToast('Message 1', 'success');
+      result.current.addToast('Message 2', 'error');
+      result.current.addToast('Message 3', 'info');
+    });
+
+    expect(result.current.toasts).toHaveLength(3);
+
+    act(() => {
+      result.current.removeAllToasts();
+    });
+
+    expect(result.current.toasts).toHaveLength(0);
+  });
+
+  it('should handle removeAllToasts when there are no toasts', () => {
+    const { result } = renderHook(() => useToast(), { wrapper });
+
+    expect(result.current.toasts).toHaveLength(0);
+
+    act(() => {
+      result.current.removeAllToasts();
+    });
+
+    expect(result.current.toasts).toHaveLength(0);
+  });
 });
