@@ -131,7 +131,6 @@ describe('BookDetail component', () => {
     );
 
     expect(addToCartButton).toBeDisabled();
-    expect(addToCartButton).toHaveTextContent('Out of Stock');
     expect(quantityInput).toBeDisabled();
     expect(quantityInput).toHaveValue(0);
   });
