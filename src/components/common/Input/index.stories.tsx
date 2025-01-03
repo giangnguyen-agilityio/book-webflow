@@ -13,7 +13,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['default', 'primary', 'secondary'],
+      options: ['primary', 'secondary'],
       description: 'The color variant of the input',
     },
     size: {
