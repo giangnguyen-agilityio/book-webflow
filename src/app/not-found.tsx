@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 // Components
 import { NotFoundFallback } from '@/components';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Page Not Found',
   description:

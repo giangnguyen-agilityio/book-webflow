@@ -23,6 +23,7 @@ import {
   TwitterIcon,
   EyeFilledIcon,
   EyeSlashFilledIcon,
+  LogOutIcon,
 } from '@/icons';
 
 const icons = [
@@ -43,6 +44,7 @@ const icons = [
   { component: NotFoundIcon, label: 'Not Found' },
   { component: EyeFilledIcon, label: 'Eye Filled' },
   { component: EyeSlashFilledIcon, label: 'Eye Slash Filled' },
+  { component: LogOutIcon, label: 'Log Out' },
 ];
 
 const meta: Meta = {
@@ -74,7 +76,7 @@ const IconGallery = ({ customClass }: CustomClassType) => (
       {icons.map(({ component: IconComponent, label }, index) => (
         <div
           key={index}
-          className="flex flex-col items-center gap-2 p-4 cursor-pointer"
+          className="flex flex-col items-center gap-2 p-4 text-black cursor-pointer"
         >
           <IconComponent customClass={customClass} />
           <span className="text-sm text-center mt-2">{label}</span>

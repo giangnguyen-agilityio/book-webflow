@@ -26,7 +26,7 @@ const cardo = Cardo({
 export const metadata: Metadata = {
   title: {
     template: '%s | Book WebFlow',
-    default: 'Book WebFlo',
+    default: 'Book WebFlow',
   },
   description:
     'Browse and shop our curated collection of books. Find your next great read at Book WebFlow.',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

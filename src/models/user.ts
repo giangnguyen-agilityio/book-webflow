@@ -1,17 +1,15 @@
-const enum UserRole {
+export const enum UserRole {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
 
-interface User {
+export interface User {
   id: string;
   name: string;
   username: string;
   password: string;
   email: string;
   image: string;
-  role: string;
+  role: UserRole;
   createdAt: string;
 }
-
-export type { User, UserRole };

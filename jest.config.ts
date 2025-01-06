@@ -20,6 +20,7 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@/images/(.*)$': '<rootDir>/public/images/$1',
+    'next-auth': '<rootDir>/src/mock/next-auth',
   },
   coveragePathIgnorePatterns: [
     '/node_modules/',

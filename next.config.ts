@@ -11,10 +11,16 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'i.ibb.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avataaars.io',
+        pathname: '/**',
       },
     ],
   },

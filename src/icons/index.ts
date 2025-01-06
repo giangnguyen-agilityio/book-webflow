@@ -16,3 +16,4 @@ export * from './ThunderIcon';
 export * from './TwitterIcon';
 export * from './EyeFilledIcon';
 export * from './EyeSlashFilledIcon';
+export * from './LogOutIcon';

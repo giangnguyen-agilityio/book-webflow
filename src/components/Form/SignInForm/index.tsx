@@ -35,23 +35,24 @@ const DEFAULT_VALUE = {
 };
 
 const SignInForm = ({ onSubmit }: SignFormProps) => {
+  const router = useRouter();
+  const { addToast, removeAllToasts } = useToast();
+  const { isOpen: isPasswordVisible, onOpenChange: togglePasswordVisibility } =
+    useDisclosure();
+
   const {
     control,
-    formState: { isValid, isDirty, isLoading, errors },
+    formState: { isValid, isDirty, isSubmitting, errors },
     handleSubmit,
     clearErrors,
-  } = useForm({
+  } = useForm<AuthCredentials>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: DEFAULT_VALUE,
     resolver: zodResolver(SignInSchema),
   });
 
-  const router = useRouter();
-  const { addToast, removeAllToasts } = useToast();
-  const { isOpen: isPasswordVisible, onOpenChange: togglePasswordVisibility } =
-    useDisclosure();
-
+  // Handle input change and clear errors
   const handleInputChange = useCallback(
     (name: keyof AuthCredentials, onChange: (value: string) => void) => {
       return (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,20 +67,19 @@ const SignInForm = ({ onSubmit }: SignFormProps) => {
     [errors, clearErrors],
   );
 
+  // Handle form submission
   const handleSignIn = useCallback(
     async (formData: AuthCredentials) => {
       const result = await onSubmit(formData);
 
       if (result.success) {
         removeAllToasts();
-        router.replace(ROUTES.STORE);
-
+        router.push(ROUTES.STORE);
         return;
       }
 
       if (result.message) {
         addToast(result.message, 'error');
-
         return;
       }
     },
@@ -104,7 +104,7 @@ const SignInForm = ({ onSubmit }: SignFormProps) => {
               autoComplete="off"
               data-testid="username-input"
               errorMessage={error?.message}
-              isDisabled={isLoading}
+              isDisabled={isSubmitting}
               isInvalid={!!error?.message}
               label="Username"
               labelPlacement="outside"
@@ -136,7 +136,7 @@ const SignInForm = ({ onSubmit }: SignFormProps) => {
               autoComplete="off"
               data-testid="password-input"
               errorMessage={error?.message}
-              isDisabled={isLoading}
+              isDisabled={isSubmitting}
               isInvalid={!!error?.message}
               label="Password"
               labelPlacement="outside"
@@ -201,7 +201,8 @@ const SignInForm = ({ onSubmit }: SignFormProps) => {
         className="w-full font-semibold uppercase h-12"
         color="secondary"
         data-testid="sign-in-button"
-        isDisabled={!isValid || !isDirty}
+        isDisabled={!isValid || !isDirty || isSubmitting}
+        isLoading={isSubmitting}
         radius="sm"
         spinner={<LoadingIcon />}
         type="submit"
