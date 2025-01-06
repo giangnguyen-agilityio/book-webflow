@@ -6,10 +6,10 @@ import { AuthError } from 'next-auth';
 import { AuthCredentials, AuthResult } from '@/types';
 
 // Configs
-import { signIn } from '@/config';
+import { signIn, signOut } from '@/config';
 
 // Constants
-import { AUTH_MESSAGES } from '@/constants';
+import { AUTH_MESSAGES, ROUTES } from '@/constants';
 
 export const authenticateUser = async (
   formData: AuthCredentials,
@@ -34,4 +34,8 @@ export const authenticateUser = async (
       message: AUTH_MESSAGES.NETWORK_ERROR,
     };
   }
+};
+
+export const handleSignOut = async () => {
+  await signOut({ redirectTo: ROUTES.SIGN_IN });
 };

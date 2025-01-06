@@ -4,7 +4,7 @@
 import { API_PATH, AUTH_MESSAGES } from '@/constants';
 
 // Types
-import { AuthCredentials } from '@/types';
+import { AuthCredentials, UserSession } from '@/types';
 
 // Utils
 import { formatErrorMessage } from '@/utils';
@@ -14,9 +14,6 @@ import { httpClient } from '@/services';
 
 // Models
 import { User } from '@/models';
-
-// Types
-import { UserSession } from '@/types';
 
 interface AuthResult {
   user?: UserSession;

@@ -21,12 +21,27 @@ import { useCartContext } from '@/context';
 // Constants
 import { ROUTES, SOCIAL_LINK_ITEMS } from '@/constants';
 
+// Types
+import { UserSession } from '@/types';
+
 // Components
-import { CartAction, Navbar, Sidebar, SocialLinks } from '@/components';
+import {
+  CartAction,
+  Navbar,
+  Sidebar,
+  SocialLinks,
+  UserProfile,
+} from '@/components';
 
-const CartModal = dynamic(() => import('@/components/Modal/CartModal'));
+const CartModal = dynamic(() => import('@/components/Modal/CartModal'), {
+  ssr: false,
+});
 
-const Header = () => {
+interface HeaderProps {
+  userInfo?: UserSession;
+}
+
+const Header = ({ userInfo }: HeaderProps) => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -89,6 +104,11 @@ const Header = () => {
         {/* Cart Icon */}
         <NavbarContent className="!flex-grow-0">
           <CartAction onPress={handleCartOpen} />
+        </NavbarContent>
+
+        {/* User Profile */}
+        <NavbarContent className="!flex-grow-0">
+          <UserProfile userInfo={userInfo} />
         </NavbarContent>
 
         {/* Sidebar Menu */}

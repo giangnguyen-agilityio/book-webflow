@@ -46,8 +46,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
       try {
         const parsedCart = JSON.parse(savedCart);
         setCartItems(parsedCart);
-      } catch (error) {
-        console.error('Error parsing cart data:', error);
+      } catch (_error) {
         localStorage.removeItem(CART_STORAGE_KEY);
       }
     }

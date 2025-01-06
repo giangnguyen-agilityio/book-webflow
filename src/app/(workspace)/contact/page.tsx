@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 // Components
 import { ComingSoon } from '@/components';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Contact Us',
   description: 'Get in touch with us for any inquiries or support.',
