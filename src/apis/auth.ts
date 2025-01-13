@@ -1,49 +1,89 @@
-'use server';
-
-// Constants
 import { API_PATH, AUTH_MESSAGES } from '@/constants';
 
 // Types
-import { AuthCredentials, UserSession } from '@/types';
+import { AuthCredentials, AuthResult, SignUpData } from '@/types';
 
 // Utils
-import { formatErrorMessage } from '@/utils';
+import { generateRandomAvatar } from '@/utils';
 
 // Services
-import { httpClient } from '@/services';
+import { httpClient, HttpMethod } from '@/services';
 
 // Models
-import { User } from '@/models';
-
-interface AuthResult {
-  user?: UserSession;
-  error?: string;
-}
+import { User, UserRole } from '@/models';
 
 export async function validateUserCredentials({
   username,
   password,
 }: AuthCredentials): Promise<AuthResult> {
   try {
-    const response = await httpClient.get<{ users: User[] }>({
+    const { users } = await httpClient.get<{ users: User[] }>({
       endpoint: API_PATH.AUTH,
     });
 
-    const matchedUser = response.users.find(
+    const matchedUser = users.find(
       (user) => user.username === username && user.password === password,
     );
 
     if (!matchedUser) {
       return {
-        error: AUTH_MESSAGES.INVALID_CREDENTIALS,
+        success: false,
+        errorMessage: AUTH_MESSAGES.INVALID_CREDENTIALS,
       };
     }
 
     const { password: _, ...userWithoutPassword } = matchedUser;
-    return { user: userWithoutPassword };
-  } catch (error) {
+    return { success: true, user: userWithoutPassword };
+  } catch (_error) {
     return {
-      error: formatErrorMessage(error),
+      success: false,
+      errorMessage: AUTH_MESSAGES.NETWORK_ERROR,
+    };
+  }
+}
+
+export async function checkExistingUser(username: string): Promise<AuthResult> {
+  try {
+    const { users } = await httpClient.get<{ users: User[] }>({
+      endpoint: API_PATH.AUTH,
+    });
+
+    const isExistingUser = users.some((user) => user.username === username);
+
+    if (isExistingUser) {
+      return {
+        success: false,
+        errorMessage: AUTH_MESSAGES.USERNAME_EXISTS,
+      };
+    }
+
+    return { success: true };
+  } catch (_error) {
+    return {
+      success: false,
+      errorMessage: AUTH_MESSAGES.NETWORK_ERROR,
+    };
+  }
+}
+
+export async function createUser(userData: SignUpData): Promise<AuthResult> {
+  try {
+    await httpClient.request({
+      endpoint: API_PATH.AUTH,
+      method: HttpMethod.POST,
+      body: {
+        ...userData,
+        image: generateRandomAvatar(),
+        role: UserRole.USER,
+        createdAt: new Date().toISOString(),
+      },
+    });
+
+    return { success: true };
+  } catch (_error) {
+    return {
+      success: false,
+      errorMessage: AUTH_MESSAGES.REGISTRATION_FAILED,
     };
   }
 }

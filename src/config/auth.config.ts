@@ -20,13 +20,15 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isSignInPage = nextUrl.pathname === ROUTES.SIGN_IN;
+      const isAuthPage = [ROUTES.SIGN_IN, ROUTES.SIGN_UP].includes(
+        nextUrl.pathname,
+      );
 
-      if (isLoggedIn && isSignInPage) {
+      if (isLoggedIn && isAuthPage) {
         return Response.redirect(new URL(ROUTES.STORE, nextUrl));
       }
 
-      if (!isLoggedIn && !isSignInPage) {
+      if (!isLoggedIn && !isAuthPage) {
         return Response.redirect(new URL(ROUTES.SIGN_IN, nextUrl));
       }
 

@@ -3,39 +3,73 @@
 import { AuthError } from 'next-auth';
 
 // Types
-import { AuthCredentials, AuthResult } from '@/types';
+import type { AuthCredentials, AuthResult, SignUpData } from '@/types';
 
 // Configs
-import { signIn, signOut } from '@/config';
+import { signIn as nextAuthSignIn, signOut as nextAuthSignOut } from '@/config';
 
 // Constants
 import { AUTH_MESSAGES, ROUTES } from '@/constants';
 
-export const authenticateUser = async (
-  formData: AuthCredentials,
-): Promise<AuthResult> => {
+// APIs
+import { checkExistingUser, createUser } from '@/apis';
+
+export async function authenticateUser(
+  credentials: AuthCredentials,
+): Promise<AuthResult> {
   try {
-    await signIn('credentials', {
-      ...formData,
+    await nextAuthSignIn('credentials', {
+      username: credentials.username,
+      password: credentials.password,
       redirect: false,
     });
 
     return { success: true };
   } catch (error) {
-    if (error instanceof AuthError) {
-      return {
-        success: false,
-        message: AUTH_MESSAGES.AUTH_FAILED,
-      };
-    }
-
     return {
       success: false,
-      message: AUTH_MESSAGES.NETWORK_ERROR,
+      errorMessage:
+        error instanceof AuthError
+          ? AUTH_MESSAGES.AUTH_FAILED
+          : AUTH_MESSAGES.NETWORK_ERROR,
     };
   }
-};
+}
 
-export const handleSignOut = async () => {
-  await signOut({ redirectTo: ROUTES.SIGN_IN });
-};
+export async function handleRegisterUser(
+  data: SignUpData,
+): Promise<AuthResult> {
+  try {
+    // Validate username availability
+    const validationResult = await checkExistingUser(data.username);
+
+    if (!validationResult.success) {
+      return validationResult;
+    }
+
+    // Create new user account
+    const registrationResult = await createUser(data);
+
+    if (!registrationResult.success) {
+      return registrationResult;
+    }
+
+    // Perform automatic sign in
+    await nextAuthSignIn('credentials', {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+    });
+
+    return { success: true };
+  } catch (_error) {
+    return {
+      success: false,
+      errorMessage: AUTH_MESSAGES.NETWORK_ERROR,
+    };
+  }
+}
+
+export async function handleSignOut() {
+  await nextAuthSignOut({ redirectTo: ROUTES.SIGN_IN });
+}
