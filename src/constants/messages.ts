@@ -19,9 +19,13 @@ export const INVENTORY_STATUS = {
 export const AUTH_MESSAGES = {
   INVALID_CREDENTIALS: 'Invalid username or password',
   AUTH_FAILED: 'Authentication failed. Please try again.',
-  VALIDATION_FAILED: 'Invalid input. Please check your credentials.',
   NETWORK_ERROR:
     'Authentication failed. Please check your network connection and try again.',
+  REGISTRATION_FAILED: 'Failed to register account',
   USERNAME_MIN: 'Username must be at least 3 characters',
   PASSWORD_MIN: 'Password must be at least 6 characters',
+  NAME_REQUIRED: 'Full name is required',
+  EMAIL_REQUIRED: 'Email address is required',
+  EMAIL_INVALID: 'Please enter a valid email address',
+  USERNAME_EXISTS: 'This username is already exists',
 };

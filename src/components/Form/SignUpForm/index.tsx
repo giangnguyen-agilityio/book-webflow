@@ -1,20 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { ChangeEvent, useCallback } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Checkbox, useDisclosure } from '@nextui-org/react';
+import { useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import { useCallback, ChangeEvent } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
 // Constants
 import { ROUTES } from '@/constants';
-
-// Schemas
-import { SignInSchema } from '@/schemas';
-
-// Types
-import { AuthResult, AuthCredentials } from '@/types';
 
 // Context
 import { useToast } from '@/context';
@@ -22,21 +16,29 @@ import { useToast } from '@/context';
 // Icons
 import { EyeFilledIcon, EyeSlashFilledIcon, LoadingIcon } from '@/icons';
 
-// Components
-import { Input, Button } from '@/components';
+// Schemas
+import { SignUpSchema } from '@/schemas';
 
-interface SignInFormProps {
-  onSubmit: (formData: AuthCredentials) => Promise<AuthResult>;
+// Types
+import { AuthResult, SignUpData } from '@/types';
+
+// Components
+import { Button, Input } from '@/components';
+
+interface SignUpFormProps {
+  onSubmit: (data: SignUpData) => Promise<AuthResult>;
 }
 
 const DEFAULT_VALUE = {
+  name: '',
+  email: '',
   username: '',
   password: '',
 };
 
-const SignInForm = ({ onSubmit }: SignInFormProps) => {
+const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   const router = useRouter();
-  const { addToast, removeAllToasts } = useToast();
+  const { addToast } = useToast();
   const { isOpen: isPasswordVisible, onOpenChange: togglePasswordVisibility } =
     useDisclosure();
 
@@ -45,16 +47,16 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
     formState: { isValid, isDirty, isSubmitting, errors },
     handleSubmit,
     clearErrors,
-  } = useForm<AuthCredentials>({
+  } = useForm<SignUpData>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: DEFAULT_VALUE,
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(SignUpSchema),
   });
 
   // Handle input change and clear errors
   const handleInputChange = useCallback(
-    (name: keyof AuthCredentials, onChange: (value: string) => void) => {
+    (name: keyof SignUpData, onChange: (value: string) => void) => {
       return (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
 
@@ -68,11 +70,10 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
   );
 
   // Handle form submission
-  const handleSignIn = async (formData: AuthCredentials) => {
+  const handleSignUp = async (formData: SignUpData) => {
     const result = await onSubmit(formData);
 
     if (result.success) {
-      removeAllToasts();
       router.push(ROUTES.STORE);
       return;
     }
@@ -84,9 +85,69 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
   };
 
   return (
-    <form className="space-y-5" onSubmit={handleSubmit(handleSignIn)}>
+    <form className="space-y-5" onSubmit={handleSubmit(handleSignUp)}>
       <div className="space-y-10">
-        {/* Username Input */}
+        <Controller
+          control={control}
+          name="name"
+          render={({
+            field: { name, onChange, ...rest },
+            fieldState: { error },
+          }) => (
+            <Input
+              {...rest}
+              isRequired
+              aria-label="Full name input field"
+              autoComplete="off"
+              data-testid="name-input"
+              errorMessage={error?.message}
+              isDisabled={isSubmitting}
+              isInvalid={!!error?.message}
+              label="Full Name"
+              labelPlacement="outside"
+              placeholder="Enter your full name"
+              radius="sm"
+              classNames={{
+                label: 'text-base pb-2',
+                inputWrapper: 'h-12',
+                errorMessage: 'text-[14px]',
+              }}
+              onChange={handleInputChange(name, onChange)}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="email"
+          render={({
+            field: { name, onChange, ...rest },
+            fieldState: { error },
+          }) => (
+            <Input
+              {...rest}
+              isRequired
+              aria-label="Email input field"
+              autoComplete="off"
+              data-testid="email-input"
+              errorMessage={error?.message}
+              isDisabled={isSubmitting}
+              isInvalid={!!error?.message}
+              label="Email"
+              labelPlacement="outside"
+              placeholder="Enter your email"
+              radius="sm"
+              type="email"
+              classNames={{
+                label: 'text-base pb-2',
+                inputWrapper: 'h-12',
+                errorMessage: 'text-[14px]',
+              }}
+              onChange={handleInputChange(name, onChange)}
+            />
+          )}
+        />
+
         <Controller
           control={control}
           name="username"
@@ -117,7 +178,6 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
           )}
         />
 
-        {/* Password Input */}
         <Controller
           control={control}
           name="password"
@@ -168,34 +228,11 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
         />
       </div>
 
-      <div
-        className="w-full flex items-center justify-between"
-        title="This feature is not available in this version yet"
-      >
-        <Checkbox
-          aria-label="Remember me checkbox"
-          classNames={{
-            label: 'cursor-pointer text-start text-black',
-          }}
-        >
-          Remember me
-        </Checkbox>
-
-        <Link
-          aria-label="Forgot password link"
-          className="text-end text-foreground-100 font-semibold hover:underline"
-          data-testid="forgot-password-link"
-          href={ROUTES.FORGOT_PASSWORD}
-        >
-          Forgot your password?
-        </Link>
-      </div>
-
       <Button
-        aria-label="Sign in button"
+        aria-label="Sign up button"
         className="w-full font-semibold uppercase h-12"
         color="secondary"
-        data-testid="sign-in-button"
+        data-testid="sign-up-button"
         isDisabled={!isValid || !isDirty || isSubmitting}
         isLoading={isSubmitting}
         radius="sm"
@@ -203,22 +240,22 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
         type="submit"
         variant="solid"
       >
-        Sign in
+        Sign up
       </Button>
 
       <p className="text-black text-center">
-        Don&apos;t have an account?&nbsp;&nbsp;
+        Already have an account?&nbsp;&nbsp;
         <Link
-          aria-label="Register button"
+          aria-label="Sign in button"
           className="text-foreground-100 font-semibold hover:underline"
-          data-testid="register-button"
-          href={ROUTES.SIGN_UP}
+          data-testid="sign-in-button"
+          href={ROUTES.SIGN_IN}
         >
-          Register here
+          Sign in here
         </Link>
       </p>
     </form>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
