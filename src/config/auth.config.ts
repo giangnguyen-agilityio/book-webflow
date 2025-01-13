@@ -2,10 +2,13 @@ import type { NextAuthConfig } from 'next-auth';
 import { AdapterUser } from 'next-auth/adapters';
 
 // Constants
-import { ROUTES } from '@/constants';
+import { ROUTES, ROUTES_ADMIN } from '@/constants';
 
 // Types
 import { UserSession } from '@/types';
+
+// Models
+import { UserRole } from '@/models';
 
 declare module 'next-auth' {
   interface Session {
@@ -23,6 +26,19 @@ export const authConfig = {
       const isAuthPage = [ROUTES.SIGN_IN, ROUTES.SIGN_UP].includes(
         nextUrl.pathname,
       );
+
+      // Check if current path is an admin route
+      const isAdminRoute = Object.values(ROUTES_ADMIN.STORE).some((route) => {
+        // Handle dynamic routes by replacing :id with actual regex pattern
+        const routePattern = route.replace(':id', '[^/]+');
+
+        return new RegExp(`^${routePattern}$`).test(nextUrl.pathname);
+      });
+
+      // Redirect if user is not admin but tries to access admin routes
+      if (isAdminRoute && auth?.user?.role !== UserRole.ADMIN) {
+        return Response.redirect(new URL(ROUTES.STORE, nextUrl));
+      }
 
       if (isLoggedIn && isAuthPage) {
         return Response.redirect(new URL(ROUTES.STORE, nextUrl));

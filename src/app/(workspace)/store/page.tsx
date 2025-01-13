@@ -7,6 +7,12 @@ import { SearchParams } from '@/types';
 // Constants
 import { DEFAULT_PAGE } from '@/constants';
 
+// Configs
+import { auth } from '@/config';
+
+// Models
+import { UserRole } from '@/models';
+
 // UI components
 import { ArticlesAndResources, BookList, NewsletterSignup } from '@/ui';
 
@@ -29,11 +35,13 @@ export const metadata: Metadata = {
 
 const StorePage = async ({ searchParams }: StorePageProps) => {
   const { page = DEFAULT_PAGE } = (await searchParams) || {};
+  const session = await auth();
+  const isAdmin = session?.user?.role === UserRole.ADMIN;
 
   return (
     <>
-      <Suspense key={page} fallback={<BookListSkeleton />}>
-        <BookList page={page} />
+      <Suspense key={page} fallback={<BookListSkeleton isAdmin={isAdmin} />}>
+        <BookList isAdmin={isAdmin} page={page} />
       </Suspense>
 
       <Suspense fallback={<ArticlesAndResourcesSkeleton />}>

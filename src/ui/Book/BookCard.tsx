@@ -20,11 +20,12 @@ import { Button, Heading, ImageFallback, Text } from '@/components';
 
 interface BookCardProps {
   bookData: Book;
+  isAdmin: boolean;
 }
 
 const DEFAULT_ORDER_QUANTITY = 1;
 
-const BookCard = ({ bookData }: BookCardProps) => {
+const BookCard = ({ bookData, isAdmin }: BookCardProps) => {
   const {
     id = 'N/A',
     label = 'N/A',
@@ -43,7 +44,7 @@ const BookCard = ({ bookData }: BookCardProps) => {
   const isOutOfStock = availableQuantity === 0;
 
   const handleAddToCart = () => {
-    if (!isOutOfStock) {
+    if (!isOutOfStock && !isAdmin) {
       addToCart(bookData, DEFAULT_ORDER_QUANTITY);
     }
   };
@@ -131,19 +132,21 @@ const BookCard = ({ bookData }: BookCardProps) => {
           </div>
         </Link>
 
-        <Button
-          aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
-          disabled={isOutOfStock}
-          variant="outline"
-          className={cn(
-            'self-start h-fit w-fit 3xl:w-55 py-2 3xl:py-5',
-            'font-cardo font-bold text-lg',
-            'transition-colors duration-300',
-          )}
-          onPress={handleAddToCart}
-        >
-          {isOutOfStock ? 'Out of Stock' : 'Order Today'}
-        </Button>
+        {!isAdmin && (
+          <Button
+            aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
+            disabled={isOutOfStock}
+            variant="outline"
+            className={cn(
+              'self-start h-fit w-fit 3xl:w-55 py-2 3xl:py-5',
+              'font-cardo font-bold text-lg',
+              'transition-colors duration-300',
+            )}
+            onPress={handleAddToCart}
+          >
+            {isOutOfStock ? 'Out of Stock' : 'Order Today'}
+          </Button>
+        )}
       </div>
     </article>
   );

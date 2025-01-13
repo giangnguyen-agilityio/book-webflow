@@ -9,3 +9,10 @@ export const ROUTES = {
   SIGN_UP: '/sign-up',
   FORGOT_PASSWORD: '/forgot-password',
 };
+
+export const ROUTES_ADMIN = {
+  STORE: {
+    ADD: '/store/add',
+    EDIT: '/store/:id/edit',
+  },
+};

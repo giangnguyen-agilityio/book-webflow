@@ -23,9 +23,10 @@ import { useCartContext } from '@/context';
 
 interface BookDetailProps {
   data: Book;
+  isAdmin: boolean;
 }
 
-const BookDetail = ({ data }: BookDetailProps) => {
+const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
   const [orderQuantity, setOrderQuantity] = useState(1);
   const { cartItems, addToCart } = useCartContext();
   const router = useRouter();
@@ -173,39 +174,42 @@ const BookDetail = ({ data }: BookDetailProps) => {
             </dl>
           </div>
 
-          <div className="flex mt-8 gap-2 items-center">
-            <Input
-              aria-label={`Quantity for ${title}`}
-              color="secondary"
-              disabled={isOutOfStock}
-              min={1}
-              size="lg"
-              type="number"
-              value={String(isOutOfStock ? 0 : orderQuantity)}
-              classNames={{
-                base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
-                input: 'font-medium text-center',
-              }}
-              onChange={handleQuantityChange}
-            />
+          {/* Hide order section for Admin */}
+          {!isAdmin && (
+            <div className="flex mt-8 gap-2 items-center">
+              <Input
+                aria-label={`Quantity for ${title}`}
+                color="secondary"
+                disabled={isOutOfStock}
+                min={1}
+                size="lg"
+                type="number"
+                value={String(isOutOfStock ? 0 : orderQuantity)}
+                classNames={{
+                  base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
+                  input: 'font-medium text-center',
+                }}
+                onChange={handleQuantityChange}
+              />
 
-            <Button
-              aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
-              color="default"
-              disableAnimation={isOutOfStock}
-              disabled={isOutOfStock}
-              startContent={<CartIcon customClass="w-5 h-5" />}
-              variant="solid"
-              className={cn(
-                'w-full xl:w-94.5',
-                'h-10 sm:h-12 md:h-16.25 py-5',
-                'font-cardo text-base sm:text-lg font-bold',
-              )}
-              onPress={handleAddToCart}
-            >
-              Add to Cart
-            </Button>
-          </div>
+              <Button
+                aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
+                color="default"
+                disableAnimation={isOutOfStock}
+                disabled={isOutOfStock}
+                startContent={<CartIcon customClass="w-5 h-5" />}
+                variant="solid"
+                className={cn(
+                  'w-full xl:w-94.5',
+                  'h-10 sm:h-12 md:h-16.25 py-5',
+                  'font-cardo text-base sm:text-lg font-bold',
+                )}
+                onPress={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

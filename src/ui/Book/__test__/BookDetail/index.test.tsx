@@ -4,11 +4,11 @@ import { screen, wrapper, userEvent } from '@/utils/testUtils';
 // Context
 import { useCartContext, useToast } from '@/context';
 
-// Components
-import { BookDetail } from '@/ui';
-
 // Mock
 import { MOCK_DEFAULT_BOOK_ITEM } from '@/mock';
+
+// Components
+import { BookDetail } from '@/ui';
 
 const mockRouter = {
   back: jest.fn(),
@@ -50,13 +50,14 @@ describe('BookDetail component', () => {
   });
 
   it('should render correctly', () => {
-    const { container } = wrapper(<BookDetail data={mockBook} />);
-
+    const { container } = wrapper(
+      <BookDetail data={mockBook} isAdmin={false} />,
+    );
     expect(container).toMatchSnapshot();
   });
 
   it('should handle add to cart action', async () => {
-    wrapper(<BookDetail data={mockBook} />);
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
 
     const addToCartButton = screen.getByRole('button', {
       name: /add to cart/i,
@@ -76,7 +77,7 @@ describe('BookDetail component', () => {
       },
     };
 
-    wrapper(<BookDetail data={bookWithoutDate} />);
+    wrapper(<BookDetail data={bookWithoutDate} isAdmin={false} />);
 
     expect(screen.getByText('Publisher:')).toBeInTheDocument();
     expect(
@@ -86,7 +87,7 @@ describe('BookDetail component', () => {
   });
 
   it('should handle back navigation', async () => {
-    wrapper(<BookDetail data={mockBook} />);
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
 
     const backButton = screen.getByRole('button', { name: /back/i });
     await user.click(backButton);
@@ -95,7 +96,7 @@ describe('BookDetail component', () => {
   });
 
   it('should handle quantity change within available limit', async () => {
-    wrapper(<BookDetail data={mockBook} />);
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
 
     const quantityInput = screen.getByLabelText(
       `Quantity for ${mockBook.title}`,
@@ -108,7 +109,7 @@ describe('BookDetail component', () => {
 
   it('should limit quantity to available stock', async () => {
     const bookWithLimitedStock = { ...mockBook, quantity: 3 };
-    wrapper(<BookDetail data={bookWithLimitedStock} />);
+    wrapper(<BookDetail data={bookWithLimitedStock} isAdmin={false} />);
 
     const quantityInput = screen.getByLabelText(
       `Quantity for ${mockBook.title}`,
@@ -121,7 +122,7 @@ describe('BookDetail component', () => {
 
   it('should show out of stock state when quantity is 0', () => {
     const outOfStockBook = { ...mockBook, quantity: 0 };
-    wrapper(<BookDetail data={outOfStockBook} />);
+    wrapper(<BookDetail data={outOfStockBook} isAdmin={false} />);
 
     const addToCartButton = screen.getByRole('button', {
       name: /out of stock/i,
@@ -142,7 +143,7 @@ describe('BookDetail component', () => {
       addToCart: mockAddToCart,
     });
 
-    wrapper(<BookDetail data={mockBook} />);
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
 
     const quantityInput = screen.getByLabelText(
       `Quantity for ${mockBook.title}`,
@@ -151,5 +152,27 @@ describe('BookDetail component', () => {
     await user.type(quantityInput, '5');
 
     expect(quantityInput).toHaveValue(cartQuantity);
+  });
+
+  it('should hide order section for admin users', () => {
+    wrapper(<BookDetail data={mockBook} isAdmin={true} />);
+
+    expect(
+      screen.queryByRole('button', { name: /add to cart/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(`Quantity for ${mockBook.title}`),
+    ).not.toBeInTheDocument();
+  });
+
+  it('should show order section for non-admin users', () => {
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
+
+    expect(
+      screen.getByRole('button', { name: /add to cart/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(`Quantity for ${mockBook.title}`),
+    ).toBeInTheDocument();
   });
 });
