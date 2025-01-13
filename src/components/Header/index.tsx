@@ -24,6 +24,9 @@ import { ROUTES, SOCIAL_LINK_ITEMS } from '@/constants';
 // Types
 import { UserSession } from '@/types';
 
+// Models
+import { UserRole } from '@/models';
+
 // Components
 import {
   CartAction,
@@ -102,9 +105,11 @@ const Header = ({ userInfo }: HeaderProps) => {
         />
 
         {/* Cart Icon */}
-        <NavbarContent className="!flex-grow-0">
-          <CartAction onPress={handleCartOpen} />
-        </NavbarContent>
+        {userInfo?.role !== UserRole.ADMIN && (
+          <NavbarContent className="!flex-grow-0">
+            <CartAction onPress={handleCartOpen} />
+          </NavbarContent>
+        )}
 
         {/* User Profile */}
         <NavbarContent className="!flex-grow-0">

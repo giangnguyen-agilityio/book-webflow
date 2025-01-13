@@ -8,6 +8,12 @@ import { cn } from '@/utils';
 // APIs
 import { getBookById } from '@/apis';
 
+// Config
+import { auth } from '@/config';
+
+// Models
+import { UserRole } from '@/models';
+
 // UI components
 import { ArticlesAndResources, Benefits, BookDetail } from '@/ui';
 
@@ -52,6 +58,8 @@ export async function generateMetadata({
 const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
   const { id } = await params;
   const { book, error } = await getBookById(id);
+  const session = await auth();
+  const isAdmin = session?.user?.role === UserRole.ADMIN;
 
   if (!book || error) {
     notFound();
@@ -64,7 +72,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
       >
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-12">
-            <BookDetail data={book} />
+            <BookDetail data={book} isAdmin={isAdmin} />
           </div>
         </div>
       </section>
