@@ -5,7 +5,7 @@ import { CartItem } from '@/models';
 import { MOCK_DEFAULT_BOOK_ITEM } from '@/mock';
 
 const MOCK_DEFAULT_CART_ITEMS: CartItem[] = [
-  { ...MOCK_DEFAULT_BOOK_ITEM, orderedQuantity: 2 },
+  { ...MOCK_DEFAULT_BOOK_ITEM, id: '1', orderedQuantity: 2 },
   {
     ...MOCK_DEFAULT_BOOK_ITEM,
     id: '2',

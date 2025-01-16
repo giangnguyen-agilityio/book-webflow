@@ -27,7 +27,7 @@ const DEFAULT_ORDER_QUANTITY = 1;
 
 const BookCard = ({ bookData, isAdmin }: BookCardProps) => {
   const {
-    id = 'N/A',
+    id,
     label = 'N/A',
     imageSrc = ImageStore.UnavailableImage,
     title = 'N/A',

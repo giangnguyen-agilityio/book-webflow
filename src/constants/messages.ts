@@ -29,3 +29,37 @@ export const AUTH_MESSAGES = {
   EMAIL_INVALID: 'Please enter a valid email address',
   USERNAME_EXISTS: 'This username is already exists',
 };
+
+export const BOOK_MESSAGES = {
+  // Basic Information
+  TITLE_REQUIRED: 'Please enter a book title',
+  PRICE_INVALID: 'Please enter a valid price',
+  PRICE_MUST_BE_POSITIVE: 'Price must be greater than or equal to 0',
+
+  DESCRIPTION_MIN: 'Description must be at least 10 characters',
+  LABEL_REQUIRED: 'Please enter a book label',
+
+  QUANTITY_INVALID: 'Please enter a valid quantity',
+  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than or equal to 0',
+
+  INVALID_IMAGE_URL: 'Please enter a valid image URL',
+
+  // Book Information
+  PUBLISHER_REQUIRED: 'Please enter a publisher name',
+  PUBLISHED_DATE_REQUIRED: 'Please select a published date',
+  PUBLISHED_DATE_INVALID_FORMAT: 'Date must be in YYYY-MM-DD format',
+  PUBLISHED_DATE_YEAR_MIN: 'The book must be published from 2000 onwards',
+  LANGUAGE_REQUIRED: 'Please enter a language',
+  LANGUAGE_LETTERS_ONLY: 'Language must contain only letters',
+
+  PAPERBACK_INVALID: 'Please enter a valid number of pages',
+  PAPERBACK_MUST_BE_POSITIVE: 'Number of pages must be greater than 0',
+
+  ISBN_REQUIRED: 'Please enter an ISBN',
+
+  // Dimensions
+  DIMENSION_INVALID: 'Please enter a valid dimension',
+  DIMENSION_MUST_BE_POSITIVE: 'Dimension must be greater than or equal to 0',
+
+  ADD_BOOK_SUCCESS: 'Book added successfully',
+};
