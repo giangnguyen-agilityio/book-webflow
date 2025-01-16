@@ -25,6 +25,7 @@ import {
   EyeSlashFilledIcon,
   LogOutIcon,
   PlusIcon,
+  EditIcon,
 } from '@/icons';
 
 const icons = [
@@ -47,6 +48,7 @@ const icons = [
   { component: EyeSlashFilledIcon, label: 'Eye Slash Filled' },
   { component: LogOutIcon, label: 'Log Out' },
   { component: PlusIcon, label: 'Plus' },
+  { component: EditIcon, label: 'Edit' },
 ];
 
 const meta: Meta = {

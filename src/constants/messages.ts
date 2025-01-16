@@ -62,4 +62,5 @@ export const BOOK_MESSAGES = {
   DIMENSION_MUST_BE_POSITIVE: 'Dimension must be greater than or equal to 0',
 
   ADD_BOOK_SUCCESS: 'Book added successfully',
+  UPDATE_BOOK_SUCCESS: 'Book updated successfully',
 };

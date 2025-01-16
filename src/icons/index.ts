@@ -18,3 +18,4 @@ export * from './EyeFilledIcon';
 export * from './EyeSlashFilledIcon';
 export * from './LogOutIcon';
 export * from './PlusIcon';
+export * from './EditIcon';

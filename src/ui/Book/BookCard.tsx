@@ -15,6 +15,9 @@ import { ImageStore, ROUTES } from '@/constants';
 // Context
 import { useCartContext } from '@/context';
 
+// Icons
+import { EditIcon } from '@/icons';
+
 // Components
 import { Button, Heading, ImageFallback, Text } from '@/components';
 
@@ -117,17 +120,35 @@ const BookCard = ({ bookData, isAdmin }: BookCardProps) => {
               {description}
             </Text>
 
-            <div className="flex items-center gap-2 mb-4">
-              <span
-                aria-hidden="true"
-                className="w-4 h-4 rounded-full bg-secondary"
-              />
-              <Text
-                className="font-cardo font-bold text-base lg:text-3xl"
-                textColor="text-primary"
-              >
-                {label}
-              </Text>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  className="w-4 h-4 rounded-full bg-secondary"
+                />
+                <Text
+                  className="font-cardo font-bold text-base lg:text-3xl"
+                  textColor="text-primary"
+                >
+                  {label}
+                </Text>
+              </div>
+
+              {isAdmin && (
+                <div className="flex items-center gap-3">
+                  <Button
+                    isIconOnly
+                    aria-label="Edit book button"
+                    as={Link}
+                    color="success"
+                    href={`${ROUTES.STORE}/${id}/edit`}
+                    radius="full"
+                    variant="ghost"
+                  >
+                    <EditIcon customClass="w-4 h-4" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </Link>
