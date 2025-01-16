@@ -90,6 +90,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
           ...prevItems,
           {
             ...book,
+            id: book.id || '',
             orderedQuantity: quantity,
             quantity: book.quantity - quantity,
           },

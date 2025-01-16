@@ -8,3 +8,4 @@ export * from './links';
 export * from './metadata';
 export * from './apis';
 export * from './messages';
+export * from './regex';

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, ChangeEvent } from 'react';
 import { Divider } from '@nextui-org/react';
 
 // Utils
@@ -25,7 +25,7 @@ const CartModalItem = ({
 }: CartModalItemProps) => {
   const { id, title, price, quantity, imageSrc, orderedQuantity } = item;
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
     onQuantityChange(id, e.target.value);
   };
 
