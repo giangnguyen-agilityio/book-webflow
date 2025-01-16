@@ -22,16 +22,17 @@ import { BookSchema, type BookSchemaType } from '@/schemas';
 import { Book } from '@/models';
 
 // Types
-import { TBookResponse } from '@/types';
+import type { TBookResponse } from '@/types';
 
 // Utils
 import { cn } from '@/utils';
 
 // Components
-import { Button, Input, Text } from '@/components';
+import { BackButton, Button, Input, Text } from '@/components';
 
 interface BookFormProps {
   onSubmit: (data: Book) => Promise<TBookResponse>;
+  data?: Book;
 }
 
 const DEFAULT_VALUE: BookSchemaType = {
@@ -51,7 +52,7 @@ const DEFAULT_VALUE: BookSchemaType = {
   height: 0,
 };
 
-const BookForm = ({ onSubmit }: BookFormProps) => {
+const BookForm = ({ onSubmit, data }: BookFormProps) => {
   const router = useRouter();
   const { addToast } = useToast();
 
@@ -63,7 +64,20 @@ const BookForm = ({ onSubmit }: BookFormProps) => {
   } = useForm<BookSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    defaultValues: DEFAULT_VALUE,
+    defaultValues: data
+      ? {
+          ...data,
+          imageSrc: String(data.imageSrc),
+          publisher: data.bookInformation.publisher,
+          publishedDate: data.bookInformation.publishedDate,
+          language: data.bookInformation.language,
+          paperback: data.bookInformation.paperback,
+          isbn: data.bookInformation.isbn,
+          length: data.bookInformation.dimensions.length,
+          width: data.bookInformation.dimensions.width,
+          height: data.bookInformation.dimensions.height,
+        }
+      : DEFAULT_VALUE,
     resolver: zodResolver(BookSchema),
   });
 
@@ -97,7 +111,7 @@ const BookForm = ({ onSubmit }: BookFormProps) => {
 
     const formattedData: Book = {
       ...mainInfo,
-      id: '',
+      id: data?.id || '',
       bookInformation: {
         publisher,
         publishedDate,
@@ -120,11 +134,16 @@ const BookForm = ({ onSubmit }: BookFormProps) => {
     }
 
     router.push(ROUTES.STORE);
-    addToast(BOOK_MESSAGES.ADD_BOOK_SUCCESS, 'success');
+    addToast(
+      data ? BOOK_MESSAGES.UPDATE_BOOK_SUCCESS : BOOK_MESSAGES.ADD_BOOK_SUCCESS,
+      'success',
+    );
   };
 
   return (
     <form className="max-w-3xl mx-auto" onSubmit={handleSubmit(handleAddBook)}>
+      <BackButton customClass="mb-4" />
+
       {/* Form Sections */}
       <div className="space-y-6">
         {/* Basic Information Section */}
@@ -626,7 +645,7 @@ const BookForm = ({ onSubmit }: BookFormProps) => {
               'transition-all duration-200',
             )}
           >
-            Add New Book
+            {data ? 'Update Book' : 'Add New Book'}
           </Button>
         </div>
       </div>

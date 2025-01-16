@@ -33,4 +33,22 @@ const createNewBook = async (data: Book): Promise<TBookResponse> => {
   }
 };
 
-export { createNewBook };
+const updateBook = async (data: Book): Promise<TBookResponse> => {
+  try {
+    const response = await httpClient.request<Book, TBookResponse>({
+      endpoint: `${API_PATH.BOOKS}/${data.id}`,
+      method: HttpMethod.PUT,
+      body: data,
+    });
+
+    return {
+      book: response.book,
+    };
+  } catch (error) {
+    return {
+      error: formatErrorMessage(error),
+    };
+  }
+};
+
+export { createNewBook, updateBook };
