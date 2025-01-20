@@ -28,7 +28,7 @@ import type { TBookResponse } from '@/types';
 import { cn } from '@/utils';
 
 // Components
-import { BackButton, Button, Input, Text } from '@/components';
+import { BackButton, Button, Input, Text, ImageUpload } from '@/components';
 
 interface BookFormProps {
   onSubmit: (data: Book) => Promise<TBookResponse>;
@@ -112,6 +112,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
     const formattedData: Book = {
       ...mainInfo,
       id: data?.id || '',
+      imageSrc: formData.imageSrc || '',
       bookInformation: {
         publisher,
         publishedDate,
@@ -331,32 +332,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
             />
           </div>
 
+          {/* Image Upload Section */}
           <Controller
             control={control}
             name="imageSrc"
-            render={({
-              field: { name, onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                {...rest}
-                isRequired
-                aria-label="Book image URL input field"
-                autoComplete="off"
-                data-testid="book-image-input"
-                errorMessage={error?.message}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <ImageUpload
+                error={error?.message}
                 isDisabled={isSubmitting}
-                isInvalid={!!error?.message}
-                label="Image URL"
-                labelPlacement="outside"
-                placeholder="Enter image URL"
-                radius="sm"
-                classNames={{
-                  label: 'text-base pb-2',
-                  inputWrapper: 'h-12',
-                  errorMessage: 'text-[14px]',
-                }}
-                onChange={handleInputChange(name, onChange)}
+                value={value}
+                onChange={onChange}
               />
             )}
           />
