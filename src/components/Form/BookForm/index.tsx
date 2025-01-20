@@ -96,7 +96,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
     [errors, clearErrors],
   );
 
-  const handleAddBook = async (formData: BookSchemaType) => {
+  const handleBookSubmit = async (formData: BookSchemaType) => {
     const {
       publisher,
       publishedDate,
@@ -133,7 +133,12 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
       return;
     }
 
-    router.push(ROUTES.STORE);
+    if (data) {
+      router.back();
+    } else {
+      router.push(ROUTES.STORE);
+    }
+
     addToast(
       data ? BOOK_MESSAGES.UPDATE_BOOK_SUCCESS : BOOK_MESSAGES.ADD_BOOK_SUCCESS,
       'success',
@@ -141,7 +146,10 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
   };
 
   return (
-    <form className="max-w-3xl mx-auto" onSubmit={handleSubmit(handleAddBook)}>
+    <form
+      className="max-w-3xl mx-auto"
+      onSubmit={handleSubmit(handleBookSubmit)}
+    >
       <BackButton customClass="mb-4" />
 
       {/* Form Sections */}

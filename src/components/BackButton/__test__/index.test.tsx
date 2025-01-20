@@ -10,6 +10,10 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 describe('BackButton component', () => {
   // Setup mock router before each test
   const mockBack = jest.fn();

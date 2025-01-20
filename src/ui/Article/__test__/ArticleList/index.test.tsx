@@ -18,6 +18,10 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ replace: jest.fn() }),
 }));
 
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 jest.mock('@/apis', () => ({
   getArticleList: jest.fn(),
 }));

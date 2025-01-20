@@ -1,7 +1,9 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 // Constants
-import { API_PATH } from '@/constants';
+import { API_PATH, ROUTES } from '@/constants';
 
 // Types
 import { TBookResponse } from '@/types';
@@ -23,6 +25,8 @@ const createNewBook = async (data: Book): Promise<TBookResponse> => {
       body: data,
     });
 
+    revalidatePath(ROUTES.STORE);
+
     return {
       book: response.book,
     };
@@ -41,6 +45,8 @@ const updateBook = async (data: Book): Promise<TBookResponse> => {
       body: data,
     });
 
+    revalidatePath(ROUTES.STORE);
+
     return {
       book: response.book,
     };
@@ -51,4 +57,23 @@ const updateBook = async (data: Book): Promise<TBookResponse> => {
   }
 };
 
-export { createNewBook, updateBook };
+const deleteBook = async (bookId: string): Promise<TBookResponse> => {
+  try {
+    const response = await httpClient.request<null, TBookResponse>({
+      endpoint: `${API_PATH.BOOKS}/${bookId}`,
+      method: HttpMethod.DELETE,
+    });
+
+    revalidatePath(ROUTES.STORE);
+
+    return {
+      book: response.book,
+    };
+  } catch (error) {
+    return {
+      error: formatErrorMessage(error),
+    };
+  }
+};
+
+export { createNewBook, updateBook, deleteBook };
