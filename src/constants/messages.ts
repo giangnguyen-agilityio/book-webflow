@@ -4,11 +4,13 @@ export const CART_MESSAGES = {
     'Are you sure you want to remove this item from your cart?',
   REMOVE_SUCCESS: 'Item has been removed from cart',
   ADD_SUCCESS: 'Item has been added to cart',
+  REMOVE_FAILED: 'Failed to remove item from cart',
   UPDATE_SUCCESS: 'Cart has been updated successfully',
   UPDATE_FAILED: 'Failed to update the cart item',
   EXCEED_STOCK: 'Cannot exceed available stock',
   CHECKOUT_SUCCESS: 'Thank you for your purchase! Your order has been placed.',
-  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than or equal to 0',
+  CHECKOUT_FAILED: 'Something went wrong with checkout. Please try again',
+  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than 0',
 };
 
 export const INVENTORY_STATUS = {

@@ -1,127 +1,142 @@
 // Utils
 import { act, ignoredConsoleError, renderHook } from '@/utils/testUtils';
 
-// Models
-import { Book } from '@/models';
+// Constants
+import { CART_MESSAGES } from '@/constants';
 
 // Mock
 import { MOCK_DEFAULT_BOOK_ITEM } from '@/mock';
 
 // Context
+import { ToastType } from '@/context';
+
 import { CartProvider, useCartContext } from '..';
 
-// Mock getCart API
-jest.mock('@/actions', () => ({
-  ...jest.requireActual('@/actions'),
-  getCart: jest.fn(),
-}));
+const mockCartItem = {
+  id: '1',
+  bookId: '1',
+  quantity: 1,
+  book: MOCK_DEFAULT_BOOK_ITEM,
+};
 
-jest.mock('@/context', () => ({
-  useToast: () => ({
-    addToast: jest.fn(),
+const mockUserId = 'userID';
+const mockAddToast = jest.fn();
+
+const mockHandleAddToCart = jest.fn().mockResolvedValue(true);
+const mockHandleUpdateQuantity = jest.fn().mockResolvedValue(true);
+const mockHandleRemoveFromCart = jest.fn().mockResolvedValue(true);
+const mockHandleClearCart = jest.fn().mockResolvedValue(true);
+
+jest.mock('@/hooks', () => ({
+  useCart: () => ({
+    items: [],
+    isLoading: false,
+    handleAddToCart: mockHandleAddToCart,
+    handleUpdateQuantity: mockHandleUpdateQuantity,
+    handleRemoveFromCart: mockHandleRemoveFromCart,
+    handleClearCart: mockHandleClearCart,
   }),
 }));
 
-const mockBook: Book = MOCK_DEFAULT_BOOK_ITEM;
+jest.mock('@/context', () => ({
+  ...jest.requireActual('@/context'),
+  useToast: () => ({
+    addToast: mockAddToast,
+  }),
+  ToastType: {
+    SUCCESS: 'success',
+    ERROR: 'error',
+    WARNING: 'warning',
+    INFO: 'info',
+  },
+}));
 
 describe('CartContext', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should initialize with empty cart', () => {
+  it('should provide cart context with initial values', () => {
     const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
+      wrapper: ({ children }) => (
+        <CartProvider userId={mockUserId}>{children}</CartProvider>
+      ),
     });
 
-    expect(result.current.cartItems).toHaveLength(0);
+    expect(result.current.cartItems).toEqual([]);
+    expect(result.current.isLoading).toBe(false);
   });
 
-  it('should add item to cart', () => {
+  it('should handle addToCart successfully', async () => {
     const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
+      wrapper: ({ children }) => (
+        <CartProvider userId={mockUserId}>{children}</CartProvider>
+      ),
     });
 
-    act(() => {
-      result.current.addToCart(mockBook, 2);
+    await act(async () => {
+      await result.current.addToCart(mockCartItem.bookId, 1);
     });
 
-    expect(result.current.cartItems).toHaveLength(1);
-    expect(result.current.cartItems[0]).toEqual({
-      ...mockBook,
-      orderedQuantity: 2,
-      quantity: mockBook.quantity - 2,
-    });
+    expect(mockHandleAddToCart).toHaveBeenCalled();
+    expect(mockAddToast).toHaveBeenCalledWith(
+      CART_MESSAGES.ADD_SUCCESS,
+      ToastType.SUCCESS,
+    );
   });
 
-  it('should update quantity if item already exists in cart', () => {
+  it('should handle removeFromCart successfully', async () => {
     const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
+      wrapper: ({ children }) => (
+        <CartProvider userId={mockUserId}>{children}</CartProvider>
+      ),
     });
 
-    act(() => {
-      result.current.addToCart(mockBook, 1);
-    });
-    act(() => {
-      result.current.addToCart(mockBook, 2);
+    await act(async () => {
+      await result.current.removeFromCart(mockCartItem.id);
     });
 
-    expect(result.current.cartItems).toHaveLength(1);
-    expect(result.current.cartItems[0].orderedQuantity).toBe(3);
+    expect(mockHandleRemoveFromCart).toHaveBeenCalled();
+    expect(mockAddToast).toHaveBeenCalledWith(
+      CART_MESSAGES.REMOVE_SUCCESS,
+      ToastType.SUCCESS,
+    );
   });
 
-  it('should not add item if quantity exceeds stock', () => {
+  it('should handle updateQuantity successfully', async () => {
     const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
+      wrapper: ({ children }) => (
+        <CartProvider userId={mockUserId}>{children}</CartProvider>
+      ),
     });
 
-    act(() => {
-      result.current.addToCart({ ...mockBook, quantity: 5 }, 6);
+    await act(async () => {
+      await result.current.updateQuantity(mockCartItem.id, '2');
     });
 
-    expect(result.current.cartItems).toHaveLength(0);
+    expect(mockHandleUpdateQuantity).toHaveBeenCalled();
+    expect(mockAddToast).toHaveBeenCalledWith(
+      CART_MESSAGES.UPDATE_SUCCESS,
+      ToastType.SUCCESS,
+    );
   });
 
-  it('should remove item from cart', () => {
+  it('should handle clearCart successfully', async () => {
     const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
+      wrapper: ({ children }) => (
+        <CartProvider userId={mockUserId}>{children}</CartProvider>
+      ),
     });
 
-    act(() => {
-      result.current.addToCart(mockBook, 2);
+    await act(async () => {
+      await result.current.clearCart();
     });
 
-    act(() => {
-      result.current.removeFromCart(mockBook.id || '');
-    });
-
-    expect(result.current.cartItems).toHaveLength(0);
-  });
-
-  it('should update item quantity', () => {
-    const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
-    });
-
-    act(() => {
-      result.current.addToCart(mockBook, 2);
-      result.current.updateQuantity(mockBook.id || '', 3);
-    });
-
-    expect(result.current.cartItems[0].orderedQuantity).toBe(3);
-  });
-
-  it('should clear cart', () => {
-    const { result } = renderHook(() => useCartContext(), {
-      wrapper: ({ children }) => <CartProvider>{children}</CartProvider>,
-    });
-
-    act(() => {
-      result.current.addToCart(mockBook, 2);
-      result.current.clearCart();
-    });
-
-    expect(result.current.cartItems).toHaveLength(0);
+    expect(mockHandleClearCart).toHaveBeenCalled();
+    expect(mockAddToast).toHaveBeenCalledWith(
+      CART_MESSAGES.CHECKOUT_SUCCESS,
+      ToastType.SUCCESS,
+    );
   });
 
   it('should throw error when useCartContext is used outside provider', () => {

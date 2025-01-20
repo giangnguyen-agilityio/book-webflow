@@ -4,9 +4,11 @@ import { CartItem } from '@/models';
 // Actions
 import {
   getCart,
-  addToCartAction,
+  addItemToCart,
   updateCartItem,
   updateBook,
+  removeCartItem,
+  clearCartItems,
 } from '@/actions';
 
 // APIs
@@ -21,35 +23,61 @@ import { BOOK_MESSAGES, CART_MESSAGES } from '@/constants';
 // Utils
 import { formatErrorMessage, validateQuantity } from '@/utils';
 
-export const useCart = (userId?: string) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+interface CartState {
+  items: CartItem[];
+  isLoading: boolean;
+}
+
+interface CartActions {
+  handleFetchCart: () => Promise<void>;
+  handleAddToCart: (id: string, orderedQuantity: number) => Promise<boolean>;
+  handleUpdateQuantity: (id: string, value: string) => Promise<boolean>;
+  handleRemoveFromCart: (id: string) => Promise<boolean>;
+  handleClearCart: () => Promise<boolean>;
+}
+
+export const useCart = (userId?: string): CartState & CartActions => {
+  const [state, setState] = useState<CartState>({
+    items: [],
+    isLoading: false,
+  });
   const { addToast } = useToast();
+
+  const handleSetItems = (items: CartItem[]) => {
+    setState((prev) => ({ ...prev, items }));
+  };
+
+  const handleSetLoading = (isLoading: boolean) => {
+    setState((prev) => ({ ...prev, isLoading }));
+  };
 
   const handleFetchCart = async () => {
     if (!userId) return;
-    setIsLoading(true);
+    handleSetLoading(true);
 
     try {
       const response = await getCart(userId);
       if (response.cart) {
-        setCartItems(response.cart);
+        handleSetItems(response.cart);
       }
       if (response.error) {
         addToast(response.error, ToastType.ERROR);
       }
     } finally {
-      setIsLoading(false);
+      handleSetLoading(false);
     }
   };
 
-  const handleAddToCart = async (id: string, orderedQuantity: number) => {
-    if (!userId) return;
-    setIsLoading(true);
+  const handleAddToCart = async (
+    id: string,
+    orderedQuantity: number,
+  ): Promise<boolean> => {
+    if (!userId) return false;
+    handleSetLoading(true);
 
     try {
       // 1. Get book and validate
-      const existingItem = cartItems.find((item) => item.bookId === id);
+      const existingItem = state.items.find((item) => item.bookId === id);
       const { book } = await getBookById(id);
 
       if (!book) {
@@ -77,7 +105,7 @@ export const useCart = (userId?: string) => {
       // 3. Update cart
       const cartResponse = existingItem
         ? await updateCartItem(userId, cartItem)
-        : await addToCartAction(userId, cartItem);
+        : await addItemToCart(userId, cartItem);
 
       if (cartResponse.error || !cartResponse.cart) {
         addToast(formatErrorMessage(cartResponse.error), ToastType.ERROR);
@@ -99,14 +127,14 @@ export const useCart = (userId?: string) => {
       await handleFetchCart();
       return true;
     } finally {
-      setIsLoading(false);
+      handleSetLoading(false);
     }
   };
 
   const handleUpdateQuantity = async (id: string, value: string) => {
-    if (!userId || isLoading) return false;
+    if (!userId || state.isLoading) return false;
 
-    const itemToUpdate = cartItems.find((item) => item.id === id);
+    const itemToUpdate = state.items.find((item) => item.id === id);
     if (!itemToUpdate) return false;
 
     const parsedQuantity = parseInt(value, 10);
@@ -123,56 +151,120 @@ export const useCart = (userId?: string) => {
       return false;
     }
 
-    // Calculate new quantities
-    const quantityDiff = parsedQuantity - itemToUpdate.orderedQuantity;
-    const newBookQuantity = itemToUpdate.quantity - quantityDiff;
-
     try {
-      setIsLoading(true);
+      handleSetLoading(true);
 
       // Optimistically update UI
-      const updatedCartItem: CartItem = {
+      const updatedCartItem = {
         ...itemToUpdate,
         orderedQuantity: parsedQuantity,
-        quantity: newBookQuantity,
+        quantity:
+          itemToUpdate.quantity -
+          (parsedQuantity - itemToUpdate.orderedQuantity),
       };
 
-      const bookUpdateData: Omit<
-        CartItem,
-        'orderedQuantity' | 'bookId' | 'authId'
-      > = {
-        ...itemToUpdate,
-        quantity: newBookQuantity,
-      };
+      const {
+        orderedQuantity: _orderedQuantity,
+        bookId: _bookId,
+        authId: _authId,
+        ...updatedBookData
+      } = itemToUpdate;
 
-      setCartItems((prev) =>
-        prev.map((item) => (item.id === id ? updatedCartItem : item)),
+      handleSetItems(
+        state.items.map((item) => (item.id === id ? updatedCartItem : item)),
       );
 
       // Parallel API calls
       const [cartResponse, bookResponse] = await Promise.all([
         updateCartItem(userId, updatedCartItem),
-        updateBook(bookUpdateData),
+        updateBook({
+          ...updatedBookData,
+          quantity:
+            itemToUpdate.quantity -
+            (parsedQuantity - itemToUpdate.orderedQuantity),
+        }),
       ]);
 
       if (cartResponse.error || bookResponse.error) {
-        setCartItems((prev) =>
-          prev.map((item) => (item.id === id ? itemToUpdate : item)),
+        handleSetItems(
+          state.items.map((item) => (item.id === id ? itemToUpdate : item)),
         );
+
         addToast(CART_MESSAGES.UPDATE_FAILED, ToastType.ERROR);
         return false;
       }
 
       return true;
     } catch (error) {
-      setCartItems((prev) =>
-        prev.map((item) => (item.id === id ? itemToUpdate : item)),
+      handleSetItems(
+        state.items.map((item) => (item.id === id ? itemToUpdate : item)),
       );
       addToast(formatErrorMessage(error), ToastType.ERROR);
 
       return false;
     } finally {
-      setIsLoading(false);
+      handleSetLoading(false);
+    }
+  };
+
+  const handleRemoveFromCart = async (id: string): Promise<boolean> => {
+    if (!userId || state.isLoading) return false;
+
+    const itemToRemove = state.items.find((item) => item.id === id);
+    if (!itemToRemove) return false;
+
+    try {
+      handleSetLoading(true);
+
+      // Optimistic update
+      const previousItems = [...state.items];
+      handleSetItems(state.items.filter((item) => item.id !== id));
+
+      // Remove from cart
+      const cartResponse = await removeCartItem(userId, id);
+
+      if (cartResponse?.error) {
+        handleSetItems(previousItems);
+        addToast(CART_MESSAGES.REMOVE_FAILED, ToastType.ERROR);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      handleSetItems(state.items);
+      addToast(formatErrorMessage(error), ToastType.ERROR);
+      return false;
+    } finally {
+      handleSetLoading(false);
+    }
+  };
+
+  const handleClearCart = async (): Promise<boolean> => {
+    if (!userId || state.isLoading || state.items.length === 0) return false;
+
+    try {
+      handleSetLoading(true);
+
+      // Optimistic update
+      const previousItems = [...state.items];
+      handleSetItems([]);
+
+      // Clear cart items
+      const response = await clearCartItems(userId, previousItems);
+
+      if (response?.error) {
+        handleSetItems(previousItems);
+        addToast(CART_MESSAGES.CHECKOUT_FAILED, ToastType.ERROR);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      handleSetItems(state.items);
+      addToast(formatErrorMessage(error), ToastType.ERROR);
+      return false;
+    } finally {
+      handleSetLoading(false);
     }
   };
 
@@ -181,11 +273,15 @@ export const useCart = (userId?: string) => {
   }, [userId]);
 
   return {
-    isLoading,
-    cartItems,
-    setCartItems,
-    setIsLoading,
+    // State
+    items: state.items,
+    isLoading: state.isLoading,
+
+    // Actions
+    handleFetchCart,
     handleAddToCart,
     handleUpdateQuantity,
+    handleRemoveFromCart,
+    handleClearCart,
   };
 };
