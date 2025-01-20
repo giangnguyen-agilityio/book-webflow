@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Contexts
-import { ToastProvider, useToast } from '@/context';
+import { ToastProvider, ToastType, useToast } from '@/context';
 
 // Components
 import { Button, Toast as ToastComponent } from '@/components';
@@ -9,15 +9,21 @@ import { Button, Toast as ToastComponent } from '@/components';
 const Toast = () => {
   const { addToast } = useToast();
 
-  const showToast = (type: 'success' | 'error' | 'info' | 'warning') => {
+  const showToast = (
+    type:
+      | ToastType.SUCCESS
+      | ToastType.ERROR
+      | ToastType.INFO
+      | ToastType.WARNING,
+  ) => {
     addToast(`This is a ${type} message!`, type);
   };
 
   const buttons = [
-    { type: 'success', color: 'success' } as const,
-    { type: 'error', color: 'danger' } as const,
-    { type: 'info', color: 'secondary' } as const,
-    { type: 'warning', color: 'warning' } as const,
+    { type: ToastType.SUCCESS, color: 'success' } as const,
+    { type: ToastType.ERROR, color: 'danger' } as const,
+    { type: ToastType.INFO, color: 'secondary' } as const,
+    { type: ToastType.WARNING, color: 'warning' } as const,
   ];
 
   return (

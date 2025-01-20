@@ -2,11 +2,13 @@ export const CART_MESSAGES = {
   REMOVE_TITLE: 'Remove Item',
   REMOVE_DESCRIPTION:
     'Are you sure you want to remove this item from your cart?',
-  REMOVE_SUCCESS: 'Item removed from cart',
-  ADD_SUCCESS: 'Item added to cart',
-  UPDATE_SUCCESS: 'Cart updated successfully',
+  REMOVE_SUCCESS: 'Item has been removed from cart',
+  ADD_SUCCESS: 'Item has been added to cart',
+  UPDATE_SUCCESS: 'Cart has been updated successfully',
+  UPDATE_FAILED: 'Failed to update the cart item',
   EXCEED_STOCK: 'Cannot exceed available stock',
   CHECKOUT_SUCCESS: 'Thank you for your purchase! Your order has been placed.',
+  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than or equal to 0',
 };
 
 export const INVENTORY_STATUS = {
@@ -61,8 +63,8 @@ export const BOOK_MESSAGES = {
   DIMENSION_INVALID: 'Please enter a valid dimension',
   DIMENSION_MUST_BE_POSITIVE: 'Dimension must be greater than or equal to 0',
 
-  ADD_BOOK_SUCCESS: 'Book added successfully',
-  UPDATE_BOOK_SUCCESS: 'Book updated successfully',
-  DELETE_BOOK_SUCCESS: 'Book deleted successfully',
-  FAILED_TO_FETCH_BOOK: 'Failed to fetch book',
+  ADD_BOOK_SUCCESS: 'Book has been added successfully',
+  UPDATE_BOOK_SUCCESS: 'Book has been updated successfully',
+  DELETE_BOOK_SUCCESS: 'Book has been deleted successfully',
+  FAILED_TO_FETCH_BOOK: 'Failed to fetch the book',
 };

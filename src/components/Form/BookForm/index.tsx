@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { BOOK_MESSAGES, ROUTES } from '@/constants';
 
 // Context
-import { useToast } from '@/context';
+import { ToastType, useToast } from '@/context';
 
 // Icons
 import { LoadingIcon } from '@/icons';
@@ -129,7 +129,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
     const result = await onSubmit(formattedData);
 
     if (result.error) {
-      addToast(result.error, 'error');
+      addToast(result.error, ToastType.ERROR);
       return;
     }
 
@@ -141,7 +141,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
 
     addToast(
       data ? BOOK_MESSAGES.UPDATE_BOOK_SUCCESS : BOOK_MESSAGES.ADD_BOOK_SUCCESS,
-      'success',
+      ToastType.SUCCESS,
     );
   };
 

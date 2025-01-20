@@ -35,7 +35,7 @@ interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
   onRemoveItem: (id: string) => void;
-  onUpdateQuantity: (id: string, quantity: number) => void;
+  onUpdateQuantity: (id: string, value: string) => void;
   onCheckout: () => void;
   cartItems?: CartItem[];
 }
@@ -62,19 +62,9 @@ const CartModal = ({
 
   const handleQuantityChange = useCallback(
     (id: string, value: string) => {
-      const newQuantity = parseInt(value, 10);
-      const item = cartItems.find((item) => item.id === id);
-
-      if (item && !isNaN(newQuantity) && newQuantity > 0) {
-        const finalQuantity = Math.min(
-          newQuantity,
-          item.quantity + item.orderedQuantity,
-        );
-
-        onUpdateQuantity(id, finalQuantity);
-      }
+      onUpdateQuantity(id, value);
     },
-    [onUpdateQuantity, cartItems],
+    [onUpdateQuantity],
   );
 
   const handleRemoveClick = useCallback((id: string) => {

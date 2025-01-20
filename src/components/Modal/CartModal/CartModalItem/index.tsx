@@ -1,5 +1,6 @@
 import { memo, ChangeEvent } from 'react';
 import { Divider } from '@nextui-org/react';
+import { useDebouncedCallback } from 'use-debounce';
 
 // Utils
 import { cn } from '@/utils';
@@ -24,17 +25,25 @@ const CartModalItem = ({
   onRemoveClick,
 }: CartModalItemProps) => {
   const { id, title, price, quantity, imageSrc, orderedQuantity } = item;
+  const formattedOrderedQuantity = orderedQuantity || 1;
+  const formattedQuantity = quantity || 0;
 
-  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onQuantityChange(id, e.target.value);
-  };
+  // Calculate remaining stock
+  const remainingStock = formattedQuantity + formattedOrderedQuantity;
+
+  const handleQuantityChange = useDebouncedCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newQuantity = e?.target.value;
+      if (newQuantity) {
+        onQuantityChange(id, newQuantity);
+      }
+    },
+    500,
+  );
 
   const handleRemoveClick = () => {
     onRemoveClick(id);
   };
-
-  // Calculate remaining stock
-  const remainingStock = quantity + orderedQuantity;
 
   return (
     <div>
@@ -80,11 +89,11 @@ const CartModalItem = ({
             <Input
               aria-label={`Quantity for ${title}`}
               color="primary"
+              defaultValue={String(orderedQuantity)}
               max={remainingStock}
-              min="1"
+              min={1}
               size="lg"
               type="number"
-              value={String(orderedQuantity)}
               classNames={{
                 base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-14',
                 input: 'font-medium',
