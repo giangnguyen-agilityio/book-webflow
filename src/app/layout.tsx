@@ -4,6 +4,9 @@ import { Inter, Cardo } from 'next/font/google';
 // Providers
 import Providers from '@/app/providers';
 
+// Configs
+import { auth } from '@/config';
+
 // Components
 import { Toast } from '@/components';
 
@@ -50,10 +53,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${inter.variable} ${cardo.variable} antialiased`}>
-        <Providers>
+        <Providers userId={userId}>
           {children}
           <Toast />
         </Providers>
