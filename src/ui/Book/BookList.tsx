@@ -63,7 +63,14 @@ const BookList = async ({ page = DEFAULT_PAGE, isAdmin }: BookListProps) => {
         <>
           <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {books?.map((book) => (
-              <BookCard key={book.id} bookData={book} isAdmin={isAdmin} />
+              <BookCard
+                key={book.id}
+                bookData={book}
+                currentPage={page}
+                isAdmin={isAdmin}
+                itemsPerPage={DEFAULT_BOOKS_PER_PAGE}
+                totalItems={count}
+              />
             ))}
           </div>
           {pageCount > DEFAULT_PAGE && <Pagination total={pageCount} />}

@@ -20,6 +20,10 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/store/1',
 }));
 
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 jest.mock('@/context', () => ({
   ...jest.requireActual('@/context'),
   useCartContext: jest.fn(() => ({

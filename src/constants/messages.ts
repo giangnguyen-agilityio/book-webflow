@@ -63,4 +63,5 @@ export const BOOK_MESSAGES = {
 
   ADD_BOOK_SUCCESS: 'Book added successfully',
   UPDATE_BOOK_SUCCESS: 'Book updated successfully',
+  DELETE_BOOK_SUCCESS: 'Book deleted successfully',
 };

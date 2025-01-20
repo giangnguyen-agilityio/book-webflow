@@ -15,6 +15,10 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ replace: mockReplace }),
 }));
 
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 describe('Pagination component', () => {
   const user = userEvent.setup();
 

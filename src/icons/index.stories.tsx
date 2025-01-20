@@ -26,6 +26,7 @@ import {
   LogOutIcon,
   PlusIcon,
   EditIcon,
+  TrashIcon,
 } from '@/icons';
 
 const icons = [
@@ -49,6 +50,7 @@ const icons = [
   { component: LogOutIcon, label: 'Log Out' },
   { component: PlusIcon, label: 'Plus' },
   { component: EditIcon, label: 'Edit' },
+  { component: TrashIcon, label: 'Trash' },
 ];
 
 const meta: Meta = {

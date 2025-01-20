@@ -19,3 +19,4 @@ export * from './EyeSlashFilledIcon';
 export * from './LogOutIcon';
 export * from './PlusIcon';
 export * from './EditIcon';
+export * from './TrashIcon';

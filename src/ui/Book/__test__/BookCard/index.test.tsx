@@ -2,7 +2,7 @@
 import { screen, wrapper, userEvent } from '@/utils/testUtils';
 
 // Constants
-import { ROUTES } from '@/constants';
+import { BOOK_MESSAGES, ROUTES } from '@/constants';
 
 // Context
 import { useCartContext, useToast } from '@/context';
@@ -12,6 +12,31 @@ import { MOCK_DEFAULT_BOOK_ITEM } from '@/mock';
 
 // Components
 import { BookCard } from '@/ui';
+
+const mockRouter = {
+  push: jest.fn(),
+  refresh: jest.fn(),
+};
+
+const mockBook = MOCK_DEFAULT_BOOK_ITEM;
+
+const defaultProps = {
+  bookData: mockBook,
+  isAdmin: false,
+  totalItems: 10,
+  currentPage: 1,
+  itemsPerPage: 6,
+};
+
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useRouter: () => mockRouter,
+  usePathname: () => '/store',
+}));
+
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
 
 jest.mock('@/context', () => ({
   ...jest.requireActual('@/context'),
@@ -24,7 +49,10 @@ jest.mock('@/context', () => ({
   })),
 }));
 
-const mockBook = MOCK_DEFAULT_BOOK_ITEM;
+jest.mock('@/actions', () => ({
+  ...jest.requireActual('@/actions'),
+  deleteBook: jest.fn().mockResolvedValue({ error: null }),
+}));
 
 describe('BookCard component', () => {
   const mockAddToCart = jest.fn();
@@ -43,23 +71,21 @@ describe('BookCard component', () => {
   });
 
   it('should render correctly for normal user', () => {
-    const { container } = wrapper(
-      <BookCard bookData={mockBook} isAdmin={false} />,
-    );
+    const { container } = wrapper(<BookCard {...defaultProps} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly for admin user', () => {
     const { container } = wrapper(
-      <BookCard bookData={mockBook} isAdmin={true} />,
+      <BookCard {...defaultProps} isAdmin={true} />,
     );
 
     expect(container).toMatchSnapshot();
   });
 
   it('should navigate to book detail page when clicked', () => {
-    wrapper(<BookCard bookData={mockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} />);
 
     const link = screen.getByRole('link');
 
@@ -67,17 +93,16 @@ describe('BookCard component', () => {
   });
 
   it('should handle add to cart action for normal user', async () => {
-    wrapper(<BookCard bookData={mockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} />);
 
     const addToCartButton = screen.getByText('Order Today');
-
     await user.click(addToCartButton);
 
     expect(mockAddToCart).toHaveBeenCalledWith(mockBook, 1);
   });
 
   it('should not show order button for admin user', () => {
-    wrapper(<BookCard bookData={mockBook} isAdmin={true} />);
+    wrapper(<BookCard {...defaultProps} isAdmin={true} />);
 
     const orderButton = screen.queryByText('Order Today');
 
@@ -87,12 +112,47 @@ describe('BookCard component', () => {
   it('should show out of stock when quantity is 0', () => {
     const outOfStockBook = { ...mockBook, quantity: 0 };
 
-    wrapper(<BookCard bookData={outOfStockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} bookData={outOfStockBook} />);
 
     const button = screen.getByRole('button');
 
     expect(button).toHaveTextContent('Out of Stock');
     expect(button).toBeDisabled();
+  });
+
+  it('should handle delete book action', async () => {
+    wrapper(<BookCard {...defaultProps} isAdmin={true} />);
+
+    const deleteButton = screen.getByLabelText('Delete book button');
+    await user.click(deleteButton);
+
+    const confirmButton = screen.getByText('Confirm');
+    await user.click(confirmButton);
+
+    expect(mockAddToast).toHaveBeenCalledWith(
+      BOOK_MESSAGES.DELETE_BOOK_SUCCESS,
+      'success',
+    );
+  });
+
+  it('should navigate to previous page when deleting last item', async () => {
+    wrapper(
+      <BookCard
+        {...defaultProps}
+        currentPage={2}
+        isAdmin={true}
+        itemsPerPage={6}
+        totalItems={7}
+      />,
+    );
+
+    const deleteButton = screen.getByLabelText('Delete book button');
+    await user.click(deleteButton);
+
+    const confirmButton = screen.getByText('Confirm');
+    await user.click(confirmButton);
+
+    expect(mockRouter.push).toHaveBeenCalledWith('/store?page=1');
   });
 
   it('should show correct available quantity when item exists in cart', () => {
@@ -103,7 +163,7 @@ describe('BookCard component', () => {
       addToCart: mockAddToCart,
     });
 
-    wrapper(<BookCard bookData={mockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} />);
 
     const button = screen.getByRole('button');
 
@@ -117,7 +177,7 @@ describe('BookCard component', () => {
       addToCart: mockAddToCart,
     });
 
-    wrapper(<BookCard bookData={mockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} />);
 
     const button = screen.getByRole('button');
 
@@ -128,7 +188,7 @@ describe('BookCard component', () => {
   it('should not call addToCart when out of stock button is clicked', async () => {
     const outOfStockBook = { ...mockBook, quantity: 0 };
 
-    wrapper(<BookCard bookData={outOfStockBook} isAdmin={false} />);
+    wrapper(<BookCard {...defaultProps} bookData={outOfStockBook} />);
 
     const button = screen.getByRole('button');
     await user.click(button);
@@ -137,14 +197,11 @@ describe('BookCard component', () => {
   });
 
   it('should not call addToCart for admin user even if book is in stock', async () => {
-    wrapper(<BookCard bookData={mockBook} isAdmin={true} />);
+    wrapper(<BookCard {...defaultProps} isAdmin={true} />);
 
-    // Verify order button is not present
     const orderButton = screen.queryByText('Order Today');
 
     expect(orderButton).not.toBeInTheDocument();
-
-    // Verify addToCart was never called
     expect(mockAddToCart).not.toHaveBeenCalled();
   });
 });

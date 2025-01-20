@@ -12,6 +12,10 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/articles/1',
 }));
 
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 describe('ArticleDetail component', () => {
   it('should render correctly', () => {
     const { container } = wrapper(

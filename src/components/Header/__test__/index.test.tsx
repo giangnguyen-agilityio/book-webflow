@@ -28,6 +28,9 @@ jest.mock('@/context', () => ({
 jest.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
 
 describe('Header component', () => {
   const user = userEvent.setup();
