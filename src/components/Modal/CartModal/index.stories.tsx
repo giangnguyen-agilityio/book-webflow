@@ -100,6 +100,8 @@ export const ManyItems: Story = {
       {
         ...MOCK_DEFAULT_BOOK_ITEM,
         id: '3',
+        authId: '1',
+        bookId: '3',
         title: 'Third Book',
         price: 39.99,
         orderedQuantity: 3,
@@ -107,6 +109,8 @@ export const ManyItems: Story = {
       {
         ...MOCK_DEFAULT_BOOK_ITEM,
         id: '4',
+        authId: '1',
+        bookId: '4',
         title: 'Fourth Book',
         price: 49.99,
         orderedQuantity: 1,

@@ -28,7 +28,7 @@ interface BookDetailProps {
 
 const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
   const [orderQuantity, setOrderQuantity] = useState(1);
-  const { cartItems, addToCart } = useCartContext();
+  const { isLoading, cartItems, addToCart } = useCartContext();
   const router = useRouter();
 
   const {
@@ -59,9 +59,9 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
     { label: 'Dimensions', value: `${length} x ${width} x ${height} cm` },
   ];
 
-  const cartItem = cartItems.find((item) => item.id === id);
+  const cartItem = cartItems.find((item) => item.bookId === id);
   const availableQuantity = cartItem ? cartItem.quantity : quantity;
-  const isOutOfStock = availableQuantity === 0;
+  const isOutOfStock = availableQuantity === 0 || quantity === 0;
   const isLowStock = availableQuantity < 5;
 
   const inventoryStatus = getInventoryStatus(availableQuantity);
@@ -82,10 +82,10 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
     setOrderQuantity(finalQuantity);
   };
 
-  const handleAddToCart = () => {
-    if (isOutOfStock) return;
+  const handleAddToCart = async () => {
+    if (isOutOfStock || isAdmin || isLoading) return;
 
-    addToCart(data, orderQuantity);
+    await addToCart(id, orderQuantity);
   };
 
   return (
@@ -196,7 +196,8 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
                 aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
                 color="default"
                 disableAnimation={isOutOfStock}
-                disabled={isOutOfStock}
+                disabled={isOutOfStock || isLoading}
+                isLoading={isLoading}
                 startContent={<CartIcon customClass="w-5 h-5" />}
                 variant="solid"
                 className={cn(
