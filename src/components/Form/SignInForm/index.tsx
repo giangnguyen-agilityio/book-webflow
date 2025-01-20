@@ -17,7 +17,7 @@ import { SignInSchema } from '@/schemas';
 import { AuthResult, AuthCredentials } from '@/types';
 
 // Context
-import { useToast } from '@/context';
+import { ToastType, useToast } from '@/context';
 
 // Icons
 import { EyeFilledIcon, EyeSlashFilledIcon, LoadingIcon } from '@/icons';
@@ -78,7 +78,7 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
     }
 
     if (result.errorMessage) {
-      addToast(result.errorMessage, 'error');
+      addToast(result.errorMessage, ToastType.ERROR);
       return;
     }
   };

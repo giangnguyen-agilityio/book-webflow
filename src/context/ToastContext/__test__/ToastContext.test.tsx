@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { act, renderHook, ignoredConsoleError } from '@/utils/testUtils';
 
 // Context
-import { ToastProvider, useToast } from '..';
+import { ToastProvider, ToastType, useToast } from '..';
 
 describe('ToastContext', () => {
   const wrapper = ({ children }: { children: ReactNode }) => (
@@ -25,7 +25,7 @@ describe('ToastContext', () => {
     const { result } = renderHook(() => useToast(), { wrapper });
 
     act(() => {
-      result.current.addToast('Test message', 'success');
+      result.current.addToast('Test message', ToastType.SUCCESS);
     });
 
     expect(result.current.toasts).toHaveLength(1);
@@ -42,7 +42,7 @@ describe('ToastContext', () => {
     const { result } = renderHook(() => useToast(), { wrapper });
 
     act(() => {
-      result.current.addToast('Test message', 'success');
+      result.current.addToast('Test message', ToastType.SUCCESS);
     });
 
     const toastId = result.current.toasts[0].id;
@@ -58,7 +58,7 @@ describe('ToastContext', () => {
     const { result } = renderHook(() => useToast(), { wrapper });
 
     act(() => {
-      result.current.addToast('Test message', 'success', 1000);
+      result.current.addToast('Test message', ToastType.SUCCESS, 1000);
     });
 
     expect(result.current.toasts).toHaveLength(1);
@@ -80,9 +80,9 @@ describe('ToastContext', () => {
     const { result } = renderHook(() => useToast(), { wrapper });
 
     act(() => {
-      result.current.addToast('Success message', 'success');
-      result.current.addToast('Error message', 'error');
-      result.current.addToast('Info message', 'info');
+      result.current.addToast('Success message', ToastType.SUCCESS);
+      result.current.addToast('Error message', ToastType.ERROR);
+      result.current.addToast('Info message', ToastType.INFO);
     });
 
     expect(result.current.toasts).toHaveLength(3);
@@ -95,9 +95,9 @@ describe('ToastContext', () => {
     const { result } = renderHook(() => useToast(), { wrapper });
 
     act(() => {
-      result.current.addToast('Message 1', 'success');
-      result.current.addToast('Message 2', 'error');
-      result.current.addToast('Message 3', 'info');
+      result.current.addToast('Message 1', ToastType.SUCCESS);
+      result.current.addToast('Message 2', ToastType.ERROR);
+      result.current.addToast('Message 3', ToastType.INFO);
     });
 
     expect(result.current.toasts).toHaveLength(3);

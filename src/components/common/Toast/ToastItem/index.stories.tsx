@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+// Context
+import { ToastType } from '@/context';
+
 import ToastItem from './';
 
 const meta: Meta<typeof ToastItem> = {
@@ -42,7 +45,7 @@ type Story = StoryObj<typeof ToastItem>;
 export const Success: Story = {
   args: {
     id: 1,
-    type: 'success',
+    type: ToastType.SUCCESS,
     message: 'This is a success message',
   },
 };
@@ -50,7 +53,7 @@ export const Success: Story = {
 export const Error: Story = {
   args: {
     id: 2,
-    type: 'error',
+    type: ToastType.ERROR,
     message: 'This is an error message',
   },
 };
@@ -58,7 +61,7 @@ export const Error: Story = {
 export const Info: Story = {
   args: {
     id: 3,
-    type: 'info',
+    type: ToastType.INFO,
     message: 'This is an info message',
   },
 };
@@ -66,7 +69,7 @@ export const Info: Story = {
 export const Warning: Story = {
   args: {
     id: 4,
-    type: 'warning',
+    type: ToastType.WARNING,
     message: 'This is a warning message',
   },
 };

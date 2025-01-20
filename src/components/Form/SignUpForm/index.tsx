@@ -11,7 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { ROUTES } from '@/constants';
 
 // Context
-import { useToast } from '@/context';
+import { ToastType, useToast } from '@/context';
 
 // Icons
 import { EyeFilledIcon, EyeSlashFilledIcon, LoadingIcon } from '@/icons';
@@ -79,7 +79,7 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
     }
 
     if (result.errorMessage) {
-      addToast(result.errorMessage, 'error');
+      addToast(result.errorMessage, ToastType.ERROR);
       return;
     }
   };

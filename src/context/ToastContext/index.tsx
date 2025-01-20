@@ -8,7 +8,12 @@ import {
   ReactNode,
 } from 'react';
 
-export type ToastType = 'success' | 'error' | 'info' | 'warning';
+export enum ToastType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+  WARNING = 'warning',
+}
 
 export interface IToast {
   id: number;

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, MouseEvent } from 'react';
+import { memo, MouseEvent, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
@@ -16,7 +16,7 @@ import { Book } from '@/models';
 import { BOOK_MESSAGES, ImageStore, ROUTES } from '@/constants';
 
 // Context
-import { useCartContext, useToast } from '@/context';
+import { ToastType, useCartContext, useToast } from '@/context';
 
 // Actions
 import { deleteBook } from '@/actions';
@@ -51,7 +51,7 @@ const BookCard = ({
   const router = useRouter();
   const pathname = usePathname();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const {
     id,
@@ -78,34 +78,31 @@ const BookCard = ({
   };
 
   const handleDeleteBook = async () => {
-    if (isDeleting) return;
+    if (isPending) return;
 
-    setIsDeleting(true);
-    const response = await deleteBook(id);
+    startTransition(async () => {
+      const response = await deleteBook(id);
 
-    if (response.error) {
-      addToast(response.error, 'error');
-    } else {
-      addToast(BOOK_MESSAGES.DELETE_BOOK_SUCCESS, 'success');
+      if (response.error) {
+        addToast(response.error, ToastType.ERROR);
+      } else {
+        addToast(BOOK_MESSAGES.DELETE_BOOK_SUCCESS, ToastType.SUCCESS);
 
-      const isLastItemOnPage =
-        totalItems - (currentPage - 1) * itemsPerPage === 1;
-      const isNotFirstPage = currentPage > 1;
+        const isLastItemOnPage =
+          totalItems - (currentPage - 1) * itemsPerPage === 1;
+        const isNotFirstPage = currentPage > 1;
 
-      if (isLastItemOnPage && isNotFirstPage) {
-        // If this is the last item on current page (not first page)
-        // Navigate to previous page
-        const prevPage = currentPage - 1;
-        router.push(
-          generateUrl(pathname, {
-            queryParams: { page: prevPage },
-          }),
-        );
+        if (isLastItemOnPage && isNotFirstPage) {
+          const prevPage = currentPage - 1;
+          router.push(
+            generateUrl(pathname, {
+              queryParams: { page: prevPage },
+            }),
+          );
+        }
+        onClose();
       }
-      onClose();
-    }
-
-    setIsDeleting(false);
+    });
   };
 
   const handleOpenDeleteModal = (e: MouseEvent) => {
@@ -114,7 +111,7 @@ const BookCard = ({
   };
 
   const handleCloseDeleteModal = () => {
-    if (!isDeleting) {
+    if (!isPending) {
       onClose();
     }
   };
@@ -259,7 +256,7 @@ const BookCard = ({
 
       <ConfirmModal
         description={`Are you sure you want to delete "${title}" book? This action cannot be undone.`}
-        isLoading={isDeleting}
+        isLoading={isPending}
         isOpen={isOpen}
         title="Delete Book"
         onCancel={handleCloseDeleteModal}
