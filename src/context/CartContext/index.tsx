@@ -34,10 +34,11 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CartProvider = ({ children, userId }: CartProviderProps) => {
   const {
     isLoading,
-    cartItems,
-    setCartItems,
+    items,
     handleAddToCart,
     handleUpdateQuantity,
+    handleRemoveFromCart,
+    handleClearCart,
   } = useCart(userId);
   const { addToast } = useToast();
 
@@ -45,7 +46,7 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
     async (id: string, orderedQuantity: number) => {
       const success = await handleAddToCart(id, orderedQuantity);
       if (success) {
-        const existingItem = cartItems.find((item) => item.bookId === id);
+        const existingItem = items.find((item) => item.bookId === id);
         addToast(
           existingItem
             ? CART_MESSAGES.UPDATE_SUCCESS
@@ -54,24 +55,18 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
         );
       }
     },
-    [cartItems, handleAddToCart, addToast],
+    [items, handleAddToCart, addToast],
   );
 
   // Removes an item from cart
-  // TODO: Need update
   const removeFromCart = useCallback(
-    (id: string) => {
-      const itemToRemove = cartItems.find((item) => item.id === id);
-      if (!itemToRemove) return;
-
-      setCartItems((prevItems) => {
-        const updatedItems = prevItems.filter((item) => item.id !== id);
-        return updatedItems;
-      });
-
-      addToast(CART_MESSAGES.REMOVE_SUCCESS, ToastType.SUCCESS);
+    async (id: string) => {
+      const success = await handleRemoveFromCart(id);
+      if (success) {
+        addToast(CART_MESSAGES.REMOVE_SUCCESS, ToastType.SUCCESS);
+      }
     },
-    [cartItems, setCartItems, addToast],
+    [handleRemoveFromCart, addToast],
   );
 
   // Updates quantity of an item in cart
@@ -87,15 +82,16 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
   );
 
   // Clears all items from cart
-  // TODO: Need update
-  const clearCart = useCallback(() => {
-    setCartItems([]);
-    addToast(CART_MESSAGES.CHECKOUT_SUCCESS, ToastType.SUCCESS);
-  }, [addToast, setCartItems]);
+  const clearCart = useCallback(async () => {
+    const success = await handleClearCart();
+    if (success) {
+      addToast(CART_MESSAGES.CHECKOUT_SUCCESS, ToastType.SUCCESS);
+    }
+  }, [handleClearCart, addToast]);
 
   const contextValue = {
     isLoading,
-    cartItems,
+    cartItems: items,
     addToCart,
     removeFromCart,
     updateQuantity,

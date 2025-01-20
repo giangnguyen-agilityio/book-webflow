@@ -48,7 +48,7 @@ const Header = ({ userInfo }: HeaderProps) => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { cartItems, removeFromCart, updateQuantity, clearCart } =
+  const { isLoading, cartItems, removeFromCart, updateQuantity, clearCart } =
     useCartContext();
 
   const formattedSocialLinks = SOCIAL_LINK_ITEMS.slice(0, -1);
@@ -122,6 +122,7 @@ const Header = ({ userInfo }: HeaderProps) => {
 
       <CartModal
         cartItems={cartItems}
+        isLoading={isLoading}
         isOpen={isCartOpen}
         onCheckout={clearCart}
         onClose={handleCartClose}

@@ -33,6 +33,7 @@ import CartModalItem from './CartModalItem';
 
 interface CartModalProps {
   isOpen: boolean;
+  isLoading: boolean;
   onClose: () => void;
   onRemoveItem: (id: string) => void;
   onUpdateQuantity: (id: string, value: string) => void;
@@ -42,6 +43,7 @@ interface CartModalProps {
 
 const CartModal = ({
   isOpen,
+  isLoading,
   onClose,
   onRemoveItem,
   onUpdateQuantity,
@@ -82,8 +84,10 @@ const CartModal = ({
     setItemToRemove(null);
   };
 
-  const handleContinueShopping = () => {
-    onClose();
+  const handleCloseModal = () => {
+    if (!isLoading) {
+      onClose();
+    }
   };
 
   const handleCheckout = () => {
@@ -97,7 +101,7 @@ const CartModal = ({
         aria-label="Shopping Cart"
         data-testid="cart-modal"
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleCloseModal}
       >
         <ModalHeader
           className={cn(
@@ -121,7 +125,7 @@ const CartModal = ({
             aria-label="Close cart"
             className="rounded-full p-1 sm:p-2"
             variant="outline"
-            onPress={onClose}
+            onPress={handleCloseModal}
           >
             <CloseIcon customClass="w-4 h-4 sm:w-6 sm:h-6" />
           </Button>
@@ -158,7 +162,7 @@ const CartModal = ({
                   'font-cardo font-bold text-base sm:text-lg',
                   'hover:underline hover:underline-offset-4',
                 )}
-                onPress={handleContinueShopping}
+                onPress={handleCloseModal}
               >
                 Continue Shopping
               </Button>

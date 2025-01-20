@@ -1,12 +1,12 @@
 'use client';
 
 import { memo, MouseEvent, useTransition } from 'react';
+import { useDisclosure } from '@nextui-org/react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 // Utils
-import { useDisclosure } from '@nextui-org/react';
 import { cn, generateUrl } from '@/utils';
 
 // Models
@@ -72,9 +72,11 @@ const BookCard = ({
   const isOutOfStock = availableQuantity === 0 || quantity === 0;
 
   const handleAddToCart = async () => {
-    if (isOutOfStock || isAdmin || isLoading) return;
+    if (isOutOfStock || isAdmin || isPending) return;
 
-    await addToCart(id, DEFAULT_ORDER_QUANTITY);
+    startTransition(async () => {
+      await addToCart(id, DEFAULT_ORDER_QUANTITY);
+    });
   };
 
   const handleDeleteBook = async () => {
@@ -239,7 +241,8 @@ const BookCard = ({
           {!isAdmin && (
             <Button
               aria-label={isOutOfStock ? 'Out of stock' : 'Add to cart'}
-              disabled={isOutOfStock}
+              disabled={isOutOfStock || isPending}
+              isLoading={isPending}
               variant="outline"
               className={cn(
                 'self-start h-fit w-fit 3xl:w-55 py-2 3xl:py-5',
@@ -256,7 +259,7 @@ const BookCard = ({
 
       <ConfirmModal
         description={`Are you sure you want to delete "${title}" book? This action cannot be undone.`}
-        isLoading={isPending}
+        isLoading={isPending || isLoading}
         isOpen={isOpen}
         title="Delete Book"
         onCancel={handleCloseDeleteModal}

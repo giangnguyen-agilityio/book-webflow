@@ -1,7 +1,9 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 // Constants
-import { API_PATH } from '@/constants';
+import { API_PATH, ROUTES } from '@/constants';
 
 // Services
 import { httpClient, HttpMethod } from '@/services';
@@ -35,7 +37,7 @@ const getCart = async (authId: string): Promise<TCartResponse> => {
   }
 };
 
-export const addToCartAction = async (
+const addItemToCart = async (
   authId: string,
   cartItem: CartItem,
 ): Promise<TCartItemResponse> => {
@@ -46,6 +48,8 @@ export const addToCartAction = async (
       body: cartItem,
     });
 
+    revalidatePath(ROUTES.CART);
+
     return {
       cart: response,
     };
@@ -57,7 +61,7 @@ export const addToCartAction = async (
   }
 };
 
-export const updateCartItem = async (
+const updateCartItem = async (
   authId: string,
   cartItem: CartItem,
 ): Promise<TCartItemResponse> => {
@@ -68,6 +72,8 @@ export const updateCartItem = async (
       body: cartItem,
     });
 
+    revalidatePath(ROUTES.CART);
+
     return {
       cart: response,
     };
@@ -79,4 +85,55 @@ export const updateCartItem = async (
   }
 };
 
-export { getCart };
+const removeCartItem = async (authId: string, cartItemId: string) => {
+  try {
+    await httpClient.request<CartItem, CartItem>({
+      endpoint: `${API_PATH.AUTH}/${authId}/cart/${cartItemId}`,
+      method: HttpMethod.DELETE,
+    });
+
+    revalidatePath(ROUTES.CART);
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: formatErrorMessage(error),
+    };
+  }
+};
+
+// Because the MockAPI.io not support clear all items so we need to delete each item in cart
+const clearCartItems = async (authId: string, cartItems: CartItem[]) => {
+  try {
+    await Promise.all(
+      cartItems.map((item) =>
+        httpClient.request<CartItem, CartItem>({
+          endpoint: `${API_PATH.AUTH}/${authId}/cart/${item.id}`,
+          method: HttpMethod.DELETE,
+        }),
+      ),
+    );
+
+    revalidatePath(ROUTES.CART);
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: formatErrorMessage(error),
+    };
+  }
+};
+
+export {
+  getCart,
+  addItemToCart,
+  updateCartItem,
+  removeCartItem,
+  clearCartItems,
+};
