@@ -29,10 +29,16 @@ type TCartResponse = {
   error?: string;
 };
 
+type TCartItemResponse = {
+  cart: CartItem | null;
+  error?: string;
+};
+
 export type {
   TBooksResponse,
   TBookResponse,
   TArticlesResponse,
   TArticleResponse,
   TCartResponse,
+  TCartItemResponse,
 };

@@ -63,18 +63,18 @@ const BookCard = ({
     quantity = 0,
   } = bookData;
 
-  const { cartItems, addToCart } = useCartContext();
+  const { cartItems, isLoading, addToCart } = useCartContext();
   const { addToast } = useToast();
 
-  // Find if item exists in cart to get actual quantity
-  const cartItem = cartItems.find((item) => item.id === id);
+  // Find if item exists in cart and check stock
+  const cartItem = cartItems.find((item) => item.bookId === id);
   const availableQuantity = cartItem ? cartItem.quantity : quantity;
-  const isOutOfStock = availableQuantity === 0;
+  const isOutOfStock = availableQuantity === 0 || quantity === 0;
 
-  const handleAddToCart = () => {
-    if (!isOutOfStock && !isAdmin) {
-      addToCart(bookData, DEFAULT_ORDER_QUANTITY);
-    }
+  const handleAddToCart = async () => {
+    if (isOutOfStock || isAdmin || isLoading) return;
+
+    await addToCart(id, DEFAULT_ORDER_QUANTITY);
   };
 
   const handleDeleteBook = async () => {

@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, ReactNode } from 'react';
 
 // Models
-import { Book, CartItem } from '@/models';
+import { CartItem } from '@/models';
 
 // Context
 import { useToast } from '@/context';
@@ -17,9 +17,9 @@ import { useCart } from '@/hooks';
 interface CartContextType {
   isLoading: boolean;
   cartItems: CartItem[];
-  addToCart: (book: Book, quantity: number) => void;
+  addToCart: (id: string, orderedQuantity: number) => Promise<void>;
   removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  updateQuantity: (id: string, newQuantity: number) => void;
   clearCart: () => void;
 }
 
@@ -32,60 +32,28 @@ interface CartProviderProps {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CartProvider = ({ children, userId }: CartProviderProps) => {
-  const { cartItems, isLoading, setCartItems } = useCart(userId);
+  const { isLoading, cartItems, setCartItems, handleAddToCart } =
+    useCart(userId);
   const { addToast } = useToast();
 
-  // Adds a book to cart or updates quantity if already exists
   const addToCart = useCallback(
-    (book: Book, quantity: number) => {
-      const existingItem = cartItems.find((item) => item.id === book.id);
-      const newQuantity = existingItem
-        ? existingItem.orderedQuantity + quantity
-        : quantity;
-
-      // Check against original book quantity instead of cart item quantity
-      if (newQuantity > book.quantity) {
-        addToast(CART_MESSAGES.EXCEED_STOCK, 'error');
-        return;
-      }
-
-      setCartItems((prevItems) => {
-        const existingItem = prevItems.find((item) => item.id === book.id);
-
-        if (existingItem) {
-          return prevItems.map((item) =>
-            item.id === book.id
-              ? {
-                  ...item,
-                  orderedQuantity: newQuantity,
-                  quantity: book.quantity - newQuantity,
-                }
-              : item,
-          );
-        }
-
-        return [
-          ...prevItems,
-          {
-            ...book,
-            id: book.id || '',
-            orderedQuantity: quantity,
-            quantity: book.quantity - quantity,
-          },
-        ];
-      });
-
-      // Show success toast after state update
-      if (existingItem) {
-        addToast(CART_MESSAGES.UPDATE_SUCCESS, 'success');
-      } else {
-        addToast(CART_MESSAGES.ADD_SUCCESS, 'success');
+    async (id: string, orderedQuantity: number) => {
+      const success = await handleAddToCart(id, orderedQuantity);
+      if (success) {
+        const existingItem = cartItems.find((item) => item.bookId === id);
+        addToast(
+          existingItem
+            ? CART_MESSAGES.UPDATE_SUCCESS
+            : CART_MESSAGES.ADD_SUCCESS,
+          'success',
+        );
       }
     },
-    [cartItems, setCartItems, addToast],
+    [cartItems, handleAddToCart, addToast],
   );
 
   // Removes an item from cart
+  // TODO: Need update
   const removeFromCart = useCallback(
     (id: string) => {
       const itemToRemove = cartItems.find((item) => item.id === id);
@@ -102,6 +70,7 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
   );
 
   // Updates quantity of an item in cart
+  // TODO: Need update
   const updateQuantity = useCallback((id: string, newQuantity: number) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -117,6 +86,7 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
   }, []);
 
   // Clears all items from cart
+  // TODO: Need update
   const clearCart = useCallback(() => {
     setCartItems([]);
     addToast(CART_MESSAGES.CHECKOUT_SUCCESS, 'success');
