@@ -2,7 +2,7 @@
 import { MOCK_DEFAULT_CART_ITEMS } from '@/mock';
 
 // Utils
-import { screen, wrapper, userEvent } from '@/utils/testUtils';
+import { screen, wrapper, userEvent, waitFor } from '@/utils/testUtils';
 
 // Components
 import CartModalItem from '..';
@@ -27,15 +27,27 @@ describe('CartModalItem component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should handle quantity change', async () => {
+  it('should handle quantity change with debounce', async () => {
     const user = userEvent.setup();
     wrapper(<CartModalItem {...defaultProps} />);
 
-    const input = screen.getByRole('spinbutton');
+    const input = screen.getByRole('spinbutton', {
+      name: new RegExp(`Quantity for ${mockItem.title}`, 'i'),
+    });
+
     await user.clear(input);
     await user.type(input, '5');
 
-    expect(defaultProps.onQuantityChange).toHaveBeenCalled();
+    // Wait for debounce
+    await waitFor(
+      () => {
+        expect(defaultProps.onQuantityChange).toHaveBeenCalledWith(
+          mockItem.id,
+          '5',
+        );
+      },
+      { timeout: 1000 },
+    );
   });
 
   it('should handle remove click', async () => {
@@ -45,7 +57,7 @@ describe('CartModalItem component', () => {
     const removeButton = screen.getByRole('button', { name: /remove/i });
     await user.click(removeButton);
 
-    expect(defaultProps.onRemoveClick).toHaveBeenCalledWith('1');
+    expect(defaultProps.onRemoveClick).toHaveBeenCalledWith(mockItem.id);
   });
 
   it('should not show divider when showDivider is false', () => {
@@ -59,9 +71,13 @@ describe('CartModalItem component', () => {
   it('should limit quantity input to remaining stock', () => {
     wrapper(<CartModalItem {...defaultProps} />);
 
-    const input = screen.getByRole('spinbutton');
+    const input = screen.getByRole('spinbutton', {
+      name: new RegExp(`Quantity for ${mockItem.title}`, 'i'),
+    });
 
-    expect(input).toHaveAttribute('max', '12'); // quantity + orderedQuantity
+    const remainingStock =
+      (mockItem.quantity || 0) + (mockItem.orderedQuantity || 1);
+    expect(input).toHaveAttribute('max', String(remainingStock));
     expect(input).toHaveAttribute('min', '1');
   });
 });

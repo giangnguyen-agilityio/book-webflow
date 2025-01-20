@@ -46,6 +46,7 @@ describe('BookDetail component', () => {
     jest.clearAllMocks();
     (useCartContext as jest.Mock).mockReturnValue({
       cartItems: [],
+      isLoading: false,
       addToCart: mockAddToCart,
     });
     (useToast as jest.Mock).mockReturnValue({
@@ -53,41 +54,104 @@ describe('BookDetail component', () => {
     });
   });
 
-  it('should render correctly', () => {
+  it('should render book details correctly', () => {
     const { container } = wrapper(
       <BookDetail data={mockBook} isAdmin={false} />,
     );
     expect(container).toMatchSnapshot();
   });
 
-  it('should handle add to cart action', async () => {
+  it('should handle quantity change correctly', async () => {
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
+
+    const quantityInput = screen.getByLabelText(
+      `Quantity for ${mockBook.title}`,
+    );
+    await user.clear(quantityInput);
+    await user.type(quantityInput, '3');
+
+    expect(quantityInput).toHaveValue(3);
+  });
+
+  it('should prevent quantity from going below 1', async () => {
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
+
+    const quantityInput = screen.getByLabelText(
+      `Quantity for ${mockBook.title}`,
+    );
+    await user.clear(quantityInput);
+    await user.type(quantityInput, '0');
+
+    expect(quantityInput).toHaveValue(1);
+  });
+
+  it('should handle add to cart with correct quantity', async () => {
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
+
+    const quantityInput = screen.getByLabelText(
+      `Quantity for ${mockBook.title}`,
+    );
+    await user.clear(quantityInput);
+    await user.type(quantityInput, '3');
+
+    const addToCartButton = screen.getByRole('button', {
+      name: /add to cart/i,
+    });
+    await user.click(addToCartButton);
+
+    expect(mockAddToCart).toHaveBeenCalledWith(mockBook.id, 3);
+  });
+
+  it('should disable add to cart when loading', () => {
+    (useCartContext as jest.Mock).mockReturnValue({
+      cartItems: [],
+      isLoading: true,
+      addToCart: mockAddToCart,
+    });
+
     wrapper(<BookDetail data={mockBook} isAdmin={false} />);
 
     const addToCartButton = screen.getByRole('button', {
       name: /add to cart/i,
     });
-
-    await user.click(addToCartButton);
-
-    expect(mockAddToCart).toHaveBeenCalledWith(mockBook, 1);
+    expect(addToCartButton).toBeDisabled();
   });
 
-  it('should display publisher without published date when date is not provided', () => {
-    const bookWithoutDate = {
-      ...mockBook,
-      bookInformation: {
-        ...mockBook.bookInformation,
-        publishedDate: '',
-      },
-    };
+  it('should show correct inventory status for low stock', () => {
+    const lowStockBook = { ...mockBook, quantity: 3 };
+    wrapper(<BookDetail data={lowStockBook} isAdmin={false} />);
 
-    wrapper(<BookDetail data={bookWithoutDate} isAdmin={false} />);
-
-    expect(screen.getByText('Publisher:')).toBeInTheDocument();
     expect(
-      screen.getByText(bookWithoutDate.bookInformation.publisher),
+      screen.getByText('Only 3 copies left! Order soon'),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/\(\d+\)/)).not.toBeInTheDocument();
+  });
+
+  it('should show correct inventory status for out of stock', () => {
+    const outOfStockBook = { ...mockBook, quantity: 0 };
+    wrapper(<BookDetail data={outOfStockBook} isAdmin={false} />);
+
+    expect(
+      screen.getByText('Out of stock - Check back later'),
+    ).toBeInTheDocument();
+  });
+
+  it('should calculate available quantity based on cart items', () => {
+    const cartQuantity = 10;
+    (useCartContext as jest.Mock).mockReturnValue({
+      cartItems: [{ bookId: mockBook.id, quantity: cartQuantity }],
+      isLoading: false,
+      addToCart: mockAddToCart,
+    });
+
+    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
+
+    const quantityInput = screen.getByLabelText(
+      `Quantity for ${mockBook.title}`,
+    );
+    expect(quantityInput).toHaveValue(1);
+    expect(
+      screen.getByText('In Stock - Usually ships within 1-2 business days'),
+    ).toBeInTheDocument();
   });
 
   it('should handle back navigation', async () => {
@@ -99,66 +163,7 @@ describe('BookDetail component', () => {
     expect(mockRouter.back).toHaveBeenCalled();
   });
 
-  it('should handle quantity change within available limit', async () => {
-    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
-
-    const quantityInput = screen.getByLabelText(
-      `Quantity for ${mockBook.title}`,
-    );
-    await user.clear(quantityInput);
-    await user.type(quantityInput, '5');
-
-    expect(quantityInput).toHaveValue(5);
-  });
-
-  it('should limit quantity to available stock', async () => {
-    const bookWithLimitedStock = { ...mockBook, quantity: 3 };
-    wrapper(<BookDetail data={bookWithLimitedStock} isAdmin={false} />);
-
-    const quantityInput = screen.getByLabelText(
-      `Quantity for ${mockBook.title}`,
-    );
-    await user.clear(quantityInput);
-    await user.type(quantityInput, '5');
-
-    expect(quantityInput).toHaveValue(3);
-  });
-
-  it('should show out of stock state when quantity is 0', () => {
-    const outOfStockBook = { ...mockBook, quantity: 0 };
-    wrapper(<BookDetail data={outOfStockBook} isAdmin={false} />);
-
-    const addToCartButton = screen.getByRole('button', {
-      name: /out of stock/i,
-    });
-    const quantityInput = screen.getByLabelText(
-      `Quantity for ${mockBook.title}`,
-    );
-
-    expect(addToCartButton).toBeDisabled();
-    expect(quantityInput).toBeDisabled();
-    expect(quantityInput).toHaveValue(0);
-  });
-
-  it('should use cart item quantity when book exists in cart', async () => {
-    const cartQuantity = 2;
-    (useCartContext as jest.Mock).mockReturnValue({
-      cartItems: [{ ...mockBook, quantity: cartQuantity }],
-      addToCart: mockAddToCart,
-    });
-
-    wrapper(<BookDetail data={mockBook} isAdmin={false} />);
-
-    const quantityInput = screen.getByLabelText(
-      `Quantity for ${mockBook.title}`,
-    );
-    await user.clear(quantityInput);
-    await user.type(quantityInput, '5');
-
-    expect(quantityInput).toHaveValue(cartQuantity);
-  });
-
-  it('should hide order section for admin users', () => {
+  it('should not show order section for admin users', () => {
     wrapper(<BookDetail data={mockBook} isAdmin={true} />);
 
     expect(

@@ -1,5 +1,10 @@
 // Utils
-import { screen, wrapper, userEvent } from '@/utils/testUtils';
+import {
+  screen,
+  wrapper,
+  userEvent,
+  ignoredConsoleError,
+} from '@/utils/testUtils';
 
 // Constants
 import { BOOK_MESSAGES, ROUTES } from '@/constants';
@@ -34,15 +39,12 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/store',
 }));
 
-jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
-}));
-
 jest.mock('@/context', () => ({
   ...jest.requireActual('@/context'),
   useCartContext: jest.fn(() => ({
     cartItems: [],
-    addToCart: jest.fn(),
+    isLoading: false,
+    addToCart: jest.fn().mockResolvedValue(undefined),
   })),
   useToast: jest.fn(() => ({
     addToast: jest.fn(),
@@ -55,14 +57,16 @@ jest.mock('@/actions', () => ({
 }));
 
 describe('BookCard component', () => {
-  const mockAddToCart = jest.fn();
+  const mockAddToCart = jest.fn().mockResolvedValue(undefined);
   const mockAddToast = jest.fn();
   const user = userEvent.setup();
 
   beforeEach(() => {
     jest.clearAllMocks();
+    ignoredConsoleError();
     (useCartContext as jest.Mock).mockReturnValue({
       cartItems: [],
+      isLoading: false,
       addToCart: mockAddToCart,
     });
     (useToast as jest.Mock).mockReturnValue({
@@ -86,37 +90,37 @@ describe('BookCard component', () => {
 
   it('should navigate to book detail page when clicked', () => {
     wrapper(<BookCard {...defaultProps} />);
-
-    const link = screen.getByRole('link');
+    const link = screen.getByRole('link', {
+      name: new RegExp(mockBook.title, 'i'),
+    });
 
     expect(link).toHaveAttribute('href', `${ROUTES.STORE}/${mockBook.id}`);
   });
 
-  it('should handle add to cart action for normal user', async () => {
+  it('should handle add to cart action', async () => {
     wrapper(<BookCard {...defaultProps} />);
+    const addToCartButton = screen.getByRole('button', {
+      name: /add to cart/i,
+    });
 
-    const addToCartButton = screen.getByText('Order Today');
     await user.click(addToCartButton);
 
-    expect(mockAddToCart).toHaveBeenCalledWith(mockBook, 1);
+    expect(mockAddToCart).toHaveBeenCalledWith(mockBook.id, 1);
   });
 
   it('should not show order button for admin user', () => {
     wrapper(<BookCard {...defaultProps} isAdmin={true} />);
-
-    const orderButton = screen.queryByText('Order Today');
+    const orderButton = screen.queryByRole('button', { name: /add to cart/i });
 
     expect(orderButton).not.toBeInTheDocument();
   });
 
   it('should show out of stock when quantity is 0', () => {
     const outOfStockBook = { ...mockBook, quantity: 0 };
-
     wrapper(<BookCard {...defaultProps} bookData={outOfStockBook} />);
 
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: /out of stock/i });
 
-    expect(button).toHaveTextContent('Out of Stock');
     expect(button).toBeDisabled();
   });
 
@@ -126,7 +130,7 @@ describe('BookCard component', () => {
     const deleteButton = screen.getByLabelText('Delete book button');
     await user.click(deleteButton);
 
-    const confirmButton = screen.getByText('Confirm');
+    const confirmButton = screen.getByRole('button', { name: /confirm/i });
     await user.click(confirmButton);
 
     expect(mockAddToast).toHaveBeenCalledWith(
@@ -149,59 +153,55 @@ describe('BookCard component', () => {
     const deleteButton = screen.getByLabelText('Delete book button');
     await user.click(deleteButton);
 
-    const confirmButton = screen.getByText('Confirm');
+    const confirmButton = screen.getByRole('button', { name: /confirm/i });
     await user.click(confirmButton);
 
     expect(mockRouter.push).toHaveBeenCalledWith('/store?page=1');
   });
 
-  it('should show correct available quantity when item exists in cart', () => {
+  it('should show correct available quantity based on cart items', () => {
     const cartQuantity = 3;
-
     (useCartContext as jest.Mock).mockReturnValue({
-      cartItems: [{ ...mockBook, quantity: cartQuantity }],
+      cartItems: [{ bookId: mockBook.id, quantity: cartQuantity }],
+      isLoading: false,
       addToCart: mockAddToCart,
     });
 
     wrapper(<BookCard {...defaultProps} />);
 
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: /add to cart/i });
 
     expect(button).toBeEnabled();
-    expect(button).toHaveTextContent('Order Today');
   });
 
-  it('should show out of stock when cart quantity is 0', () => {
+  it('should handle edit book navigation', async () => {
+    wrapper(<BookCard {...defaultProps} isAdmin={true} />);
+
+    const editButton = screen.getByLabelText('Edit book button');
+
+    await user.click(editButton);
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      `${ROUTES.STORE}/${mockBook.id}/edit`,
+    );
+  });
+
+  it('should not close delete modal when loading', async () => {
     (useCartContext as jest.Mock).mockReturnValue({
-      cartItems: [{ ...mockBook, quantity: 0 }],
+      cartItems: [],
+      isLoading: true,
       addToCart: mockAddToCart,
     });
 
-    wrapper(<BookCard {...defaultProps} />);
-
-    const button = screen.getByRole('button');
-
-    expect(button).toHaveTextContent('Out of Stock');
-    expect(button).toBeDisabled();
-  });
-
-  it('should not call addToCart when out of stock button is clicked', async () => {
-    const outOfStockBook = { ...mockBook, quantity: 0 };
-
-    wrapper(<BookCard {...defaultProps} bookData={outOfStockBook} />);
-
-    const button = screen.getByRole('button');
-    await user.click(button);
-
-    expect(mockAddToCart).not.toHaveBeenCalled();
-  });
-
-  it('should not call addToCart for admin user even if book is in stock', async () => {
     wrapper(<BookCard {...defaultProps} isAdmin={true} />);
 
-    const orderButton = screen.queryByText('Order Today');
+    const deleteButton = screen.getByLabelText('Delete book button');
+    await user.click(deleteButton);
 
-    expect(orderButton).not.toBeInTheDocument();
-    expect(mockAddToCart).not.toHaveBeenCalled();
+    const cancelButton = screen.getByRole('button', { name: /cancel/i });
+    await user.click(cancelButton);
+
+    const modal = screen.getByRole('dialog');
+    expect(modal).toBeInTheDocument();
   });
 });

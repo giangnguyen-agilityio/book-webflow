@@ -4,6 +4,7 @@ import {
   wrapper,
   userEvent,
   ignoredConsoleError,
+  waitFor,
 } from '@/utils/testUtils';
 
 // Constants
@@ -18,6 +19,7 @@ import CartModal from '..';
 describe('CartModal component', () => {
   const defaultProps = {
     isOpen: true,
+    isLoading: false,
     onClose: jest.fn(),
     onRemoveItem: jest.fn(),
     onUpdateQuantity: jest.fn(),
@@ -57,8 +59,14 @@ describe('CartModal component', () => {
 
     await user.clear(quantityInput);
     await user.type(quantityInput, '3');
+    await quantityInput.blur();
 
-    expect(defaultProps.onUpdateQuantity).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(defaultProps.onUpdateQuantity).toHaveBeenCalledWith(
+        MOCK_DEFAULT_CART_ITEMS[0].id,
+        '3',
+      );
+    });
   });
 
   it('should handle item removal', async () => {
@@ -105,9 +113,19 @@ describe('CartModal component', () => {
     expect(screen.getByText('$40.00 USD')).toBeInTheDocument();
   });
 
-  it('should close modal when clicking close button', async () => {
+  it('should not close modal when isLoading is true', async () => {
     const user = userEvent.setup();
-    wrapper(<CartModal {...defaultProps} />);
+    wrapper(<CartModal {...defaultProps} isLoading={true} />);
+
+    const closeButton = screen.getByRole('button', { name: /close cart/i });
+    await user.click(closeButton);
+
+    expect(defaultProps.onClose).not.toHaveBeenCalled();
+  });
+
+  it('should close modal when isLoading is false', async () => {
+    const user = userEvent.setup();
+    wrapper(<CartModal {...defaultProps} isLoading={false} />);
 
     const closeButton = screen.getByRole('button', { name: /close cart/i });
     await user.click(closeButton);

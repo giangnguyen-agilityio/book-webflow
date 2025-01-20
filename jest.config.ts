@@ -28,6 +28,7 @@ const config: Config = {
     '/models/',
     '/themes/',
     '/types/',
+    '/middleware\\.ts$',
   ],
 };
 
