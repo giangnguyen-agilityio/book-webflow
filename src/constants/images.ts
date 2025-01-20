@@ -15,4 +15,18 @@ const IMAGE_FALLBACK_SRC = {
   DEFAULT: UnavailableImage,
 };
 
-export { ImageStore, IMAGE_FALLBACK_SRC, IMAGE_BLUR_SRC };
+const ACCEPTED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+export {
+  ImageStore,
+  IMAGE_FALLBACK_SRC,
+  IMAGE_BLUR_SRC,
+  ACCEPTED_IMAGE_TYPES,
+  MAX_FILE_SIZE,
+};

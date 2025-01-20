@@ -203,7 +203,7 @@ const BookCard = ({
                     className="w-4 h-4 rounded-full bg-secondary mr-2"
                   />
                   <Text
-                    className="max-w-60 font-cardo font-bold text-base lg:text-3xl"
+                    className="max-w-40 xl:max-w-60 font-cardo font-bold text-base lg:text-3xl"
                     textColor="text-primary"
                   >
                     {label}

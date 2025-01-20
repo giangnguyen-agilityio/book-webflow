@@ -46,6 +46,7 @@ const updateBook = async (data: Book): Promise<TBookResponse> => {
     });
 
     revalidatePath(ROUTES.STORE);
+    revalidatePath(ROUTES.CART);
 
     return {
       book: response.book,
@@ -65,6 +66,7 @@ const deleteBook = async (bookId: string): Promise<TBookResponse> => {
     });
 
     revalidatePath(ROUTES.STORE);
+    revalidatePath(ROUTES.CART);
 
     return {
       book: response.book,
