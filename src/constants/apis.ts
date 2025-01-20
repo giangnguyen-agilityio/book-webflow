@@ -3,4 +3,5 @@ export const API_PATH = {
   CARTS: '/carts',
   ARTICLES: '/articles',
   AUTH: '/auth',
+  CART: '/cart',
 };

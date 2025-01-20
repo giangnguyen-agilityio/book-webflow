@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { NavbarItem, Button, cn } from '@nextui-org/react';
 
 // Icons
-import { CartIcon } from '@/icons';
+import { CartIcon, LoadingIcon } from '@/icons';
 
 // Context
 import { useCartContext } from '@/context';
@@ -14,7 +14,7 @@ interface CartButtonProps {
 }
 
 const CartAction = ({ onPress }: CartButtonProps) => {
-  const { cartItems } = useCartContext();
+  const { cartItems, isLoading } = useCartContext();
   const quantity = cartItems.length;
 
   let formattedQuantity = '';
@@ -35,16 +35,26 @@ const CartAction = ({ onPress }: CartButtonProps) => {
       <Button
         isIconOnly
         aria-label="Cart Button"
+        className={cn('pr-2 pt-1', 'text-foreground hover:text-secondary')}
         radius="md"
         startContent={<CartIcon />}
         variant="light"
-        className={cn(
-          'text-foreground hover:text-secondary',
-          quantity > 0 && 'pr-2 pt-1',
-        )}
         onPress={onPress}
       />
-      {quantity > 0 && (
+
+      {isLoading && (
+        <span
+          className={cn(
+            'font-extrabold text-[10px]',
+            'absolute top-0 right-0',
+            'w-5 h-5 flex items-center justify-center rounded-full',
+          )}
+        >
+          <LoadingIcon customClass="text-warning" />
+        </span>
+      )}
+
+      {quantity > 0 && !isLoading && (
         <span
           className={cn(
             'font-extrabold text-[10px]',

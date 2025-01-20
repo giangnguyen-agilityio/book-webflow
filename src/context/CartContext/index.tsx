@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  ReactNode,
-} from 'react';
+import { createContext, useCallback, useContext, ReactNode } from 'react';
 
 // Models
 import { Book, CartItem } from '@/models';
@@ -18,7 +11,11 @@ import { useToast } from '@/context';
 // Constants
 import { CART_MESSAGES } from '@/constants';
 
+// Hooks
+import { useCart } from '@/hooks';
+
 interface CartContextType {
+  isLoading: boolean;
   cartItems: CartItem[];
   addToCart: (book: Book, quantity: number) => void;
   removeFromCart: (id: string) => void;
@@ -28,34 +25,15 @@ interface CartContextType {
 
 interface CartProviderProps {
   children: ReactNode;
+  userId?: string;
 }
-
-const CART_STORAGE_KEY = 'bookstore_cart';
 
 // Context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+const CartProvider = ({ children, userId }: CartProviderProps) => {
+  const { cartItems, isLoading, setCartItems } = useCart(userId);
   const { addToast } = useToast();
-
-  // Load cart items from localStorage on initial render
-  useEffect(() => {
-    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        setCartItems(parsedCart);
-      } catch (_error) {
-        localStorage.removeItem(CART_STORAGE_KEY);
-      }
-    }
-  }, []);
-
-  // Persist cart items to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems]);
 
   // Adds a book to cart or updates quantity if already exists
   const addToCart = useCallback(
@@ -104,7 +82,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
         addToast(CART_MESSAGES.ADD_SUCCESS, 'success');
       }
     },
-    [addToast, cartItems],
+    [cartItems, setCartItems, addToast],
   );
 
   // Removes an item from cart
@@ -120,7 +98,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
       addToast(CART_MESSAGES.REMOVE_SUCCESS, 'success');
     },
-    [addToast, cartItems],
+    [cartItems, setCartItems, addToast],
   );
 
   // Updates quantity of an item in cart
@@ -141,11 +119,11 @@ const CartProvider = ({ children }: CartProviderProps) => {
   // Clears all items from cart
   const clearCart = useCallback(() => {
     setCartItems([]);
-    localStorage.removeItem(CART_STORAGE_KEY);
     addToast(CART_MESSAGES.CHECKOUT_SUCCESS, 'success');
-  }, [addToast]);
+  }, [addToast, setCartItems]);
 
   const contextValue = {
+    isLoading,
     cartItems,
     addToCart,
     removeFromCart,
@@ -154,7 +132,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   return (
-    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
+    <CartContext.Provider key={userId} value={contextValue}>
+      {children}
+    </CartContext.Provider>
   );
 };
 

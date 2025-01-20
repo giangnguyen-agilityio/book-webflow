@@ -7,13 +7,15 @@ import { ToastProvider, CartProvider } from '@/context';
 
 export default function Providers({
   children,
+  userId,
 }: Readonly<{
   children: React.ReactNode;
+  userId?: string;
 }>) {
   return (
     <NextUIProvider>
       <ToastProvider>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider userId={userId}>{children}</CartProvider>
       </ToastProvider>
     </NextUIProvider>
   );

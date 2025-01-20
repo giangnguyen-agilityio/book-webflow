@@ -1,5 +1,5 @@
 // Models
-import { Book, Article } from '@/models';
+import { Book, Article, CartItem } from '@/models';
 
 type TBooksResponse = {
   books?: Book[];
@@ -23,9 +23,16 @@ type TArticleResponse = {
   error?: string;
 };
 
+type TCartResponse = {
+  cart?: CartItem[];
+  count?: number;
+  error?: string;
+};
+
 export type {
   TBooksResponse,
   TBookResponse,
   TArticlesResponse,
   TArticleResponse,
+  TCartResponse,
 };
