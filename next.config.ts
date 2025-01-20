@@ -25,6 +25,11 @@ const nextConfig: NextConfig = {
     ],
   },
   productionBrowserSourceMaps: true,
+  experimental: {
+    staleTimes: {
+      dynamic: 15,
+    },
+  },
 };
 
 export default nextConfig;

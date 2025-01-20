@@ -15,19 +15,47 @@
     <img src="https://img.shields.io/badge/Next.js-15-gray?logo=next.js&logoColor=white&labelColor=black" alt="Next.js 15">
     <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
     <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+    <img src="https://img.shields.io/badge/NextAuth-black?logo=nextauth&logoColor=white" alt="NextAuth">
+    <img src="https://img.shields.io/badge/Zod-3068C6?logo=zod&logoColor=white" alt="Zod">
   </div>
 </div>
 
 ## 🔑 Features
 
 <details>
+<summary><strong>Authentication & Authorization</strong></summary>
+
+- User authentication with NextAuth
+  - Login with username/password
+  - Secure session management
+  - Protected routes and API endpoints
+- Role-based access control (Admin & User)
+  - Different navigation menus for each role
+  - Protected admin features
+- User Registration
+  - Username availability check
+  - Random avatar generation
+  - Automatic login after registration
+  </details>
+
+<details>
 <summary><strong>Store</strong></summary>
 
-- Show the book list with pagination
-- View book details with quantity selection
-- Add books to the cart with quantity validation
-- Show the notification system for cart actions
-</details>
+- **For Users:**
+
+  - View book list with pagination (6 items per page)
+  - Navigate to book details page
+  - Add books to cart (if quantity ≥ 1)
+  - Receive notifications for cart actions
+
+- **For Admin:**
+
+  - Book Management
+    - Create new books
+    - Update existing books
+    - Delete books
+    - Server-side data revalidation
+    </details>
 
 <details>
 <summary><strong>Shopping Cart</strong></summary>
@@ -56,6 +84,8 @@
     <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg" width="30" height="30"/><br/>Next.js 15</td>
     <td align="center"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="30" height="30"/><br/>TypeScript</td>
     <td align="center"><img src="https://avatars.githubusercontent.com/u/67109815?s=48&v=4" width="30" height="30"/><br/>Tailwind CSS</td>
+    <td align="center"><img src="https://next-auth.js.org/img/logo/logo-sm.png" width="30" height="30"/><br/>NextAuth</td>
+    <td align="center"><img src="https://zod.dev/logo.svg" width="30" height="30"/><br/>Zod</td>
   </tr>
 </table>
 
