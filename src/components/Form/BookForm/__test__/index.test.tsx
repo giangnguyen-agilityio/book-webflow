@@ -239,17 +239,6 @@ describe('BookForm component', () => {
           'Valid Language',
         );
       });
-
-      it('should validate image URL field', async () => {
-        const input = screen.getByTestId('book-image-input');
-
-        await validateFieldWithInvalidValue(
-          input,
-          'invalid-image-url',
-          /Please enter a valid image URL/i,
-          'https://test.com/image.jpg',
-        );
-      });
     });
   });
 });

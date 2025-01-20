@@ -22,7 +22,7 @@ const validateNumeric = (
 };
 
 export const BookSchema = z.object({
-  imageSrc: z.string().url(BOOK_MESSAGES.INVALID_IMAGE_URL),
+  imageSrc: z.string().optional(),
   title: z.string().min(1, BOOK_MESSAGES.TITLE_REQUIRED),
   price: validateNumeric(
     BOOK_MESSAGES.PRICE_INVALID,

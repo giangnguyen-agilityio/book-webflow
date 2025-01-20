@@ -46,7 +46,9 @@ export const BOOK_MESSAGES = {
   QUANTITY_INVALID: 'Please enter a valid quantity',
   QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than or equal to 0',
 
-  INVALID_IMAGE_URL: 'Please enter a valid image URL',
+  INVALID_IMAGE: 'Please select an image',
+  ONLY_IMAGE_FILES_ALLOWED: 'File type must be JPEG, PNG or WebP',
+  IMAGE_SIZE_TOO_LARGE: 'File size must be less than 5MB',
 
   // Book Information
   PUBLISHER_REQUIRED: 'Please enter a publisher name',
@@ -69,4 +71,6 @@ export const BOOK_MESSAGES = {
   UPDATE_BOOK_SUCCESS: 'Book has been updated successfully',
   DELETE_BOOK_SUCCESS: 'Book has been deleted successfully',
   FAILED_TO_FETCH_BOOK: 'Failed to fetch the book',
+  UPLOAD_IMAGE_ERROR: 'Error occurred while uploading image',
+  READ_FILE_FAILED: 'Unable to read the selected file',
 };
