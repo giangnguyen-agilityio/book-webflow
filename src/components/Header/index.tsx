@@ -112,7 +112,7 @@ const Header = ({ userInfo }: HeaderProps) => {
         )}
 
         {/* User Profile */}
-        <NavbarContent className="!flex-grow-0">
+        <NavbarContent as="div" className="!flex-grow-0">
           <UserProfile userInfo={userInfo} />
         </NavbarContent>
 

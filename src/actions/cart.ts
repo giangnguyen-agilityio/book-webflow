@@ -49,6 +49,7 @@ const addItemToCart = async (
     });
 
     revalidatePath(ROUTES.CART);
+    revalidatePath(ROUTES.STORE);
 
     return {
       cart: response,
@@ -73,6 +74,7 @@ const updateCartItem = async (
     });
 
     revalidatePath(ROUTES.CART);
+    revalidatePath(ROUTES.STORE);
 
     return {
       cart: response,
@@ -93,6 +95,7 @@ const removeCartItem = async (authId: string, cartItemId: string) => {
     });
 
     revalidatePath(ROUTES.CART);
+    revalidatePath(ROUTES.STORE);
 
     return {
       success: true,
@@ -118,6 +121,7 @@ const clearCartItems = async (authId: string, cartItems: CartItem[]) => {
     );
 
     revalidatePath(ROUTES.CART);
+    revalidatePath(ROUTES.STORE);
 
     return {
       success: true,
