@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-// Actions
-import { handleRegisterUser } from '@/actions';
+// APIs
+import { handleRegisterUser } from '@/apis';
 
 // Components
 import { SignUpForm } from '@/components';

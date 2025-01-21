@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-// Actions
-import { authenticateUser } from '@/actions';
+// APIs
+import { authenticateUser } from '@/apis';
 
 // UI
 import { SignInForm } from '@/components';

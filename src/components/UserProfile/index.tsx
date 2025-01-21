@@ -14,8 +14,8 @@ import { LogOutIcon } from '@/icons';
 // Types
 import { UserSession } from '@/types';
 
-// Actions
-import { handleSignOut } from '@/actions';
+// APIs
+import { handleSignOut } from '@/apis';
 
 // Components
 import { Button, ImageFallback } from '@/components';

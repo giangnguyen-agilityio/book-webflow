@@ -5,10 +5,7 @@ import { notFound } from 'next/navigation';
 import { cn } from '@/utils';
 
 // APIs
-import { getBookById } from '@/apis';
-
-// Actions
-import { updateBook } from '@/actions';
+import { getBookById, updateBook } from '@/apis';
 
 // Components
 import { BookForm } from '@/components';
