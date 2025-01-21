@@ -1,11 +1,11 @@
-// Actions
+// APIs
 import {
   getCart,
   addItemToCart,
   updateCartItem,
   removeCartItem,
   clearCartItems,
-} from '@/actions';
+} from '@/apis';
 
 // Constants
 import { API_PATH } from '@/constants';

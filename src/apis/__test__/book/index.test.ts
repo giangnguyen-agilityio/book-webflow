@@ -1,30 +1,52 @@
+// APIs
+import {
+  createNewBook,
+  updateBook,
+  deleteBook,
+  getBookList,
+  getBookById,
+} from '@/apis';
+
 // Constants
 import { API_PATH, DEFAULT_BOOKS_PER_PAGE } from '@/constants';
 
 // Mock
-import { MOCK_BOOK_LIST } from '@/mock';
+import { MOCK_DEFAULT_BOOK_ITEM, MOCK_BOOK_LIST } from '@/mock';
 
 // Services
-import { httpClient } from '@/services';
+import { httpClient, HttpMethod } from '@/services';
 
-// APIs
-import { getBookList, getBookById } from '@/apis';
+// Utils
+import { formatErrorMessage } from '@/utils';
 
-// Mock the httpClient
+// Mock dependencies
+jest.mock('next/cache', () => ({
+  revalidatePath: jest.fn(),
+}));
+
 jest.mock('@/services', () => ({
   httpClient: {
     get: jest.fn(),
+    request: jest.fn(),
+  },
+  HttpMethod: {
+    POST: 'POST',
+    PUT: 'PUT',
+    DELETE: 'DELETE',
   },
 }));
 
-describe('Book API', () => {
+jest.mock('@/utils', () => ({
+  formatErrorMessage: jest.fn(),
+}));
+
+describe('Book Actions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('getBookList', () => {
     it('should fetch books with default pagination', async () => {
-      // Mock response using mock data
       const mockResponse = {
         books: MOCK_BOOK_LIST.slice(0, DEFAULT_BOOKS_PER_PAGE),
         count: MOCK_BOOK_LIST.length,
@@ -43,9 +65,8 @@ describe('Book API', () => {
     it('should fetch books with custom pagination', async () => {
       const page = 2;
       const limit = 3;
-      // Mock response using mock data for page 2
       const mockResponse = {
-        books: MOCK_BOOK_LIST.slice(limit, limit * 2), // Get books 4-6
+        books: MOCK_BOOK_LIST.slice(limit, limit * 2),
         count: MOCK_BOOK_LIST.length,
       };
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
@@ -58,7 +79,6 @@ describe('Book API', () => {
         endpoint: `${API_PATH.BOOKS}?page=${page}&limit=${limit}`,
       });
 
-      // Verify the returned books are different from page 1
       const page1Books = MOCK_BOOK_LIST.slice(0, limit);
       expect(result.books).not.toEqual(page1Books);
     });
@@ -78,9 +98,11 @@ describe('Book API', () => {
 
     it('should handle errors', async () => {
       const errorMessage = 'Failed to fetch books';
+
       (httpClient.get as jest.Mock).mockRejectedValueOnce(
         new Error(errorMessage),
       );
+      (formatErrorMessage as jest.Mock).mockReturnValueOnce(errorMessage);
 
       const result = await getBookList();
 
@@ -96,6 +118,7 @@ describe('Book API', () => {
       const mockResponse = {
         books: [targetBook],
       };
+
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
       const result = await getBookById(targetBook.id);
@@ -113,6 +136,7 @@ describe('Book API', () => {
         books: [],
         count: 0,
       };
+
       (httpClient.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
       const { book } = await getBookById('non-existent-id');
@@ -123,11 +147,15 @@ describe('Book API', () => {
       });
     });
 
+    // ... existing code ...
+
     it('should handle errors when fetching by id', async () => {
       const errorMessage = 'Book not found';
+
       (httpClient.get as jest.Mock).mockRejectedValueOnce(
         new Error(errorMessage),
       );
+      (formatErrorMessage as jest.Mock).mockReturnValueOnce(errorMessage);
 
       const result = await getBookById('1');
 
@@ -135,6 +163,8 @@ describe('Book API', () => {
         error: errorMessage,
       });
     });
+
+    // ... existing code ...
 
     it('should handle undefined id parameter', async () => {
       const mockResponse = {
@@ -149,6 +179,83 @@ describe('Book API', () => {
       expect(httpClient.get).toHaveBeenCalledWith({
         endpoint: `${API_PATH.BOOKS}?id=undefined`,
       });
+    });
+  });
+
+  describe('createNewBook', () => {
+    it('should create new book successfully', async () => {
+      const mockResponse = { book: MOCK_DEFAULT_BOOK_ITEM };
+      (httpClient.request as jest.Mock).mockResolvedValueOnce(mockResponse);
+
+      const result = await createNewBook(MOCK_DEFAULT_BOOK_ITEM);
+
+      expect(httpClient.request).toHaveBeenCalledWith({
+        endpoint: API_PATH.BOOKS,
+        method: HttpMethod.POST,
+        body: MOCK_DEFAULT_BOOK_ITEM,
+      });
+      expect(result).toEqual({ book: MOCK_DEFAULT_BOOK_ITEM });
+    });
+
+    it('should handle error when creating book', async () => {
+      const mockError = 'Create book failed';
+      (httpClient.request as jest.Mock).mockRejectedValueOnce(new Error());
+      (formatErrorMessage as jest.Mock).mockReturnValueOnce(mockError);
+
+      const result = await createNewBook(MOCK_DEFAULT_BOOK_ITEM);
+
+      expect(result).toEqual({ error: mockError });
+    });
+  });
+
+  describe('updateBook', () => {
+    it('should update book successfully', async () => {
+      const mockResponse = { book: MOCK_DEFAULT_BOOK_ITEM };
+      (httpClient.request as jest.Mock).mockResolvedValueOnce(mockResponse);
+
+      const result = await updateBook(MOCK_DEFAULT_BOOK_ITEM);
+
+      expect(httpClient.request).toHaveBeenCalledWith({
+        endpoint: `${API_PATH.BOOKS}/${MOCK_DEFAULT_BOOK_ITEM.id}`,
+        method: HttpMethod.PUT,
+        body: MOCK_DEFAULT_BOOK_ITEM,
+      });
+      expect(result).toEqual({ book: MOCK_DEFAULT_BOOK_ITEM });
+    });
+
+    it('should handle error when updating book', async () => {
+      const mockError = 'Update book failed';
+      (httpClient.request as jest.Mock).mockRejectedValueOnce(new Error());
+      (formatErrorMessage as jest.Mock).mockReturnValueOnce(mockError);
+
+      const result = await updateBook(MOCK_DEFAULT_BOOK_ITEM);
+
+      expect(result).toEqual({ error: mockError });
+    });
+  });
+
+  describe('deleteBook', () => {
+    it('should delete book successfully', async () => {
+      const mockResponse = { book: MOCK_DEFAULT_BOOK_ITEM };
+      (httpClient.request as jest.Mock).mockResolvedValueOnce(mockResponse);
+
+      const result = await deleteBook(MOCK_DEFAULT_BOOK_ITEM.id);
+
+      expect(httpClient.request).toHaveBeenCalledWith({
+        endpoint: `${API_PATH.BOOKS}/${MOCK_DEFAULT_BOOK_ITEM.id}`,
+        method: HttpMethod.DELETE,
+      });
+      expect(result).toEqual({ book: MOCK_DEFAULT_BOOK_ITEM });
+    });
+
+    it('should handle error when deleting book', async () => {
+      const mockError = 'Delete book failed';
+      (httpClient.request as jest.Mock).mockRejectedValueOnce(new Error());
+      (formatErrorMessage as jest.Mock).mockReturnValueOnce(mockError);
+
+      const result = await deleteBook(MOCK_DEFAULT_BOOK_ITEM.id);
+
+      expect(result).toEqual({ error: mockError });
     });
   });
 });

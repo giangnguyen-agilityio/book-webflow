@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 import { CartItem } from '@/models';
 
-// Actions
+// APIs
 import {
   getCart,
   addItemToCart,
   updateCartItem,
+  getBookById,
   updateBook,
   removeCartItem,
   clearCartItems,
-} from '@/actions';
-
-// APIs
-import { getBookById } from '@/apis';
+} from '@/apis';
 
 // Context
 import { ToastType, useToast } from '@/context';

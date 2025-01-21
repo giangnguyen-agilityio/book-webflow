@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 // Utils
 import { cn } from '@/utils';
 
-// Actions
-import { createNewBook } from '@/actions';
+// APIs
+import { createNewBook } from '@/apis';
 
 // Components
 import { BookForm } from '@/components';

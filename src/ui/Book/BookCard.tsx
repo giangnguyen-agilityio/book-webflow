@@ -19,7 +19,7 @@ import { BOOK_MESSAGES, ImageStore, ROUTES } from '@/constants';
 import { ToastType, useCartContext, useToast } from '@/context';
 
 // Actions
-import { deleteBook } from '@/actions';
+import { deleteBook } from '@/apis';
 
 // Icons
 import { EditIcon, TrashIcon } from '@/icons';

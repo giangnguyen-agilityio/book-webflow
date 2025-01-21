@@ -51,8 +51,8 @@ jest.mock('@/context', () => ({
   })),
 }));
 
-jest.mock('@/actions', () => ({
-  ...jest.requireActual('@/actions'),
+jest.mock('@/apis', () => ({
+  ...jest.requireActual('@/apis'),
   deleteBook: jest.fn().mockResolvedValue({ error: null }),
 }));
 
