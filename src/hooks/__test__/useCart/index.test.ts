@@ -46,21 +46,53 @@ describe('useCart', () => {
     jest.clearAllMocks();
   });
 
-  it('should fetch cart items on mount', async () => {
+  it('should fetch cart items and validate against existing books', async () => {
+    // Mock getCart response
     (cartActions.getCart as jest.Mock).mockResolvedValue({
       cart: [MOCK_CART_ITEM],
+    });
+
+    // Mock getBookById response
+    (bookApis.getBookById as jest.Mock).mockResolvedValue({
+      book: MOCK_DEFAULT_BOOK_ITEM,
     });
 
     const { result } = renderHook(() => useCart(MOCK_USER_ID));
 
     expect(result.current.isLoading).toBe(true);
+
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     expect(cartActions.getCart).toHaveBeenCalledWith(MOCK_USER_ID);
+    expect(bookApis.getBookById).toHaveBeenCalledWith(MOCK_CART_ITEM.bookId);
     expect(result.current.items).toEqual([MOCK_CART_ITEM]);
     expect(result.current.isLoading).toBe(false);
+  });
+
+  it('should remove cart items when corresponding book no longer exists', async () => {
+    // Mock getCart response
+    (cartActions.getCart as jest.Mock).mockResolvedValue({
+      cart: [MOCK_CART_ITEM],
+    });
+
+    // Mock book not found
+    (bookApis.getBookById as jest.Mock).mockResolvedValue({
+      book: null,
+    });
+
+    const { result } = renderHook(() => useCart(MOCK_USER_ID));
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    expect(cartActions.removeCartItem).toHaveBeenCalledWith(
+      MOCK_USER_ID,
+      MOCK_CART_ITEM.id,
+    );
+    expect(result.current.items).toEqual([]);
   });
 
   it('should handle add to cart', async () => {

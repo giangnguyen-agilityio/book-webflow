@@ -57,9 +57,29 @@ export const useCart = (userId?: string): CartState & CartActions => {
 
     try {
       const response = await getCart(userId);
+
       if (response.cart) {
-        handleSetItems(response.cart);
+        // Validate each cart item against existing books
+        const validItems = await Promise.all(
+          response.cart.map(async (item) => {
+            const { book } = await getBookById(item.bookId);
+
+            // If book doesn't exist anymore, remove it from cart
+            if (!book) {
+              await removeCartItem(userId, item.id);
+              return null;
+            }
+            return item;
+          }),
+        );
+
+        // Filter out null items (books that no longer exist)
+        const filteredItems = validItems.filter(
+          (item): item is CartItem => item !== null,
+        );
+        handleSetItems(filteredItems);
       }
+
       if (response.error) {
         addToast(response.error, ToastType.ERROR);
       }
