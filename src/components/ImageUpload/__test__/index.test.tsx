@@ -1,5 +1,10 @@
 // Utils
-import { screen, wrapper, userEvent } from '@/utils/testUtils';
+import {
+  screen,
+  wrapper,
+  userEvent,
+  ignoredConsoleError,
+} from '@/utils/testUtils';
 
 // Constants
 import {
@@ -93,6 +98,8 @@ describe('ImageUpload component', () => {
   });
 
   it('should handle file reader error', async () => {
+    ignoredConsoleError();
+
     wrapper(<ImageUpload />);
 
     const file = new File(['test'], 'test.jpg', {

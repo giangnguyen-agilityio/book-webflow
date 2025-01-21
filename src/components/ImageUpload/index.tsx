@@ -76,9 +76,7 @@ const ImageUpload = ({
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
       const file = e.target.files?.[0];
-      if (!file) return;
-
-      if (!validateFile(file)) return;
+      if (!file || !validateFile(file)) return;
 
       setIsLoading(true);
 
