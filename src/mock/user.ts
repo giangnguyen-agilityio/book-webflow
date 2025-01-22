@@ -1,7 +1,7 @@
 export const MOCK_USER = {
   id: '1',
-  username: 'testuser',
-  password: 'password123',
+  username: 'Testuser',
+  password: 'password123!',
   email: 'test@example.com',
   image: 'avatar.jpg',
   role: 'USER',

@@ -181,6 +181,7 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
                 aria-label={`Quantity for ${title}`}
                 color="secondary"
                 disabled={isOutOfStock}
+                inputMode="numeric"
                 min={1}
                 size="lg"
                 type="number"

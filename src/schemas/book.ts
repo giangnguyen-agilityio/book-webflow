@@ -44,8 +44,8 @@ export const BookSchema = z.object({
     )
     .refine((date) => {
       const year = parseInt(date.split('-')[0]);
-      return year >= 2000;
-    }, BOOK_MESSAGES.PUBLISHED_DATE_YEAR_MIN),
+      return year >= 2000 && year <= new Date().getFullYear();
+    }, BOOK_MESSAGES.PUBLISHED_DATE_YEAR_RANGE),
   language: z
     .string()
     .min(1, BOOK_MESSAGES.LANGUAGE_REQUIRED)

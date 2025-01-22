@@ -17,7 +17,7 @@ import { MOCK_CART_ITEM, MOCK_USER_ID } from '@/mock';
 import { httpClient, HttpMethod } from '@/services';
 
 jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
+  revalidateTag: jest.fn(),
 }));
 
 jest.mock('@/services', () => ({
@@ -56,6 +56,11 @@ describe('Cart Actions', () => {
       const result = await getCart(MOCK_USER_ID);
 
       expect(httpClient.request).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.CART],
+          },
+        },
         endpoint: `${API_PATH.AUTH}/${MOCK_USER_ID}/cart`,
         method: HttpMethod.GET,
       });

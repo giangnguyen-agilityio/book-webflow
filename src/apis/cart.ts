@@ -1,9 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 // Constants
-import { API_PATH, ROUTES } from '@/constants';
+import { API_PATH } from '@/constants';
 
 // Services
 import { httpClient, HttpMethod } from '@/services';
@@ -22,6 +22,11 @@ const getCart = async (authId: string): Promise<TCartResponse> => {
     const response = await httpClient.request<null, TCartResponse>({
       endpoint: `${API_PATH.AUTH}/${authId}/cart`,
       method: HttpMethod.GET,
+      config: {
+        next: {
+          tags: [API_PATH.CART],
+        },
+      },
     });
 
     return { cart: response.cart };
@@ -48,8 +53,8 @@ const addItemToCart = async (
       body: cartItem,
     });
 
-    revalidatePath(ROUTES.CART);
-    revalidatePath(ROUTES.STORE);
+    revalidateTag(API_PATH.CART);
+    revalidateTag(API_PATH.BOOKS);
 
     return {
       cart: response,
@@ -73,8 +78,8 @@ const updateCartItem = async (
       body: cartItem,
     });
 
-    revalidatePath(ROUTES.CART);
-    revalidatePath(ROUTES.STORE);
+    revalidateTag(API_PATH.CART);
+    revalidateTag(API_PATH.BOOKS);
 
     return {
       cart: response,
@@ -94,8 +99,8 @@ const removeCartItem = async (authId: string, cartItemId: string) => {
       method: HttpMethod.DELETE,
     });
 
-    revalidatePath(ROUTES.CART);
-    revalidatePath(ROUTES.STORE);
+    revalidateTag(API_PATH.CART);
+    revalidateTag(API_PATH.BOOKS);
 
     return {
       success: true,
@@ -120,8 +125,8 @@ const clearCartItems = async (authId: string, cartItems: CartItem[]) => {
       ),
     );
 
-    revalidatePath(ROUTES.CART);
-    revalidatePath(ROUTES.STORE);
+    revalidateTag(API_PATH.CART);
+    revalidateTag(API_PATH.BOOKS);
 
     return {
       success: true,

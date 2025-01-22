@@ -27,11 +27,21 @@ export const AUTH_MESSAGES = {
     'Authentication failed. Please check your network connection and try again.',
   REGISTRATION_FAILED: 'Failed to register account',
   USERNAME_MIN: 'Username must be at least 3 characters',
+  USERNAME_MAX: 'Username cannot exceed 30 characters',
+  USERNAME_PATTERN:
+    'Username can only contain letters, numbers, underscores, hyphens and dots',
   PASSWORD_MIN: 'Password must be at least 6 characters',
   NAME_REQUIRED: 'Full name is required',
+  NAME_MAX: 'Full name cannot exceed 50 characters',
+  NAME_PATTERN:
+    'Full name can only contain letters, spaces, hyphens and apostrophes',
   EMAIL_REQUIRED: 'Email address is required',
   EMAIL_INVALID: 'Please enter a valid email address',
   USERNAME_EXISTS: 'This username is already exists',
+  PASSWORD_NUMBER: 'Password must contain at least one number',
+  PASSWORD_SPECIAL_CHAR: 'Password must contain at least one special character',
+  PASSWORD_NO_SPACES: 'Password cannot contain spaces',
+  USERNAME_NO_SPACES: 'Username cannot contain spaces',
 };
 
 export const BOOK_MESSAGES = {
@@ -54,7 +64,8 @@ export const BOOK_MESSAGES = {
   PUBLISHER_REQUIRED: 'Please enter a publisher name',
   PUBLISHED_DATE_REQUIRED: 'Please select a published date',
   PUBLISHED_DATE_INVALID_FORMAT: 'Date must be in YYYY-MM-DD format',
-  PUBLISHED_DATE_YEAR_MIN: 'The book must be published from 2000 onwards',
+  PUBLISHED_DATE_YEAR_RANGE:
+    'Publication year must be between 2000 and current year',
   LANGUAGE_REQUIRED: 'Please enter a language',
   LANGUAGE_LETTERS_ONLY: 'Language must contain only letters',
 
