@@ -3,7 +3,6 @@ import {
   screen,
   wrapper,
   userEvent,
-  waitForElementToBeRemoved,
   ignoredConsoleError,
 } from '@/utils/testUtils';
 
@@ -34,6 +33,7 @@ jest.mock('next/cache', () => ({
 
 describe('Header component', () => {
   const user = userEvent.setup();
+
   const mockCartContext = {
     cartItems: [],
     removeFromCart: jest.fn(),
@@ -86,7 +86,6 @@ describe('Header component', () => {
     const cartButton = screen.getByLabelText('Cart Button');
     await user.click(cartButton);
 
-    // Cart modal should be rendered
     expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
@@ -97,12 +96,16 @@ describe('Header component', () => {
     const cartButton = screen.getByLabelText('Cart Button');
     await user.click(cartButton);
 
+    // Verify modal exists before attempting to close
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toBeInTheDocument();
+
     // Close cart modal
     const closeButton = screen.getByLabelText('Close cart');
     await user.click(closeButton);
 
-    // Cart modal should not be in the document
-    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    // Wait for modal to disappear
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('should handle cart operations correctly', async () => {

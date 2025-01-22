@@ -3,7 +3,7 @@
 import {
   Skeleton as SkeletonNextUI,
   SkeletonProps as SkeletonNextUIProps,
-} from '@nextui-org/react';
+} from '@heroui/react';
 
 // Utils
 import { cn } from '@/utils';

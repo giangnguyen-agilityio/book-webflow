@@ -8,7 +8,7 @@ import {
   NavbarBrand,
   NavbarMenuToggle,
   NavbarItem,
-} from '@nextui-org/react';
+} from '@heroui/react';
 import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 

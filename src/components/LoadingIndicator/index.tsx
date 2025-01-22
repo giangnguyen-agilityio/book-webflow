@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Spinner, SpinnerProps } from '@nextui-org/react';
+import { Spinner, SpinnerProps } from '@heroui/react';
 
 // Utils
 import { cn } from '@/utils';

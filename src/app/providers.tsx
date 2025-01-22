@@ -1,6 +1,6 @@
 'use client';
 
-import { NextUIProvider } from '@nextui-org/react';
+import { HeroUIProvider } from '@heroui/react';
 
 // Context
 import { ToastProvider, CartProvider } from '@/context';
@@ -13,10 +13,10 @@ export default function Providers({
   userId?: string;
 }>) {
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
       <ToastProvider>
         <CartProvider userId={userId}>{children}</CartProvider>
       </ToastProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   );
 }

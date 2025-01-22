@@ -1,5 +1,5 @@
 import { memo, ChangeEvent } from 'react';
-import { Divider } from '@nextui-org/react';
+import { Divider } from '@heroui/react';
 import { useDebouncedCallback } from 'use-debounce';
 
 // Utils
@@ -82,7 +82,7 @@ const CartModalItem = ({
                   'text-base sm:text-lg md:text-xl',
                 )}
               >
-                ${price.toFixed(2)} USD
+                {price.toFixed(2)} USD
               </Text>
             </div>
 

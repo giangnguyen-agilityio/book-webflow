@@ -2,12 +2,7 @@
 
 import Link from 'next/link';
 import { memo, useCallback, useMemo, useState } from 'react';
-import {
-  Divider,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
+import { Divider, ModalBody, ModalFooter, ModalHeader } from '@heroui/react';
 import dynamic from 'next/dynamic';
 
 // Utils
@@ -195,7 +190,7 @@ const CartModal = ({
                   className="font-inter text-lg sm:text-xl font-bold"
                   textColor="text-primary"
                 >
-                  ${subtotal.toFixed(2)} USD
+                  {subtotal.toFixed(2)} USD
                 </Text>
               </div>
               <Button

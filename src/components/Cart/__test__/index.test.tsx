@@ -1,4 +1,4 @@
-import { Navbar } from '@nextui-org/react';
+import { Navbar } from '@heroui/react';
 
 // Utils
 import { wrapper, screen, userEvent } from '@/utils/testUtils';

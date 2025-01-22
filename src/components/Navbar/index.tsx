@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 import Link from 'next/link';
-import { NavbarContent, NavbarItem, cn } from '@nextui-org/react';
+import { NavbarContent, NavbarItem, cn } from '@heroui/react';
 
 // Constants
 import { NAVIGATION_ITEMS } from '@/constants';

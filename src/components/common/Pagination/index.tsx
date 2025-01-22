@@ -5,7 +5,7 @@ import {
   extendVariants,
   Pagination as PaginationNextUI,
   PaginationProps as NextUIPaginationProps,
-} from '@nextui-org/react';
+} from '@heroui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 // Utils
@@ -38,7 +38,7 @@ export const CustomPagination = extendVariants(PaginationNextUI, {
   defaultVariants: {
     color: 'primary',
   },
-});
+}) as typeof PaginationNextUI;
 
 const Pagination = ({ total, ...props }: NextUIPaginationProps) => {
   const pathname = usePathname();

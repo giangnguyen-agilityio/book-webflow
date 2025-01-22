@@ -153,6 +153,7 @@ export const useCart = (userId?: string): CartState & CartActions => {
     if (!userId || state.isLoading) return false;
 
     const itemToUpdate = state.items.find((item) => item.id === id);
+
     if (!itemToUpdate) return false;
 
     const parsedQuantity = parseInt(value, 10);
@@ -197,6 +198,7 @@ export const useCart = (userId?: string): CartState & CartActions => {
         updateCartItem(userId, updatedCartItem),
         updateBook({
           ...updatedBookData,
+          id: itemToUpdate.bookId,
           quantity:
             itemToUpdate.quantity -
             (parsedQuantity - itemToUpdate.orderedQuantity),
@@ -288,6 +290,7 @@ export const useCart = (userId?: string): CartState & CartActions => {
 
   useEffect(() => {
     handleFetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   return {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDisclosure } from '@nextui-org/react';
+import { useDisclosure } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { useCallback, ChangeEvent } from 'react';
 import { useForm, Controller } from 'react-hook-form';

@@ -10,6 +10,7 @@ export const wrapper = (children: ReactNode) => {
 
 export const ignoredConsoleError = () => {
   jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
 };
 
 export * from '@testing-library/react';

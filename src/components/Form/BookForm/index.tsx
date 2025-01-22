@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEvent, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Textarea } from '@nextui-org/react';
+import { Textarea } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
 // Constants

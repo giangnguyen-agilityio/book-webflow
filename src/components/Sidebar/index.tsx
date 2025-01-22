@@ -1,11 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  NavbarMenu,
-  NavbarMenuItem,
-  useNavbarContext,
-} from '@nextui-org/react';
+import { NavbarMenu, NavbarMenuItem, useNavbarContext } from '@heroui/react';
 
 // Utils
 import { cn } from '@/utils';

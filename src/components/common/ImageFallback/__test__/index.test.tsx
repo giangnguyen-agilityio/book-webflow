@@ -1,5 +1,5 @@
 // Utils
-import { wrapper, act, ignoredConsoleError } from '@/utils/testUtils';
+import { wrapper, act } from '@/utils/testUtils';
 
 // Constants
 import { IMAGE_FALLBACK_SRC } from '@/constants';
@@ -13,7 +13,6 @@ describe('ImageFallback component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    ignoredConsoleError();
   });
 
   it('should render correctly', () => {

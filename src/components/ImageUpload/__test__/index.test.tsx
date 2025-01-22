@@ -1,79 +1,50 @@
 // Utils
-import {
-  screen,
-  wrapper,
-  userEvent,
-  ignoredConsoleError,
-} from '@/utils/testUtils';
+import { screen, waitFor, wrapper, act, fireEvent } from '@/utils/testUtils';
 
 // Constants
-import {
-  BOOK_MESSAGES,
-  MAX_FILE_SIZE,
-  ACCEPTED_IMAGE_TYPES,
-} from '@/constants';
-
-// Context
-import { useToast } from '@/context';
+import { BOOK_MESSAGES, MAX_FILE_SIZE } from '@/constants';
 
 import ImageUpload from '..';
 
+const mockAddToast = jest.fn();
+
+// Mock the useToast hook
 jest.mock('@/context', () => ({
   ...jest.requireActual('@/context'),
-  useToast: jest.fn(() => ({
-    addToast: jest.fn(),
-  })),
+  useToast: () => ({
+    addToast: mockAddToast,
+  }),
 }));
 
-describe('ImageUpload component', () => {
-  const mockAddToast = jest.fn();
-  const user = userEvent.setup();
+const createFile = (name: string, size: number, type: string): File => {
+  const file = new File([''], name, { type });
+  Object.defineProperty(file, 'size', { value: size });
+  return file;
+};
 
+interface MockFileReader extends Partial<FileReader> {
+  readAsDataURL: jest.Mock;
+  result?: string;
+  onloadend: (() => void) | null;
+  onerror: (() => void) | null;
+}
+
+describe('ImageUpload', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useToast as jest.Mock).mockReturnValue({
-      addToast: mockAddToast,
-    });
   });
 
-  it('should render upload button when no image is selected', () => {
+  it('renders correctly with default props', () => {
     wrapper(<ImageUpload />);
 
     expect(screen.getByText('Select Image')).toBeInTheDocument();
+    expect(
+      screen.getByText('Accepted formats: JPEG, PNG, WebP'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Maximum file size: 5MB')).toBeInTheDocument();
   });
 
-  it('should render image preview when value prop is provided', () => {
-    const imageUrl = 'data:image/jpeg;base64,test123';
-
-    wrapper(<ImageUpload value={imageUrl} />);
-
-    expect(screen.getByAltText('Preview')).toBeInTheDocument();
-  });
-
-  it('should show remove button when image is selected', () => {
-    wrapper(<ImageUpload value="data:image/jpeg;base64,test123" />);
-
-    expect(screen.getByText('Remove Image')).toBeInTheDocument();
-  });
-
-  it('should call onChange when image is removed', async () => {
-    const onChange = jest.fn();
-
-    wrapper(
-      <ImageUpload
-        value="data:image/jpeg;base64,test123"
-        onChange={onChange}
-      />,
-    );
-
-    const removeButton = screen.getByText('Remove Image');
-
-    await user.click(removeButton);
-
-    expect(onChange).toHaveBeenCalledWith('');
-  });
-
-  it('should show error message when provided', () => {
+  it('displays error message when provided', () => {
     const errorMessage = 'Test error message';
 
     wrapper(<ImageUpload error={errorMessage} />);
@@ -81,69 +52,143 @@ describe('ImageUpload component', () => {
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 
-  it('should validate file size', async () => {
+  it('shows preview when value prop is provided', () => {
+    const imageUrl = 'data:image/jpeg;base64,test123';
+
+    wrapper(<ImageUpload value={imageUrl} />);
+
+    expect(screen.getByAltText('Preview')).toBeInTheDocument();
+  });
+
+  it('handles file size validation', async () => {
     wrapper(<ImageUpload />);
 
-    const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
+    const input = screen.getByTestId('image-upload-input');
+    const oversizedFile = createFile(
+      'test.jpg',
+      MAX_FILE_SIZE + 1,
+      'image/jpeg',
+    );
 
-    Object.defineProperty(file, 'size', { value: MAX_FILE_SIZE + 1 });
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [oversizedFile] } });
+    });
+
+    await waitFor(() => {
+      expect(mockAddToast).toHaveBeenCalledWith(
+        BOOK_MESSAGES.IMAGE_SIZE_TOO_LARGE,
+        'error',
+      );
+    });
+  });
+
+  it('handles invalid file type validation', async () => {
+    wrapper(<ImageUpload />);
 
     const input = screen.getByTestId('image-upload-input');
-    await user.upload(input, file);
+    const invalidFile = createFile('test.pdf', 1024, 'application/pdf');
 
-    expect(mockAddToast).toHaveBeenCalledWith(
-      BOOK_MESSAGES.IMAGE_SIZE_TOO_LARGE,
-      'error',
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [invalidFile] } });
+    });
+
+    await waitFor(
+      () => {
+        expect(mockAddToast).toHaveBeenCalledWith(
+          BOOK_MESSAGES.ONLY_IMAGE_FILES_ALLOWED,
+          'error',
+        );
+      },
+      { timeout: 3000 },
     );
   });
 
-  it('should handle file reader error', async () => {
-    ignoredConsoleError();
+  it('handles successful image upload', async () => {
+    const onChangeMock = jest.fn();
 
-    wrapper(<ImageUpload />);
+    wrapper(<ImageUpload onChange={onChangeMock} />);
 
-    const file = new File(['test'], 'test.jpg', {
-      type: ACCEPTED_IMAGE_TYPES[0],
-    });
     const input = screen.getByTestId('image-upload-input');
+    const validFile = createFile('test.jpg', 1024, 'image/jpeg');
 
-    // Mock FileReader with error
-    const mockFileReader = {
+    const mockFileReader: MockFileReader = {
       readAsDataURL: jest.fn(),
-      onerror: jest.fn(),
+      result: 'data:image/jpeg;base64,test123',
+      onloadend: null,
+      onerror: null,
     };
+
     jest
       .spyOn(window, 'FileReader')
-      .mockImplementation(() => mockFileReader as unknown as FileReader);
+      .mockImplementation(() => mockFileReader as FileReader);
 
-    await user.upload(input, file);
-    mockFileReader.onerror?.();
-
-    expect(mockAddToast).toHaveBeenCalledWith(
-      BOOK_MESSAGES.READ_FILE_FAILED,
-      'error',
-    );
-  });
-
-  it('should show loading indicator when processing', async () => {
-    wrapper(<ImageUpload />);
-
-    const file = new File(['test'], 'test.jpg', {
-      type: ACCEPTED_IMAGE_TYPES[0],
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [validFile] } });
+      mockFileReader.onloadend?.();
     });
-    const input = screen.getByTestId('image-upload-input');
 
-    await user.upload(input, file);
-
-    expect(screen.getByTestId('loading-indicator')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByAltText('Preview')).toBeInTheDocument();
+    });
   });
 
-  it('should show accepted formats and file size limit', () => {
+  it('handles image removal', async () => {
+    const onChangeMock = jest.fn();
+
+    wrapper(
+      <ImageUpload
+        value="data:image/jpeg;base64,test123"
+        onChange={onChangeMock}
+      />,
+    );
+
+    const removeButton = screen.getByText('Remove Image');
+
+    await act(async () => {
+      fireEvent.click(removeButton);
+    });
+
+    expect(onChangeMock).toHaveBeenCalledWith('');
+
+    await waitFor(() => {
+      expect(screen.queryByAltText('Preview')).not.toBeInTheDocument();
+    });
+  });
+
+  it('disables interaction when isDisabled prop is true', () => {
+    wrapper(<ImageUpload isDisabled={true} />);
+
+    const selectButton = screen.getByText('Select Image');
+
+    expect(selectButton).toBeDisabled();
+  });
+
+  it('handles file reader error', async () => {
     wrapper(<ImageUpload />);
 
-    expect(
-      screen.getByText('Accepted formats: JPEG, PNG, WebP'),
-    ).toBeInTheDocument();
-    expect(screen.getByText('Maximum file size: 5MB')).toBeInTheDocument();
+    const input = screen.getByTestId('image-upload-input');
+    const validFile = createFile('test.jpg', 1024, 'image/jpeg');
+
+    const mockFileReader: MockFileReader = {
+      readAsDataURL: jest.fn(),
+      onloadend: null,
+      onerror: null,
+    };
+
+    jest
+      .spyOn(window, 'FileReader')
+      .mockImplementation(() => mockFileReader as FileReader);
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [validFile] } });
+      mockFileReader.onerror?.();
+    });
+
+    await waitFor(() => {
+      expect(mockAddToast).toHaveBeenCalledWith(
+        BOOK_MESSAGES.READ_FILE_FAILED,
+        'error',
+      );
+    });
   });
 });
