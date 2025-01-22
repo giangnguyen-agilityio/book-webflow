@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
+  revalidateTag: jest.fn(),
 }));
 
 describe('BackButton component', () => {

@@ -21,7 +21,7 @@ import { formatErrorMessage } from '@/utils';
 
 // Mock dependencies
 jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
+  revalidateTag: jest.fn(),
 }));
 
 jest.mock('@/services', () => ({
@@ -58,6 +58,11 @@ describe('Book Actions', () => {
       expect(result).toEqual(mockResponse);
       expect(result.books?.length).toBeLessThanOrEqual(DEFAULT_BOOKS_PER_PAGE);
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.BOOKS],
+          },
+        },
         endpoint: `${API_PATH.BOOKS}?page=undefined&limit=${DEFAULT_BOOKS_PER_PAGE}`,
       });
     });
@@ -76,6 +81,11 @@ describe('Book Actions', () => {
       expect(result).toEqual(mockResponse);
       expect(result.books?.length).toBeLessThanOrEqual(limit);
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.BOOKS],
+          },
+        },
         endpoint: `${API_PATH.BOOKS}?page=${page}&limit=${limit}`,
       });
 
@@ -127,6 +137,11 @@ describe('Book Actions', () => {
         book: targetBook,
       });
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.BOOKS],
+          },
+        },
         endpoint: `${API_PATH.BOOKS}?id=${targetBook.id}`,
       });
     });
@@ -143,11 +158,14 @@ describe('Book Actions', () => {
 
       expect(book).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.BOOKS],
+          },
+        },
         endpoint: `${API_PATH.BOOKS}?id=non-existent-id`,
       });
     });
-
-    // ... existing code ...
 
     it('should handle errors when fetching by id', async () => {
       const errorMessage = 'Book not found';
@@ -164,8 +182,6 @@ describe('Book Actions', () => {
       });
     });
 
-    // ... existing code ...
-
     it('should handle undefined id parameter', async () => {
       const mockResponse = {
         books: [],
@@ -177,6 +193,11 @@ describe('Book Actions', () => {
 
       expect(book).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.BOOKS],
+          },
+        },
         endpoint: `${API_PATH.BOOKS}?id=undefined`,
       });
     });

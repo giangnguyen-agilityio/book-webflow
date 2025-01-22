@@ -261,7 +261,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                     '!bg-background hover:!bg-background-500 focus-within:ring-2',
                     'transition-all duration-200',
                   ),
-                  input: 'text-foreground-100 placeholder:text-foreground-100',
+                  input: 'text-foreground-100 placeholder:text-foreground-400',
                 }}
                 onChange={handleInputChange(name, onChange)}
               />

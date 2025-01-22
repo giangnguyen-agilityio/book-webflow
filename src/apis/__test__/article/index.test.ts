@@ -38,6 +38,11 @@ describe('Article API', () => {
         DEFAULT_ARTICLES_PER_PAGE,
       );
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.ARTICLES],
+          },
+        },
         endpoint: `${API_PATH.ARTICLES}?page=undefined&limit=${DEFAULT_ARTICLES_PER_PAGE}`,
       });
     });
@@ -57,6 +62,11 @@ describe('Article API', () => {
       expect(result).toEqual(mockResponse);
       expect(result.articles?.length).toBeLessThanOrEqual(limit);
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.ARTICLES],
+          },
+        },
         endpoint: `${API_PATH.ARTICLES}?page=${page}&limit=${limit}`,
       });
     });
@@ -89,6 +99,11 @@ describe('Article API', () => {
         article: targetArticle,
       });
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.ARTICLES],
+          },
+        },
         endpoint: `${API_PATH.ARTICLES}?id=${targetArticle.id}`,
       });
     });
@@ -104,6 +119,11 @@ describe('Article API', () => {
 
       expect(article).toBeUndefined();
       expect(httpClient.get).toHaveBeenCalledWith({
+        config: {
+          next: {
+            tags: [API_PATH.ARTICLES],
+          },
+        },
         endpoint: `${API_PATH.ARTICLES}?id=non-existent-id`,
       });
     });

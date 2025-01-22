@@ -1,9 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 // Constants
-import { API_PATH, DEFAULT_BOOKS_PER_PAGE, ROUTES } from '@/constants';
+import { API_PATH, DEFAULT_BOOKS_PER_PAGE } from '@/constants';
 
 // Types
 import { TBooksResponse, TBookResponse } from '@/types';
@@ -26,6 +26,11 @@ export async function getBookList(
   try {
     const data = await httpClient.get<TBooksResponse>({
       endpoint,
+      config: {
+        next: {
+          tags: [API_PATH.BOOKS],
+        },
+      },
     });
 
     return data;
@@ -42,6 +47,11 @@ export async function getBookById(id?: string): Promise<TBookResponse> {
   try {
     const data = await httpClient.get<TBooksResponse>({
       endpoint,
+      config: {
+        next: {
+          tags: [API_PATH.BOOKS],
+        },
+      },
     });
 
     return {
@@ -62,7 +72,7 @@ export async function createNewBook(data: Book): Promise<TBookResponse> {
       body: data,
     });
 
-    revalidatePath(ROUTES.STORE);
+    revalidateTag(API_PATH.BOOKS);
 
     return {
       book: response.book,
@@ -82,8 +92,8 @@ export async function updateBook(data: Book): Promise<TBookResponse> {
       body: data,
     });
 
-    revalidatePath(ROUTES.STORE);
-    revalidatePath(ROUTES.CART);
+    revalidateTag(API_PATH.BOOKS);
+    revalidateTag(API_PATH.CART);
 
     return {
       book: response.book,
@@ -102,8 +112,8 @@ export async function deleteBook(bookId: string): Promise<TBookResponse> {
       method: HttpMethod.DELETE,
     });
 
-    revalidatePath(ROUTES.STORE);
-    revalidatePath(ROUTES.CART);
+    revalidateTag(API_PATH.BOOKS);
+    revalidateTag(API_PATH.CART);
 
     return {
       book: response.book,

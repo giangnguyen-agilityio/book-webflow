@@ -21,6 +21,11 @@ const getArticleList = async (
   try {
     const data = await httpClient.get<TArticlesResponse>({
       endpoint,
+      config: {
+        next: {
+          tags: [API_PATH.ARTICLES],
+        },
+      },
     });
 
     return data;
@@ -37,6 +42,11 @@ const getArticleById = async (id?: string): Promise<TArticleResponse> => {
   try {
     const data = await httpClient.get<TArticlesResponse>({
       endpoint,
+      config: {
+        next: {
+          tags: [API_PATH.ARTICLES],
+        },
+      },
     });
 
     return {

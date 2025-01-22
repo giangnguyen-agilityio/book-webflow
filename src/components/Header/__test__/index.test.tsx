@@ -28,7 +28,7 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
 jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
+  revalidateTag: jest.fn(),
 }));
 
 describe('Header component', () => {
