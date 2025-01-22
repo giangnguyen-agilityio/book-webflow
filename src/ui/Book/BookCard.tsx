@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, MouseEvent, useTransition } from 'react';
-import { useDisclosure } from '@nextui-org/react';
+import { useDisclosure } from '@heroui/react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';

@@ -1,5 +1,5 @@
 // Utils
-import { act, ignoredConsoleError, renderHook } from '@/utils/testUtils';
+import { act, renderHook } from '@/utils/testUtils';
 
 // Constants
 import { CART_MESSAGES } from '@/constants';
@@ -140,8 +140,6 @@ describe('CartContext', () => {
   });
 
   it('should throw error when useCartContext is used outside provider', () => {
-    ignoredConsoleError();
-
     expect(() => renderHook(() => useCartContext())).toThrow(
       'useCartContext must be used within a CartProvider',
     );

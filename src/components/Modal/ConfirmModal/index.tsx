@@ -1,12 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import {
-  Divider,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from '@nextui-org/react';
+import { Divider, ModalBody, ModalFooter, ModalHeader } from '@heroui/react';
 
 // Components
 import { Button, Text, Heading, BaseModal } from '@/components';

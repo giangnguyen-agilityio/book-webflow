@@ -4,6 +4,11 @@ import { screen, wrapper } from '@/utils/testUtils';
 // Components
 import BaseModal from '..';
 
+jest.mock('framer-motion', () => ({
+  ...jest.requireActual('framer-motion'),
+  LazyMotion: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 describe('BaseModal component', () => {
   const mockOnClose = jest.fn();
 

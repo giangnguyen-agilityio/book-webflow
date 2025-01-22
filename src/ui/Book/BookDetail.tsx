@@ -186,8 +186,9 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
                 type="number"
                 value={String(isOutOfStock ? 0 : orderQuantity)}
                 classNames={{
-                  base: 'w-20 sm:w-24 md:w-28 h-10 sm:h-12 md:h-16.25',
+                  base: 'w-20 md:w-28 h-full sm:h-12 md:h-16.25',
                   input: 'font-medium text-center',
+                  inputWrapper: 'p-3',
                 }}
                 onChange={handleQuantityChange}
               />
@@ -198,14 +199,16 @@ const BookDetail = ({ data, isAdmin }: BookDetailProps) => {
                 disableAnimation={isOutOfStock}
                 disabled={isOutOfStock || isLoading}
                 isLoading={isLoading}
-                startContent={<CartIcon customClass="w-5 h-5" />}
                 variant="solid"
                 className={cn(
                   'w-full xl:w-94.5',
-                  'h-10 sm:h-12 md:h-16.25 py-5',
+                  'h-14 sm:h-12 md:h-16.25 py-5',
                   'font-cardo text-base sm:text-lg font-bold',
                 )}
                 onPress={handleAddToCart}
+                {...(!isLoading && {
+                  startContent: <CartIcon customClass="w-5 h-5" />,
+                })}
               >
                 Add to Cart
               </Button>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Spinner } from '@nextui-org/react';
+import { Spinner } from '@heroui/react';
 
 // Icons
 import { InstagramIcon } from '@/icons';

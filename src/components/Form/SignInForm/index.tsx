@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ChangeEvent, useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Checkbox, useDisclosure } from '@nextui-org/react';
+import { Checkbox, useDisclosure } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
 // Constants

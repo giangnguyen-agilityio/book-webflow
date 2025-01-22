@@ -1,6 +1,11 @@
 // Utils
 import { screen, wrapper, userEvent } from '@/utils/testUtils';
 
+jest.mock('framer-motion', () => ({
+  ...jest.requireActual('framer-motion'),
+  LazyMotion: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 // Components
 import ConfirmModal from '..';
 
@@ -26,6 +31,7 @@ describe('ConfirmModal component', () => {
 
   it('should handle confirm action', async () => {
     const user = userEvent.setup();
+
     wrapper(<ConfirmModal {...defaultProps} />);
 
     const confirmButton = screen.getByRole('button', { name: /confirm/i });
@@ -36,6 +42,7 @@ describe('ConfirmModal component', () => {
 
   it('should handle cancel action', async () => {
     const user = userEvent.setup();
+
     wrapper(<ConfirmModal {...defaultProps} />);
 
     const cancelButton = screen.getByRole('button', { name: /cancel/i });
@@ -46,6 +53,7 @@ describe('ConfirmModal component', () => {
 
   it('should handle close button action', async () => {
     const user = userEvent.setup();
+
     wrapper(<ConfirmModal {...defaultProps} />);
 
     const closeButton = screen.getByRole('button', { name: /close/i });

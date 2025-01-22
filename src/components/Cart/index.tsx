@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import { NavbarItem, Button, cn } from '@nextui-org/react';
+import { NavbarItem, Button, cn } from '@heroui/react';
 
 // Icons
 import { CartIcon, LoadingIcon } from '@/icons';

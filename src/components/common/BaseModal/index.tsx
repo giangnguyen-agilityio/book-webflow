@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, ReactNode } from 'react';
-import { Modal, ModalContent, ModalProps } from '@nextui-org/react';
+import { Modal, ModalContent, ModalProps } from '@heroui/react';
 
 interface BaseModalProps extends ModalProps {
   isOpen: boolean;

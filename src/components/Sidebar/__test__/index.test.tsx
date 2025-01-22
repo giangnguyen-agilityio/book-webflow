@@ -1,4 +1,4 @@
-import { Navbar } from '@nextui-org/react';
+import { Navbar } from '@heroui/react';
 
 // Utils
 import { wrapper } from '@/utils/testUtils';
@@ -6,8 +6,8 @@ import { wrapper } from '@/utils/testUtils';
 // Components
 import Sidebar from '..';
 
-jest.mock('@nextui-org/react', () => ({
-  ...jest.requireActual('@nextui-org/react'),
+jest.mock('@heroui/react', () => ({
+  ...jest.requireActual('@heroui/react'),
   useNavbarContext: () => ({
     setIsMenuOpen: jest.fn(),
     isMenuOpen: true,

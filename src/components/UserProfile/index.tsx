@@ -6,7 +6,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from '@nextui-org/react';
+} from '@heroui/react';
 
 // Icons
 import { LogOutIcon } from '@/icons';
@@ -48,7 +48,7 @@ const UserProfile = ({ userInfo }: UserProfileProps) => {
           key="logout"
           className="text-foreground-100"
           startContent={<LogOutIcon customClass="w-4 h-4" />}
-          onClick={handleSignOut}
+          onPress={handleSignOut}
         >
           Log Out
         </DropdownItem>

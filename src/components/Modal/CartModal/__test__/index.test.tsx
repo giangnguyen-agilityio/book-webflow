@@ -1,11 +1,5 @@
 // Utils
-import {
-  screen,
-  wrapper,
-  userEvent,
-  ignoredConsoleError,
-  waitFor,
-} from '@/utils/testUtils';
+import { screen, wrapper, userEvent, waitFor, act } from '@/utils/testUtils';
 
 // Constants
 import { CART_MESSAGES } from '@/constants';
@@ -15,6 +9,11 @@ import { MOCK_DEFAULT_CART_ITEMS } from '@/mock';
 
 // Components
 import CartModal from '..';
+
+jest.mock('framer-motion', () => ({
+  ...jest.requireActual('framer-motion'),
+  LazyMotion: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
 
 describe('CartModal component', () => {
   const defaultProps = {
@@ -29,21 +28,24 @@ describe('CartModal component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    ignoredConsoleError();
   });
 
-  it('should render cart with items', () => {
-    wrapper(<CartModal {...defaultProps} />);
+  it('should render cart with items', async () => {
+    await act(async () => {
+      wrapper(<CartModal {...defaultProps} />);
+    });
 
     expect(screen.getByText('Your Cart')).toBeInTheDocument();
     expect(
       screen.getByText(MOCK_DEFAULT_CART_ITEMS[0].title),
     ).toBeInTheDocument();
-    expect(screen.getByText('$69.97 USD')).toBeInTheDocument(); // (19.99 * 2) + (29.99 * 1)
+    expect(screen.getByText('69.97 USD')).toBeInTheDocument(); // (19.99 * 2) + (29.99 * 1)
   });
 
-  it('should render empty cart message when no items', () => {
-    wrapper(<CartModal {...defaultProps} cartItems={[]} />);
+  it('should render empty cart message when no items', async () => {
+    await act(async () => {
+      wrapper(<CartModal {...defaultProps} cartItems={[]} />);
+    });
 
     expect(screen.getByText(/haven't added any items/i)).toBeInTheDocument();
     expect(screen.getByText('Continue Shopping')).toBeInTheDocument();
@@ -51,15 +53,20 @@ describe('CartModal component', () => {
 
   it('should handle item quantity update', async () => {
     const user = userEvent.setup();
-    wrapper(<CartModal {...defaultProps} />);
+
+    await act(async () => {
+      wrapper(<CartModal {...defaultProps} />);
+    });
 
     const quantityInput = screen.getByRole('spinbutton', {
       name: new RegExp(`Quantity for ${MOCK_DEFAULT_CART_ITEMS[0].title}`, 'i'),
     });
 
-    await user.clear(quantityInput);
-    await user.type(quantityInput, '3');
-    await quantityInput.blur();
+    await act(async () => {
+      await user.clear(quantityInput);
+      await user.type(quantityInput, '3');
+      await quantityInput.blur();
+    });
 
     await waitFor(() => {
       expect(defaultProps.onUpdateQuantity).toHaveBeenCalledWith(
@@ -110,7 +117,7 @@ describe('CartModal component', () => {
     wrapper(<CartModal {...defaultProps} cartItems={items} />);
 
     // Subtotal should be (10 * 2) + (20 * 1) = 40
-    expect(screen.getByText('$40.00 USD')).toBeInTheDocument();
+    expect(screen.getByText('40.00 USD')).toBeInTheDocument();
   });
 
   it('should not close modal when isLoading is true', async () => {

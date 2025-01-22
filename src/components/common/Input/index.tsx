@@ -1,6 +1,6 @@
 'use client';
 
-import { extendVariants, Input as InputNextUI } from '@nextui-org/react';
+import { extendVariants, Input as InputNextUI } from '@heroui/react';
 
 // Utils
 import { cn } from '@/utils';
