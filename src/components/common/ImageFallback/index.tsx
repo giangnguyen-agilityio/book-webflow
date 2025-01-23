@@ -21,7 +21,7 @@ const ImageFallback = ({
   fallbackSrc = IMAGE_FALLBACK_SRC.DEFAULT,
   ...rest
 }: ImageFallbackProps) => {
-  const [imgSrc, setImgSrc] = useState(src);
+  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
 
   const handleFallbackImage = useCallback(
     () => setImgSrc(fallbackSrc),

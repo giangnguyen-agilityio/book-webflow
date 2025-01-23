@@ -45,6 +45,6 @@ const Input = extendVariants(InputNextUI, {
     radius: 'none',
     color: 'primary',
   },
-});
+}) as typeof InputNextUI;
 
 export default Input;

@@ -122,8 +122,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid price/i,
-          '20',
+          /Price must be greater than 0/i,
+          '0',
         );
       });
 
@@ -174,8 +174,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid dimension/i,
-          '10',
+          /Dimension must be greater than 0/i,
+          '0',
         );
       });
 
@@ -185,8 +185,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid dimension/i,
-          '10',
+          /Dimension must be greater than 0/i,
+          '0',
         );
       });
 
@@ -196,8 +196,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid dimension/i,
-          '10',
+          /Dimension must be greater than 0/i,
+          '0',
         );
       });
 
@@ -206,8 +206,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid number of pages/i,
-          '200',
+          /Number of pages must be greater than 0/i,
+          '0',
         );
       });
     });
@@ -225,8 +225,8 @@ describe('BookForm component', () => {
         await validateFieldWithInvalidValue(
           input,
           'test',
-          /Please enter a valid quantity/i,
-          '10',
+          /Quantity must be greater than 0/i,
+          '0',
         );
       });
 

@@ -195,6 +195,7 @@ const CartModal = ({
               </div>
               <Button
                 color="default"
+                isDisabled={isLoading}
                 variant="solid"
                 className={cn(
                   'w-full h-fit py-3 sm:py-4 md:py-5',

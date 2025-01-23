@@ -7,7 +7,7 @@ import { Textarea } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
 // Constants
-import { BOOK_MESSAGES, ROUTES } from '@/constants';
+import { BOOK_MESSAGES, ImageStore, ROUTES } from '@/constants';
 
 // Context
 import { ToastType, useToast } from '@/context';
@@ -28,7 +28,14 @@ import type { TBookResponse } from '@/types';
 import { cn } from '@/utils';
 
 // Components
-import { BackButton, Button, Input, Text, ImageUpload } from '@/components';
+import {
+  BackButton,
+  Button,
+  Input,
+  Text,
+  ImageUpload,
+  NumberInput,
+} from '@/components';
 
 interface BookFormProps {
   onSubmit: (data: Book) => Promise<TBookResponse>;
@@ -112,7 +119,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
     const formattedData: Book = {
       ...mainInfo,
       id: data?.id || '',
-      imageSrc: formData.imageSrc || '',
+      imageSrc: formData.imageSrc || ImageStore.UnavailableImage,
       bookInformation: {
         publisher,
         publishedDate,
@@ -204,21 +211,19 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
+                  allowDecimal
                   isRequired
                   aria-label="Book price input field"
-                  autoComplete="off"
                   data-testid="book-price-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Price"
-                  labelPlacement="outside"
+                  min={0}
                   placeholder="Enter price"
-                  radius="sm"
                   startContent="$"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',
@@ -306,20 +311,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
                   isRequired
                   aria-label="Book quantity input field"
-                  autoComplete="off"
                   data-testid="book-quantity-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Quantity"
-                  labelPlacement="outside"
                   placeholder="Enter quantity"
-                  radius="sm"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',
@@ -456,20 +457,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
                   isRequired
                   aria-label="Book pages input field"
-                  autoComplete="off"
                   data-testid="book-paperback-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Number of Pages"
-                  labelPlacement="outside"
                   placeholder="Enter number of pages"
-                  radius="sm"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',
@@ -531,20 +528,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
                   isRequired
                   aria-label="Book length input field"
-                  autoComplete="off"
                   data-testid="book-length-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Length"
-                  labelPlacement="outside"
                   placeholder="Length"
-                  radius="sm"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',
@@ -563,20 +556,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
                   isRequired
                   aria-label="Book width input field"
-                  autoComplete="off"
                   data-testid="book-width-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Width"
-                  labelPlacement="outside"
                   placeholder="Width"
-                  radius="sm"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',
@@ -595,20 +584,16 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
                 field: { name, value, onChange, ...rest },
                 fieldState: { error },
               }) => (
-                <Input
+                <NumberInput
                   {...rest}
                   isRequired
                   aria-label="Book height input field"
-                  autoComplete="off"
                   data-testid="book-height-input"
                   errorMessage={error?.message}
                   isDisabled={isSubmitting}
                   isInvalid={!!error?.message}
                   label="Height"
-                  labelPlacement="outside"
                   placeholder="Height"
-                  radius="sm"
-                  type="number"
                   value={String(value)}
                   classNames={{
                     label: 'text-base pb-2',

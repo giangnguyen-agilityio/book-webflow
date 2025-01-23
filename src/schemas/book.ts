@@ -6,7 +6,7 @@ import { BOOK_MESSAGES, REGEX_PATTERNS } from '@/constants';
 const validateNumeric = (
   invalidMsg: string,
   positiveMsg: string,
-  minValue = 0,
+  minValue = 1,
 ) => {
   return z.union([
     // Accept number directly

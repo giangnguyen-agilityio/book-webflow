@@ -48,13 +48,13 @@ export const BOOK_MESSAGES = {
   // Basic Information
   TITLE_REQUIRED: 'Please enter a book title',
   PRICE_INVALID: 'Please enter a valid price',
-  PRICE_MUST_BE_POSITIVE: 'Price must be greater than or equal to 0',
+  PRICE_MUST_BE_POSITIVE: 'Price must be greater than 0',
 
   DESCRIPTION_MIN: 'Description must be at least 10 characters',
   LABEL_REQUIRED: 'Please enter a book label',
 
   QUANTITY_INVALID: 'Please enter a valid quantity',
-  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than or equal to 0',
+  QUANTITY_MUST_BE_POSITIVE: 'Quantity must be greater than 0',
 
   INVALID_IMAGE: 'Please select an image',
   ONLY_IMAGE_FILES_ALLOWED: 'File type must be JPEG, PNG or WebP',
@@ -76,7 +76,7 @@ export const BOOK_MESSAGES = {
 
   // Dimensions
   DIMENSION_INVALID: 'Please enter a valid dimension',
-  DIMENSION_MUST_BE_POSITIVE: 'Dimension must be greater than or equal to 0',
+  DIMENSION_MUST_BE_POSITIVE: 'Dimension must be greater than 0',
 
   ADD_BOOK_SUCCESS: 'Book has been added successfully',
   UPDATE_BOOK_SUCCESS: 'Book has been updated successfully',

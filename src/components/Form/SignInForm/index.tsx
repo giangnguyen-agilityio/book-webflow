@@ -22,6 +22,9 @@ import { ToastType, useToast } from '@/context';
 // Icons
 import { EyeFilledIcon, EyeSlashFilledIcon, LoadingIcon } from '@/icons';
 
+// Utils
+import { cn } from '@/utils';
+
 // Components
 import { Input, Button } from '@/components';
 
@@ -168,12 +171,10 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
         />
       </div>
 
-      <div
-        className="w-full flex items-center justify-between"
-        title="This feature is not available in this version yet"
-      >
+      <div className="w-full flex items-center justify-between">
         <Checkbox
           aria-label="Remember me checkbox"
+          title="This feature is not available in this version yet"
           classNames={{
             label: 'cursor-pointer text-start text-black',
           }}
@@ -183,9 +184,14 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
 
         <Link
           aria-label="Forgot password link"
-          className="text-end text-foreground-100 font-semibold hover:underline"
           data-testid="forgot-password-link"
           href={ROUTES.FORGOT_PASSWORD}
+          tabIndex={isSubmitting ? -1 : 0}
+          title="This feature is not available in this version yet"
+          className={cn(
+            'text-end text-foreground-100 font-semibold hover:underline',
+            isSubmitting && 'pointer-events-none opacity-50',
+          )}
         >
           Forgot your password?
         </Link>
@@ -210,9 +216,13 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
         Don&apos;t have an account?&nbsp;&nbsp;
         <Link
           aria-label="Register button"
-          className="text-foreground-100 font-semibold hover:underline"
           data-testid="register-button"
           href={ROUTES.SIGN_UP}
+          tabIndex={isSubmitting ? -1 : 0}
+          className={cn(
+            'text-foreground-100 font-semibold hover:underline',
+            isSubmitting && 'pointer-events-none opacity-50',
+          )}
         >
           Register here
         </Link>

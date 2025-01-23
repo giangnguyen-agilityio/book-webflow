@@ -15,4 +15,10 @@ export const REGEX_PATTERNS = {
 
   // Full name: letters, spaces, hyphens, apostrophes (for names like O'Connor)
   NAME_PATTERN: /^[a-zA-Z\s'-]+$/,
+
+  // Number
+  DECIMAL_POSITIVE: /^\d*\.?\d*$/,
+  DECIMAL_WITH_NEGATIVE: /^-?\d*\.?\d*$/,
+  INTEGER_POSITIVE: /^\d*$/,
+  INTEGER_WITH_NEGATIVE: /^-?\d*$/,
 };

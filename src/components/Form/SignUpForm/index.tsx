@@ -22,6 +22,9 @@ import { SignUpSchema } from '@/schemas';
 // Types
 import { AuthResult, SignUpData } from '@/types';
 
+// Utils
+import { cn } from '@/utils';
+
 // Components
 import { Button, Input } from '@/components';
 
@@ -247,9 +250,13 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
         Already have an account?&nbsp;&nbsp;
         <Link
           aria-label="Sign in button"
-          className="text-foreground-100 font-semibold hover:underline"
           data-testid="sign-in-button"
           href={ROUTES.SIGN_IN}
+          tabIndex={isSubmitting ? -1 : 0}
+          className={cn(
+            'text-foreground-100 font-semibold hover:underline',
+            isSubmitting && 'pointer-events-none opacity-50',
+          )}
         >
           Sign in here
         </Link>

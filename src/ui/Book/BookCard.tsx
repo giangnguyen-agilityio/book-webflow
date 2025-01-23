@@ -216,7 +216,8 @@ const BookCard = ({
                       isIconOnly
                       aria-label="Edit book button"
                       color="success"
-                      radius="full"
+                      radius="sm"
+                      size="sm"
                       startContent={<EditIcon customClass="w-4 h-4" />}
                       variant="ghost"
                       onClick={handleEditBook}
@@ -227,7 +228,8 @@ const BookCard = ({
                       aria-label="Delete book button"
                       className="border-2 data-[hover=true]:border-danger data-[hover=true]:bg-danger data-[hover=true]:text-white"
                       color="danger"
-                      radius="full"
+                      radius="sm"
+                      size="sm"
                       startContent={<TrashIcon customClass="w-4 h-4" />}
                       variant="outline"
                       onClick={handleOpenDeleteModal}

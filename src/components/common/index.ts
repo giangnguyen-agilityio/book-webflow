@@ -10,3 +10,4 @@ export { default as BaseModal } from './BaseModal';
 export { default as Toast } from './Toast';
 export { default as BaseSkeleton } from './BaseSkeleton';
 export { default as Input } from './Input';
+export { default as NumberInput } from './NumberInput';
