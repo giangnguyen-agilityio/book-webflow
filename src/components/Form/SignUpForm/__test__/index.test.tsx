@@ -10,7 +10,7 @@ import { useToast } from '@/context';
 import { ROUTES } from '@/constants';
 
 // Mock
-import { MOCK_USER } from '@/mock';
+import { getMockSignUpData, MOCK_USER } from '@/mock';
 
 import SignUpForm from '..';
 
@@ -33,12 +33,7 @@ describe('SignUpForm', () => {
   const mockOnSubmit = jest.fn();
   const user = userEvent.setup();
 
-  const mockValidFormData = {
-    name: MOCK_USER.username,
-    email: MOCK_USER.email,
-    username: MOCK_USER.username,
-    password: MOCK_USER.password,
-  };
+  const mockValidFormData = getMockSignUpData();
 
   beforeEach(() => {
     jest.clearAllMocks();

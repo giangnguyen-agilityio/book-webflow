@@ -530,6 +530,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
               }) => (
                 <NumberInput
                   {...rest}
+                  allowDecimal
                   isRequired
                   aria-label="Book length input field"
                   data-testid="book-length-input"
@@ -558,6 +559,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
               }) => (
                 <NumberInput
                   {...rest}
+                  allowDecimal
                   isRequired
                   aria-label="Book width input field"
                   data-testid="book-width-input"
@@ -586,6 +588,7 @@ const BookForm = ({ onSubmit, data }: BookFormProps) => {
               }) => (
                 <NumberInput
                   {...rest}
+                  allowDecimal
                   isRequired
                   aria-label="Book height input field"
                   data-testid="book-height-input"
