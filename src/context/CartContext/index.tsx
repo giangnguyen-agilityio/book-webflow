@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, ReactNode } from 'react';
+import { createContext, useCallback, use, ReactNode } from 'react';
 
 // Models
 import { CartItem } from '@/models';
@@ -106,7 +106,7 @@ const CartProvider = ({ children, userId }: CartProviderProps) => {
 };
 
 const useCartContext = () => {
-  const context = useContext(CartContext);
+  const context = use(CartContext);
 
   if (!context) {
     throw new Error('useCartContext must be used within a CartProvider');

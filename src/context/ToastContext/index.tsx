@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-} from 'react';
+import { createContext, use, useState, useCallback, ReactNode } from 'react';
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -64,7 +58,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useToast = () => {
-  const context = useContext(ToastContext);
+  const context = use(ToastContext);
 
   if (!context) {
     throw new Error('useToast must be used within a ToastProvider');
