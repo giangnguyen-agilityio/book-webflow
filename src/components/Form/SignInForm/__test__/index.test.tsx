@@ -177,7 +177,7 @@ describe('SignInForm', () => {
 
     expect(screen.getByTestId('forgot-password-link')).toHaveAttribute(
       'href',
-      ROUTES.FORGOT_PASSWORD,
+      ROUTES.SIGN_IN,
     );
     expect(screen.getByTestId('register-button')).toHaveAttribute(
       'href',

@@ -185,7 +185,7 @@ const SignInForm = ({ onSubmit }: SignInFormProps) => {
         <Link
           aria-label="Forgot password link"
           data-testid="forgot-password-link"
-          href={ROUTES.FORGOT_PASSWORD}
+          href={ROUTES.SIGN_IN}
           tabIndex={isSubmitting ? -1 : 0}
           title="This feature is not available in this version yet"
           className={cn(
